@@ -4,12 +4,11 @@ options(scipen = 10000, width = 10)
 
 library(readr)
 jippop <- read_csv("pop_jip_20180504.csv")
-colnames(jippop) <- c('date','hour','admincd','blockcd','totalpop',
-                      'm0-9','m10-14','m15-19','m20-24','m25-29','m30-34','m35-39',
-                      'm40-44','m45-49','m50-54','m55-59','m60-64','m65-69','m70',
-                      'f0-9','f10-14','f15-19','f20-24','f25-29','f30-34','f35-39',
-                      'f40-44','f45-49','f50-54','f55-59','f60-64','f65-69','f70'
-)
+colnames(jippop) <- c('date','hour','admincd','totalpop',
+                      'M00','M10','M15','M20','M25','M30','M35',
+                      'M40','M45','M50','M55','M60','M65','M70',
+                      'F00','F10','F15','F20','F25','F30','F35',
+                      'F40','F45','F50','F55','F60','F65','F70')
 for(i in 1:length(jippop)){
   jippop[[i]] <- as.numeric(jippop[[i]])
   
@@ -19,11 +18,10 @@ jippop <- jippop[order(jippop$hour, jippop$blockcd),]
 
 adminpop <- read_csv("pop_admin_20180504.csv")
 colnames(adminpop) <- c('date','hour','admincd','totalpop',
-                        'm0-9','m10-14','m15-19','m20-24','m25-29','m30-34','m35-39',
-                        'm40-44','m45-49','m50-54','m55-59','m60-64','m65-69','m70',
-                        'f0-9','f10-14','f15-19','f20-24','f25-29','f30-34','f35-39',
-                        'f40-44','f45-49','f50-54','f55-59','f60-64','f65-69','f70'
-)
+                        'M00','M10','M15','M20','M25','M30','M35',
+                        'M40','M45','M50','M55','M60','M65','M70',
+                        'F00','F10','F15','F20','F25','F30','F35',
+                        'F40','F45','F50','F55','F60','F65','F70')
 for(i in 1:length(adminpop)){
   adminpop[[i]] <- as.numeric(adminpop[[i]])
   
@@ -31,24 +29,29 @@ for(i in 1:length(adminpop)){
 adminpop <- adminpop[order(adminpop$hour, adminpop$admincd),]
 
 
+###########################
+#-- Add code match book --#
+###########################
+codebook <- read.csv("adm_code_match.csv")
+Adminpop <- merge(adminpop, codebook, by.x = "admincd", by.y = "H_DNG_CD")
 
 
-
-setwd("D:/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Boundary/Sudo")
+#########################
+#-- Import Shapefiles --#
+#########################
 library(rgdal)
-jip   <- readOGR('Seoul_Jipgegu.shp')
-admin <- readOGR('seoul_emd_5181.shp')
-admin@data <- admin@data[,c(1,3,5,6)]
+path <- "D:/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Boundary/Sudo/"
+jip   <- readOGR(paste0(path, 'Seoul_Jipgegu.shp'))
+admin <- readOGR(paste0(path,'Seoul_Dong_Admin.shp'))
+admin@data <- admin@data[,4:7]
 admin@data[[1]] <- as.numeric(as.character(admin@data[[1]]))
-
-a <- admin@data
-a <- a[order(a$EMD_CD),]
+admin@data <- admin@data[order(admin@data$DONG_CODE),]
 
 
 jip@data   <- merge(jip@data, jippop[1:5], by.x = "TOT_OA_CD", by.y = "blockcd")
-#admin@data <- merge(admin@data, adminpop[1:4], by.x = "EMD_CD", by.y = 'admincd')
+admin@data <- merge(admin@data, Adminpop, by.x = "DONG_CODE", by.y = 'H_SDNG_CD')
+
+#writeOGR(admin, "admin",driver="ESRI Shapefile")
 
 
-
-
-##Leaflet Package ì´ìš©í•´ì•¼í•¨
+##Leaflet Package ?´?š©?•´?•¼?•¨
