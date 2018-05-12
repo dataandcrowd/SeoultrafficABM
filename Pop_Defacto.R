@@ -1,5 +1,5 @@
-setwd("D:/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Population/DeFacto")
-setwd("~/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Population/DeFacto")
+setwd("D:/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Population/DeFacto") # Windows
+setwd("~/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Population/DeFacto")  # MacOS
 options(scipen = 10000, width = 10)
 
 library(readr)
@@ -31,9 +31,8 @@ adminpop <- adminpop[order(adminpop$hour, adminpop$admincd),]
 ###########################
 codebook <- read.csv("adm_code_match.csv") # Windows
 codebook <- read.csv("adm_code_match.csv", fileEncoding = "CP949", encoding = "UTF-8") # MacOS
-
 Adminpop <- merge(adminpop, codebook, by.x = "admincd", by.y = "H_DNG_CD")
-
+rm(adminpop)
 
 #########################
 #-- Import Shapefiles --#
@@ -56,23 +55,26 @@ ad1 <- admin
 ad2 <- admin
 ad3 <- admin
 
-ad1@data <- ad1@data[ad1@data$hour == 0,] # Sampling hours equvalent to 0
-ad2@data <- ad2@data[ad2@data$hour == 16,] # Sampling hours equvalent to 16
-ad3@data <- ad3@data[ad3@data$hour == 20,] # Sampling hours equvalent to 20
+ad1@data <- ad1@data[ad1@data$hour ==  0 & ad1@data$date == 20180430,] # Sampling hours equvalent to 0
+ad2@data <- ad2@data[ad2@data$hour == 16 & ad1@data$date == 20180430,] # Sampling hours equvalent to 16
+ad3@data <- ad3@data[ad3@data$hour == 20 & ad1@data$date == 20180430,] # Sampling hours equvalent to 20
 
 #######################
 library(RColorBrewer)
 brewer.pal.info
 
-cols <- brewer.pal(5, "Oranges")
-brks <- c(10000, 20000, 30000, 40000, 50000)#, 60000, 70000, 80000)
+cols <- brewer.pal(5, "Blues")
+brks1 <- quantile(ad1@data$totalpop, c(.2, .4, .6, .8, .99)) 
+brks2 <- quantile(ad2@data$totalpop, c(.2, .4, .6, .8, .99)) 
+brks3 <- quantile(ad3@data$totalpop, c(.2, .4, .6, .8, .99)) 
 
-gs1 <- cols[findInterval(ad1@data$totalpop, vec = brks)]
-gs2 <- cols[findInterval(ad2@data$totalpop, vec = brks)]
-gs3 <- cols[findInterval(ad3@data$totalpop, vec = brks)]
 
-plot(ad1, col = gs1)
-plot(ad2, col = gs2)
-plot(ad3, col = gs3)
+gs1 <- cols[findInterval(ad1@data$totalpop, vec = brks1)]
+gs2 <- cols[findInterval(ad2@data$totalpop, vec = brks2)]
+gs3 <- cols[findInterval(ad3@data$totalpop, vec = brks3)]
+
+plot(ad1, col = gs1, main = "Population at 00H\n30th April 2018")
+plot(ad2, col = gs2, main = "Population at 16H\n30th April 2018")
+plot(ad3, col = gs3, main = "Population at 20H\n30th April 2018")
 
 ##Leaflet Package 
