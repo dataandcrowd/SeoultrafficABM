@@ -52,9 +52,26 @@ jip@data   <- merge(jip@data, jippop[1:5], by.x = "TOT_OA_CD", by.y = "blockcd")
 admin@data <- merge(admin@data, Adminpop, by.x = "DONG_CODE", by.y = 'H_SDNG_CD')
 
 ###############
-ad1 <- admin
-ad2 <- admin
-ad3 <- admin
+
+for(i in 0){
+  assign(paste("ad", i, sep = ""), admin)
+  
+  #paste("ad", i, "@data", sep = "") <- paste("ad", i, "@data[ad", i, "@data$hour ==", i, ", ]",  sep = "")
+}
+
+
+vals <- rnorm(3)
+n    <- length(vals)
+lhs  <- paste("a",    1:n,     sep="")
+rhs  <- paste("vals[",1:n,"]", sep="")
+eq   <- paste(paste(lhs, rhs, sep="<-"), collapse=";")
+eval(parse(text=eq))
+
+
+
+
+
+
 
 ad1@data <- ad1@data[ad1@data$hour == 0,] # Sampling hours equvalent to 0
 ad2@data <- ad2@data[ad2@data$hour == 16,] # Sampling hours equvalent to 16
