@@ -51,42 +51,69 @@ jip@data   <- merge(jip@data, jippop[1:5], by.x = "TOT_OA_CD", by.y = "blockcd")
 admin@data <- merge(admin@data, Adminpop, by.x = "DONG_CODE", by.y = 'H_SDNG_CD')
 
 ###############
+ad00 <- admin
+ad01 <- admin
+ad02 <- admin
+ad03 <- admin
+ad04 <- admin
+ad05 <- admin
+ad06 <- admin
+ad07 <- admin
+ad08 <- admin
+ad09 <- admin
+ad10 <- admin
+ad11 <- admin
+ad12 <- admin
+ad13 <- admin
+ad14 <- admin
+ad15 <- admin
+ad16 <- admin
+ad17 <- admin
+ad18 <- admin
+ad19 <- admin
+ad20 <- admin
+ad21 <- admin
+ad22 <- admin
+ad23 <- admin
+ad24 <- admin
 
-for(i in 0){
-  assign(paste("ad", i, sep = ""), admin)
-  
-  #paste("ad", i, "@data", sep = "") <- paste("ad", i, "@data[ad", i, "@data$hour ==", i, ", ]",  sep = "")
-}
+ad00@data <- ad00@data[ad00@data$hour ==  0 & ad00@data$date == 20180430,] # Sampling hours equvalent to 0
+ad01@data <- ad01@data[ad01@data$hour ==  0 & ad01@data$date == 20180430,] # Sampling hours equvalent to 0
+ad02@data <- ad02@data[ad02@data$hour ==  0 & ad02@data$date == 20180430,] # Sampling hours equvalent to 0
+ad03@data <- ad03@data[ad03@data$hour ==  0 & ad03@data$date == 20180430,] # Sampling hours equvalent to 0
+ad04@data <- ad04@data[ad04@data$hour ==  0 & ad04@data$date == 20180430,] # Sampling hours equvalent to 0
+ad05@data <- ad05@data[ad05@data$hour ==  0 & ad05@data$date == 20180430,] # Sampling hours equvalent to 0
+ad06@data <- ad06@data[ad06@data$hour ==  0 & ad06@data$date == 20180430,] # Sampling hours equvalent to 0
+ad07@data <- ad07@data[ad07@data$hour ==  0 & ad07@data$date == 20180430,] # Sampling hours equvalent to 0
+ad08@data <- ad08@data[ad08@data$hour ==  0 & ad08@data$date == 20180430,] # Sampling hours equvalent to 0
+ad09@data <- ad09@data[ad09@data$hour ==  0 & ad09@data$date == 20180430,] # Sampling hours equvalent to 0
+ad10@data <- ad10@data[ad10@data$hour ==  0 & ad10@data$date == 20180430,] # Sampling hours equvalent to 0
+ad11@data <- ad11@data[ad11@data$hour ==  0 & ad11@data$date == 20180430,] # Sampling hours equvalent to 0
+ad12@data <- ad12@data[ad12@data$hour ==  0 & ad12@data$date == 20180430,] # Sampling hours equvalent to 0
+ad13@data <- ad13@data[ad13@data$hour ==  0 & ad13@data$date == 20180430,] # Sampling hours equvalent to 0
+ad14@data <- ad14@data[ad14@data$hour ==  0 & ad14@data$date == 20180430,] # Sampling hours equvalent to 0
+ad15@data <- ad15@data[ad15@data$hour ==  0 & ad15@data$date == 20180430,] # Sampling hours equvalent to 0
+ad16@data <- ad16@data[ad16@data$hour ==  0 & ad16@data$date == 20180430,] # Sampling hours equvalent to 0
 
 
-vals <- rnorm(3)
-n    <- length(vals)
-lhs  <- paste("a",    1:n,     sep="")
-rhs  <- paste("vals[",1:n,"]", sep="")
-eq   <- paste(paste(lhs, rhs, sep="<-"), collapse=";")
-eval(parse(text=eq))
 
-
-ad1@data <- ad1@data[ad1@data$hour ==  0 & ad1@data$date == 20180430,] # Sampling hours equvalent to 0
-ad2@data <- ad2@data[ad2@data$hour == 16 & ad1@data$date == 20180430,] # Sampling hours equvalent to 16
-ad3@data <- ad3@data[ad3@data$hour == 20 & ad1@data$date == 20180430,] # Sampling hours equvalent to 20
 
 #######################
 library(RColorBrewer)
 brewer.pal.info
 
 cols <- brewer.pal(5, "Blues")
-brks1 <- quantile(ad1@data$totalpop, c(.2, .4, .6, .8, .99)) 
-brks2 <- quantile(ad2@data$totalpop, c(.2, .4, .6, .8, .99)) 
-brks3 <- quantile(ad3@data$totalpop, c(.2, .4, .6, .8, .99)) 
+brks1 <- quantile(ad01@data$totalpop, c(.2, .4, .6, .8, .99)) 
+brks2 <- quantile(ad02@data$totalpop, c(.2, .4, .6, .8, .99)) 
+brks3 <- quantile(ad03@data$totalpop, c(.2, .4, .6, .8, .99)) 
 
 
-gs1 <- cols[findInterval(ad1@data$totalpop, vec = brks1)]
-gs2 <- cols[findInterval(ad2@data$totalpop, vec = brks2)]
-gs3 <- cols[findInterval(ad3@data$totalpop, vec = brks3)]
+gs1 <- cols[findInterval(ad01@data$totalpop, vec = brks1)]
+gs2 <- cols[findInterval(ad02@data$totalpop, vec = brks2)]
+gs3 <- cols[findInterval(ad03@data$totalpop, vec = brks3)]
 
-plot(ad1, col = gs1, main = "Population at 00H\n30th April 2018")
-plot(ad2, col = gs2, main = "Population at 16H\n30th April 2018")
-plot(ad3, col = gs3, main = "Population at 20H\n30th April 2018")
+plot(ad01, col = gs1, main = "Population at 00H\n30th April 2018")
+plot(ad02, col = gs2, main = "Population at 16H\n30th April 2018")
+plot(ad03, col = gs3, main = "Population at 20H\n30th April 2018")
 
 ##Leaflet Package 
