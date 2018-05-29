@@ -67,11 +67,6 @@ eq   <- paste(paste(lhs, rhs, sep="<-"), collapse=";")
 eval(parse(text=eq))
 
 
-
-
-
-
-
 ad1@data <- ad1@data[ad1@data$hour ==  0 & ad1@data$date == 20180430,] # Sampling hours equvalent to 0
 ad2@data <- ad2@data[ad2@data$hour == 16 & ad1@data$date == 20180430,] # Sampling hours equvalent to 16
 ad3@data <- ad3@data[ad3@data$hour == 20 & ad1@data$date == 20180430,] # Sampling hours equvalent to 20
