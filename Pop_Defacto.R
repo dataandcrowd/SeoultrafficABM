@@ -88,8 +88,8 @@ total.week1 <- total.tib1 %>%
 total.week1 %>%
   ggplot(aes(x = hour, y = week_mean,group = admincd)) +
   geom_line(color = "grey", size= .7,alpha = 1/2) +
-  #facet_wrap(~ my_colors, scales = 'free_x')
-  facet_grid(~ Date)
+  facet_grid(~ Date) +
+  theme_bw()
 
 
 ###################################################
@@ -125,12 +125,15 @@ a <- total.week1 %>%
 
 a <- ggplotly(a)
 
-
-
-
 #########################
 #-- Import Shapefiles --#
 #########################
+# http://rmaps.github.io/blog/posts/animated-choropleths/
+
+
+
+
+
 library(rgdal)
 path <- "D:/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Boundary/Sudo/"
 path <- "~/Dropbox (Cambridge University)/2018_Cambridge/[Database]/Boundary/Sudo/"
