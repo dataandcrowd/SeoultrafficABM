@@ -34,6 +34,100 @@ codebook <- read.csv("adm_code_match.csv", fileEncoding = "CP949", encoding = "U
 Adminpop <- merge(adminpop, codebook, by.x = "admincd", by.y = "H_DNG_CD")
 rm(adminpop)
 
+
+######################
+##--temporal stats--##
+######################
+#http://strimas.com/r/tidy-sf/
+
+
+
+library(reshape2)
+library(dplyr)
+library(tidyquant)
+Adminpop$Date <- as.Date(as.character(Adminpop$date), format = "%Y%m%d",tz = "Asia/Seoul")
+popclean <- Adminpop[,-which(names(Adminpop) %in% c("H_SDNG_CD","DO_NM","CT_NM","H_DNG_NM"))]
+popclean <- melt(popclean, id = c("admincd", "Date", "date", "hour"), variable.name = "pop_type", value.name = "pop_value")
+totalpop <- filter(popclean, pop_type == "totalpop")#, Date == "2018-04-10")#, admincd == 11110515)
+
+#Convert to a tibble
+total.tib <- as_tibble(totalpop) %>%
+  group_by(hour, pop_type)
+
+
+total.week <- total.tib %>%
+  tq_transmute(
+    select     = pop_value,
+    mutate_fun = apply.weekly, 
+    FUN        = mean,
+    na.rm      = TRUE,
+    col_rename = "week_mean"
+  )
+
+total.week %>%
+  ggplot(aes(x = hour, y = week_mean, group = Date)) +
+  geom_smooth(method = "loess", aes(color = Date), se = FALSE) 
+
+
+###################################################
+
+#Convert to a tibble
+total.tib1 <- as_tibble(totalpop) %>%
+              group_by(hour, admincd)
+
+
+total.week1 <- total.tib1 %>%
+              tq_transmute(
+                select     = pop_value,
+                mutate_fun = apply.weekly, 
+                FUN        = mean,
+                na.rm      = TRUE,
+                col_rename = "week_mean"
+              )
+
+total.week1 %>%
+  ggplot(aes(x = hour, y = week_mean,group = admincd)) +
+  geom_line(color = "grey", size= .7,alpha = 1/2) +
+  #facet_wrap(~ my_colors, scales = 'free_x')
+  facet_grid(~ Date)
+
+
+###################################################
+
+#Convert to a tibble
+total.tib3 <- as_tibble(totalpop) %>%
+  group_by(hour, admincd)
+
+
+total.day <- total.tib3 %>%
+  tq_transmute(
+    select     = pop_value,
+    mutate_fun = apply.daily, 
+    FUN        = mean,
+    na.rm      = TRUE,
+    col_rename = "daily_mean"
+  )
+
+total.day %>%
+  ggplot(aes(x = hour, y = daily_mean,group = admincd)) +
+  geom_line(color = "grey", size= .7,alpha = 1/2) +
+  theme_bw()+
+  facet_wrap(~ Date)
+
+###################################################
+library(plotly)
+
+a <- total.week1 %>%
+      ggplot(aes(x = hour, y = week_mean,group = admincd)) +
+      geom_line(color = "grey", size= .7,alpha = 1/2) +
+      #facet_wrap(~ my_colors, scales = 'free_x')
+      facet_grid(~ Date)
+
+a <- ggplotly(a)
+
+
+
+
 #########################
 #-- Import Shapefiles --#
 #########################
