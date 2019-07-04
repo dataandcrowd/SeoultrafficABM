@@ -534,7 +534,7 @@ CHOOSER
 PM10-parameters
 PM10-parameters
 80 100 150
-0
+1
 
 MONITOR
 36
@@ -954,7 +954,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.4
+NetLogo 6.1.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
