@@ -7,8 +7,8 @@ breed [people person]
 nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 ;cars-own  [to-node cur-link speed reg-year]
-patches-own [is-research-area?  countdown dong-code pm10 no2 o3]
-people-own  [health age ]
+patches-own [is-research-area? road countdown dong-code pm10 no2 o3]
+people-own  [health age link-dist]
 
 
 to setup
@@ -49,6 +49,13 @@ to set-gis
   gis:set-world-envelope (gis:envelope-union-of gis:envelope-of roads)
 
   ask patches gis:intersecting area [set is-research-area? true]
+  ask patches gis:intersecting roads [set road true]
+  ask patches with [road != true] [
+    if any? neighbors with [road = true][
+      set road true]
+  ]
+  ask patches with [road != true][set road false]
+
 
   foreach gis:feature-list-of roads [ vector-feature ->
     ; First, grab the names of the starting and ending node for the current
@@ -230,7 +237,7 @@ create-people 300 [
   set health 300
   set age "active"
   set color turquoise
-  move-to one-of patches with [[is-road?] of links != true and is-research-area? = true and not any? people-here]
+  move-to one-of patches with [road = true and is-research-area? = true and not any? people-here]
 ]
 
 set-default-shape people "person student"
@@ -239,7 +246,7 @@ create-people 200 [
   set health 300
   set age "young"
   set color orange
-  move-to one-of patches with [[is-road?] of links != true and is-research-area? = true and not any? people-here]
+  move-to one-of patches with [road = true and is-research-area? = true and not any? people-here]
 ]
 
 set-default-shape people "person"
@@ -248,8 +255,13 @@ create-people 200 [
   set health 300
   set age "old"
   set color grey
-  move-to one-of patches with [[is-road?] of links != true and is-research-area? = true and not any? people-here]
+  move-to one-of patches with [road = true and is-research-area? = true and not any? people-here]
   ]
+
+
+
+
+
 
 
 end
@@ -269,8 +281,8 @@ end
 
 
 to move-people
-  ask people  [ifelse is-research-area? = true [set heading random 360 fd 1]
-    [move-to min-one-of patches in-radius 5 with [is-research-area? = true ][distance myself]]
+  ask people  [ifelse road = true and is-research-area? = true [set heading random 360 fd 1]
+    [move-to min-one-of patches in-radius 5 with [road = true and is-research-area? = true ][distance myself]]
     ]
 
 end
