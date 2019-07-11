@@ -8,7 +8,7 @@ nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 ;cars-own  [to-node cur-link speed reg-year]
 patches-own [is-research-area? road countdown dong-code pm10 no2 o3]
-people-own  [health age link-dist]
+people-own  [health age homepatch destpatch]
 
 
 to setup
@@ -259,7 +259,10 @@ create-people 200 [
   ]
 
 
-
+  ask people[
+    if any? (people-on patch-here) with [is-research-area? = true]
+    [set homepatch list(pxcor) (pycor)
+     set destpatch one-of patches with[road = true and is-research-area? = true and not any? people-here]]]
 
 
 
@@ -281,9 +284,10 @@ end
 
 
 to move-people
-  ask people  [ifelse road = true and is-research-area? = true [set heading random 360 fd 1]
+  ask people  [ifelse road = true and is-research-area? = true [face destpatch fd 1]
     [move-to min-one-of patches in-radius 5 with [road = true and is-research-area? = true ][distance myself]]
-    ]
+
+  ]
 
 end
 @#$#@#$#@
