@@ -1,5 +1,5 @@
 extensions [gis csv table]
-globals [pollution-data area roads rate dilute car-limit-number pm10-stat no2-stat o3-stat test]
+globals [pollution-data area roads pedRd rate dilute car-limit-number solved]
 breed [nodes node]
 breed [area-labels area-label]
 ;breed [cars car]
@@ -7,7 +7,7 @@ breed [people person]
 nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 ;cars-own  [to-node cur-link speed reg-year]
-patches-own [is-research-area? road countdown dong-code pm10 no2 o3]
+patches-own [is-research-area? road countdown dong-code is-walking? n step recovered]
 people-own  [health age homepatch destpatch]
 
 
@@ -18,12 +18,8 @@ to setup
   add-labels
   activate-links
   set-signals
-  ;set-cars
-  ;accelerate
   set-people
-  set car-limit-number no-of-cars * 5
-  set rate .01
-  set dilute random 15
+
   reset-ticks
 end
 
@@ -43,18 +39,22 @@ to set-gis
   gis:load-coordinate-system (word "GIS/Seoul_4daemoonArea.prj")
   set area  gis:load-dataset "GIS/Seoul_4daemoonArea.shp"
   set roads gis:load-dataset "GIS/Seoul_4DaemoonLink.shp"
-  let pm10-data  gis:load-dataset "GIS/pm10.asc"
-  let no2-data  gis:load-dataset "GIS/no2.asc"
-  let o3-data  gis:load-dataset "GIS/o3.asc"
+  set pedRd gis:load-dataset "GIS/seoulCBD_rd_pedestrians.shp"
+ ; let pm10-data  gis:load-dataset "GIS/pm10.asc"
+ ; let no2-data  gis:load-dataset "GIS/no2.asc"
+ ; let o3-data  gis:load-dataset "GIS/o3.asc"
   gis:set-world-envelope (gis:envelope-union-of gis:envelope-of roads)
 
   ask patches gis:intersecting area [set is-research-area? true]
   ask patches gis:intersecting roads [set road true]
   ask patches with [road != true] [
     if any? neighbors with [road = true][
-      set road true]
-  ]
+      set road true]]
   ask patches with [road != true][set road false]
+  ask patches gis:intersecting pedRd [set is-walking? true]
+  ask patches with [is-walking? != true][set is-walking? false]
+
+
 
 
   foreach gis:feature-list-of roads [ vector-feature ->
@@ -97,68 +97,14 @@ to set-gis
             set previous-turtle self
           ]]]]]
 
-;; Display Pollution Data
-  gis:apply-raster pm10-data pm10
-  gis:apply-raster no2-data no2
-  gis:apply-raster o3-data o3
-  ;let min-pm10-data gis:minimum-of pm10-data
-  ;let max-pm10-data gis:maximum-of pm10-data
-  ;ask patches
-  ;  [if (pm10 <= 0) or (pm10 >= 0)
-  ;  [set pcolor scale-color black pm10 min-pm10-data max-pm10-data]]
-  ;ask patches with [pm10 > 0] [set is-research-area? true]
-
-  let t csv:from-file "GIS/test.csv"
-  let t1 remove-item 0 t
-  let repeats 0
-  set test table:make
-
-  foreach t1 [ttest ->
-    let counter item 0 ttest ;; counter
-    let diff item 1 ttest
-    table:put test counter diff
-  ]
-  set repeats repeats + 1
-
-  ; Import daily pollution
-  let p0 csv:from-file "GIS/poll-stats.csv"
-  let poll-value remove-item 0 p0  ;;remove headers in the csv file
-  let rep 0  ;; loop
-  set pm10-stat table:make
-  set no2-stat table:make
-  set o3-stat table:make
-
-  foreach poll-value [poll ->
-    if item 1 poll = "pm10" [
-    let counter item 0 poll ;; counter
-    let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
-    let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put pm10-stat counter diff
-  ]
-    if item 1 poll = "no2" [
-    let counter item 0 poll ;; counter
-    let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
-    let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put no2-stat counter diff
-  ]
-    if item 1 poll = "o3" [
-     let counter item 0 poll ;; counter
-    let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
-    let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put o3-stat counter diff
-  ]
-  ]
-  set rep rep + 1
-
-
 end
 
 to draw-4daemoon
   gis:set-drawing-color [ 229 255 204]    gis:fill area 0 ;;RGB color
   gis:set-drawing-color [  64  64  64]    gis:draw area 1
+  gis:set-drawing-color [ 118  15 204]    gis:fill pedRd 1 ;;RGB color
+
+
 end
 
 to draw-daum-map
@@ -232,7 +178,7 @@ end
 to set-people
 
 set-default-shape people "person business"
-create-people 300 [
+create-people 3 [
   set size 3
   set health 300
   set age "active"
@@ -241,7 +187,7 @@ create-people 300 [
 ]
 
 set-default-shape people "person student"
-create-people 200 [
+create-people 2 [
   set size 3
   set health 300
   set age "young"
@@ -250,7 +196,7 @@ create-people 200 [
 ]
 
 set-default-shape people "person"
-create-people 200 [
+create-people 2 [
   set size 3
   set health 300
   set age "old"
@@ -261,13 +207,16 @@ create-people 200 [
 
   ask people[
     if any? (people-on patch-here) with [is-research-area? = true]
-    [set homepatch list(pxcor) (pycor)
-     set destpatch one-of patches with[road = true and is-research-area? = true and not any? people-here]]]
-
+    [set homepatch patch pxcor pycor ;[pxcor] of myself [pycor] of myself
+     set destpatch one-of patches with [road = true and is-research-area? = true
+         and not any? people-here]]]
 
 
 
 end
+
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -288,8 +237,26 @@ to move-people
     [move-to min-one-of patches in-radius 5 with [road = true and is-research-area? = true ][distance myself]]
 
   ]
+end
+
+
+to solve
+
+  ;ask people with [[road] of patch-here = true][
+  ;  if any? neighbors with [[homepatch] of people = true] or any? neighbors with [pcolor = yellow + 2][
+  ;      set pcolor yellow + 2]]
+
+  ask patches with [is-walking? = true][
+    if any? neighbors with [pcolor = orange + 2] or any? neighbors with [pcolor = yellow + 2][
+        set pcolor yellow + 2
+      ]
+    ]
+
+
+
 
 end
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 267
@@ -449,6 +416,23 @@ no-of-cars
 1
 NIL
 HORIZONTAL
+
+BUTTON
+83
+240
+149
+273
+NIL
+solve
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
