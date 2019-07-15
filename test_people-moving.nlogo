@@ -241,28 +241,25 @@ end
 
 
 to solve
+  ask people with [[road] of patch-here = true][
+    if any? neighbors with [[homepatch] of people != [0 0]] or any? neighbors with [pcolor = yellow + 2][
+        set pcolor yellow + 2]]
 
-  ;ask people with [[road] of patch-here = true][
-  ;  if any? neighbors with [[homepatch] of people = true] or any? neighbors with [pcolor = yellow + 2][
-  ;      set pcolor yellow + 2]]
 
-  ask patches with [is-walking? = true][
-    if any? neighbors with [pcolor = orange + 2] or any? neighbors with [pcolor = yellow + 2][
-        set pcolor yellow + 2
-      ]
-    ]
 
+  ;ask patches with [is-walking? = true][
+  ;  if any? neighbors with [pcolor = orange + 2] or any? neighbors with [pcolor = yellow + 2][
+  ;      set pcolor yellow + 2 ]]
 
 
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 267
 34
 868
-644
+636
 -1
 -1
 0.6
@@ -275,10 +272,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--300
-300
--300
-300
+0
+600
+0
+600
 1
 1
 1
@@ -411,7 +408,7 @@ no-of-cars
 no-of-cars
 0
 100
-0.0
+30.0
 10
 1
 NIL
