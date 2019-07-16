@@ -19,14 +19,16 @@ to setup
   activate-links
   set-signals
   set-people
-
+  build
   reset-ticks
 end
 
 
 to go
   set-signal-colours
-  move-people
+  ;move-people
+
+  ;solve
   tick
 end
 
@@ -234,22 +236,36 @@ end
 
 to move-people
   ask people  [ifelse road = true and is-research-area? = true [face destpatch fd 1]
-    [move-to min-one-of patches in-radius 5 with [road = true and is-research-area? = true ][distance myself]]
+    [move-to one-of patches in-radius 2 with [road = true and is-research-area? = true ]]
 
   ]
 end
 
 
+to build
+  ask [homepatch] of person 1697 [set pcolor lime + 1]
+  ask [destpatch] of person 1697 [set pcolor pink + 1]
+
+end
+
 to solve
   ask people with [[road] of patch-here = true][
-    if any? neighbors with [[homepatch] of people != [0 0]] or any? neighbors with [pcolor = yellow + 2][
-        set pcolor yellow + 2]]
+    if any? neighbors with [[homepatch] of people != [0 0]] or
+       any? neighbors with [pcolor = lime + 1][
+        set pcolor yellow + 2]
+    let laststep [step] of one-of neighbors with [pcolor = lime + 1 or
+                                                  [homepatch] of people != [0 0]]
+        set step laststep + 1
+  ]
+
+ask patches with [pcolor = pink + 1][
+  ask neighbors with [pink + 1 = true or road = true][set pcolor pink + 1]]
 
 
 
-  ;ask patches with [is-walking? = true][
-  ;  if any? neighbors with [pcolor = orange + 2] or any? neighbors with [pcolor = yellow + 2][
-  ;      set pcolor yellow + 2 ]]
+ ; ifelse any? patches with [pcolor = lime + 1 and any? neighbors4 with [pcolor = red] ][stop][
+
+ ; ask patches with [pcolor = lime + 1]
 
 
 
@@ -259,7 +275,7 @@ GRAPHICS-WINDOW
 267
 34
 868
-636
+644
 -1
 -1
 0.6
@@ -415,10 +431,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-83
-240
-149
+96
 273
+162
+306
 NIL
 solve
 NIL
@@ -426,7 +442,7 @@ NIL
 T
 OBSERVER
 NIL
-NIL
+V
 NIL
 NIL
 1
