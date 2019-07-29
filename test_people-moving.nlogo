@@ -19,14 +19,14 @@ to setup
   activate-links
   set-signals
   set-people
-  build
+
   reset-ticks
 end
 
 
 to go
   set-signal-colours
-  ;move-people
+  move-people
 
   ;solve
   tick
@@ -213,10 +213,7 @@ create-people 2 [
      set destpatch one-of patches with [road = true and is-research-area? = true
          and not any? people-here]]]
 
-
-
 end
-
 
 
 
@@ -235,18 +232,19 @@ end
 
 
 to move-people
-  ask people  [ifelse road = true and is-research-area? = true [face destpatch fd 1]
-    [move-to one-of patches in-radius 2 with [road = true and is-research-area? = true ]]
-
+  ;ask people  [ifelse road = true and is-research-area? = true [face destpatch fd 1]
+  ;  [move-to one-of patches in-radius 2 with [road = true and is-research-area? = true ]]
+  ;]
+ ask people [
+   if patch-here != destpatch [set heading towards destpatch fd 1]
+   ;if patch-here is-walking? = false
   ]
-end
-
-
-to build
-  ask [homepatch] of person 1697 [set pcolor lime + 1]
-  ask [destpatch] of person 1697 [set pcolor pink + 1]
 
 end
+
+
+
+
 
 to solve
   ask people with [[road] of patch-here = true][
