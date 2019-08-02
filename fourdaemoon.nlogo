@@ -1,5 +1,5 @@
 extensions [gis csv table]
-globals [pollution-data area roads rate dilute car-limit-number pm10-stat no2-stat o3-stat test]
+globals [pollution-data area roads dilute car-limit-number pm10-stat no2-stat o3-stat ]
 breed [nodes node]
 breed [area-labels area-label]
 breed [cars car]
@@ -17,9 +17,8 @@ to setup
   activate-links
   set-signals
   set-cars
-  accelerate
   set car-limit-number no-of-cars * 5
-  set rate .01
+
   set dilute random 15
   reset-ticks
 end
@@ -29,8 +28,10 @@ to go
   ask cars [move speed]
   set-signal-colours
   add-a-car
-  adjust-speed
-  set-speed-variation
+  speed-up
+  meet-traffic-lights
+  drive-out-of-hanyang
+;------------------
   ;calc-poll
   pollute
   impact
@@ -99,25 +100,7 @@ to set-gis
 ;; Display Pollution Data
   gis:apply-raster pm10-data pm10
   gis:apply-raster no2-data no2
-  gis:apply-raster o3-data o3
-  ;let min-pm10-data gis:minimum-of pm10-data
-  ;let max-pm10-data gis:maximum-of pm10-data
-  ;ask patches
-  ;  [if (pm10 <= 0) or (pm10 >= 0)
-  ;  [set pcolor scale-color black pm10 min-pm10-data max-pm10-data]]
-  ;ask patches with [pm10 > 0] [set is-research-area? true]
 
-  let t csv:from-file "GIS/test.csv"
-  let t1 remove-item 0 t
-  let repeats 0
-  set test table:make
-
-  foreach t1 [ttest ->
-    let counter item 0 ttest ;; counter
-    let diff item 1 ttest
-    table:put test counter diff
-  ]
-  set repeats repeats + 1
 
   ; Import daily pollution
   let p0 csv:from-file "GIS/poll-stats.csv"
@@ -125,7 +108,6 @@ to set-gis
   let rep 0  ;; loop
   set pm10-stat table:make
   set no2-stat table:make
-  set o3-stat table:make
 
   foreach poll-value [poll ->
     if item 1 poll = "pm10" [
@@ -142,13 +124,7 @@ to set-gis
     let diff lput item 5 poll value
     table:put no2-stat counter diff
   ]
-    if item 1 poll = "o3" [
-     let counter item 0 poll ;; counter
-    let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
-    let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put o3-stat counter diff
-  ]
+
   ]
   set rep rep + 1
 
@@ -211,7 +187,6 @@ to set-signals
       [set size 7
        set intersection? true
        set auto? random 300
-
     ]
       [set hidden? true
        set color grey
@@ -234,18 +209,10 @@ to set-cars
     set speed 0
     set reg-year 2010 + random 10
     let l one-of links with [Daero? = true]
-    set-next-car-link l [end1] of l
+    set-next-car-link l [end2] of l
             ]
 end
 
-
-to accelerate
-  let max-speed 5
-  let min-speed 0.5
-  ask cars [set speed min-speed + random-float (max-speed - min-speed)
-             ;let l one-of links
-    ]
-end
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -299,31 +266,63 @@ to add-a-car
     if (r > 0.4)[set l link 417 418]
     if (r > 0.6)[set l link 728 729]
     if (r > 0.8)[set l link 1629 1630]
-    set-next-car-link  l [end2] of l
+    set-next-car-link l [end1] of l
     ]
   ]
 
 end
 
 
-to adjust-speed
-  ;; if there is a car right ahead of you, match its speed then slow down
+
+
+
+to speed-up
+  let max-speed 3
+  let min-speed 0.5
   ask cars [
-    ;let a acceleration
-    ;if angle > 27 [set a deceleration * 10  set angle 0]
-    ;let car-ahead min-one-of other cars in-cone 1 120 [distance myself]
+    set speed min-speed + random-float (max-speed - min-speed)
+    let car-ahead one-of cars-on patch-ahead 1
+    if car-ahead != nobody
+      [ slow-down car-ahead]
+;    let empty-patches neighbors with [not any? cars-here]
+;    if any? empty-patches
+;      [ stop-car empty-patches]
+
   ]
+end
+
+to slow-down [car-ahead ]
+  ;; slow down so you are driving more slowly than the car ahead of you
+  let deceleration 0 + random-float 1
+  set speed [ speed ] of car-ahead - deceleration
 
 end
 
 
-to set-speed-variation
-ask cars [
-    if any? nodes in-radius 1 with [green-light? = false][ set speed 0 ]
-    if any? other nodes in-radius 1 with [green-light? = true]
-      [set speed (speed + (0.3 + random-float 1)) ]
+to meet-traffic-lights
+  ask cars [
+  if any? nodes in-radius 2 with [green-light? = false][ set speed 0 ]
+  if any? other nodes in-radius 1 with [green-light? = true]
+    [set speed (speed + (speed-variation + random-float 1)) ]
+
   ]
+
+
 end
+
+
+to drive-out-of-hanyang
+
+ let my_list [426 428 418 729 635 1570 1571 1527 1541 1540 602 595]
+ ask cars [
+    if distance min-one-of nodes with [who = 426 or who = 428 or who = 418 or who = 729 ][distance myself] < 1
+    [die]
+    ]
+
+
+
+end
+
 
 
 
@@ -487,9 +486,9 @@ SLIDER
 speed-variation
 speed-variation
 0
-5
-0.03
-1
+3
+0.2
+.1
 1
 NIL
 HORIZONTAL
@@ -579,6 +578,21 @@ scenario?
 0
 1
 -1000
+
+SLIDER
+33
+392
+125
+425
+rate
+rate
+0
+5
+1.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
