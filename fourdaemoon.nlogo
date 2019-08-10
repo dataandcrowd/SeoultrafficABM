@@ -1,5 +1,5 @@
 extensions [gis csv table]
-globals [pollution-data area roads dilute car-limit-number pm10-stat no2-stat o3-stat ]
+globals [pollution-data area roads dilute car-limit-number pm10-stat no2-stat ]
 breed [nodes node]
 breed [area-labels area-label]
 breed [cars car]
@@ -50,9 +50,9 @@ to set-gis
   gis:load-coordinate-system (word "GIS/Seoul_4daemoonArea.prj")
   set area  gis:load-dataset "GIS/Seoul_4daemoonArea.shp"
   set roads gis:load-dataset "GIS/Seoul_4DaemoonLink.shp"
-  let pm10-data  gis:load-dataset "GIS/pm10.asc"
-  let no2-data  gis:load-dataset "GIS/no2.asc"
-  let o3-data  gis:load-dataset "GIS/o3.asc"
+  ;let pm10-data  gis:load-dataset "GIS/pm10.asc"
+  ;let no2-data  gis:load-dataset "GIS/no2.asc"
+  ;let o3-data  gis:load-dataset "GIS/o3.asc"
   gis:set-world-envelope (gis:envelope-union-of gis:envelope-of roads)
 
   ask patches gis:intersecting area [set is-research-area? true]
@@ -98,8 +98,8 @@ to set-gis
           ]]]]]
 
 ;; Display Pollution Data
-  gis:apply-raster pm10-data pm10
-  gis:apply-raster no2-data no2
+  ;gis:apply-raster pm10-data pm10
+  ;gis:apply-raster no2-data no2
 
 
   ; Import daily pollution
@@ -336,9 +336,7 @@ to calc-poll
      set no2 no2 + (item 3 table:get no2-stat (ticks + 1))
         + random-float 0.01 * (random-float (item 3 table:get no2-stat (ticks + 1))
         - random-float (item 3 table:get no2-stat (ticks + 1)))
-     set o3 o3 + (item 3 table:get o3-stat (ticks + 1))
-        + random-float 0.01 * (random-float (item 3 table:get o3-stat (ticks + 1))
-        - random-float (item 3 table:get o3-stat (ticks + 1)))
+
   ]]
 
 end
@@ -367,10 +365,10 @@ to impact
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-259
-29
-860
-639
+322
+24
+810
+513
 -1
 -1
 0.8
@@ -528,7 +526,7 @@ HORIZONTAL
 CHOOSER
 29
 207
-167
+121
 252
 PM10-parameters
 PM10-parameters
