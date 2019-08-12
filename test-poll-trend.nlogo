@@ -1,6 +1,6 @@
 extensions [gis csv table]
-globals [ area roads rate dilute car-limit-number pm10-stat no2-stat o3-stat]
-patches-own [is-research-area? intersection countdown dong-code pm10 no2 o3]
+globals [ no2-stat no2-stat-rd]
+patches-own [is-research-area? intersection countdown dong-code no2_back no2_road]
 
 
 
@@ -15,49 +15,36 @@ to setup
 ;  file-close
 
 
-  let pm10-data  gis:load-dataset "GIS/pm10.asc"
-  let no2-data  gis:load-dataset "GIS/no2.asc"
-  let o3-data  gis:load-dataset "GIS/o3.asc"
-
-  gis:apply-raster pm10-data pm10
-  gis:apply-raster no2-data no2
-  gis:apply-raster o3-data o3
-
   ; Import daily pollution
-  let p0 csv:from-file "GIS/poll-stats.csv"
+  let p0 csv:from-file "GIS/jongno.csv"
   let poll-value remove-item 0 p0  ;;remove headers in the csv file
   let rep 0  ;; loop
-  set pm10-stat table:make
+
   set no2-stat table:make
-  set o3-stat table:make
+  set no2-stat-rd table:make
 
   foreach poll-value [poll ->
-    if item 1 poll = "pm10" [
+    if item 1 poll = "Back" [
     let counter item 0 poll ;; counter
     let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
     let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put pm10-stat counter diff
+    let no2_ lput item 5 poll value
+    table:put no2-stat counter no2_
   ]
-    if item 1 poll = "no2" [
+    if item 1 poll = "Road" [
     let counter item 0 poll ;; counter
     let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
     let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put no2-stat counter diff
-  ]
-    if item 1 poll = "o3" [
-     let counter item 0 poll ;; counter
-    let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
-    let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put o3-stat counter diff
+    let no2_ lput item 5 poll value
+    table:put no2-stat-rd counter no2_
   ]
   ]
   set rep rep + 1
 
+;;; set no2 values for each patch
 
-
+  ask patches [set no2_back (item 2 table:get no2-stat 1) + random-float (item 3 table:get no2-stat 1)]
+  ;ask patches [set no2_road (item 2 table:get no2-stat-rd 1) + random-float (item 3 table:get no2-stat-rd 1)]
 
 
 end
@@ -66,17 +53,17 @@ end
 
 
 to go
-  calc-poll
+  ;calc-poll
   tick
 end
 
 
 to calc-poll
-  ask patches with [pm10 >= 0]
-  [if ticks > 0 ;and (pm10 + (item 3 table:get pm10-stat (ticks + 1))) > (item 4 table:get pm10-stat (ticks + 1))
-    [set pm10 pm10 + item 3 table:get pm10-stat (ticks + 1)]
-]
-  output-print  [pm10] of patch 0 0
+;  ask patches
+;  [if ticks > 0 ;and (pm10 + (item 3 table:get pm10-stat (ticks + 1))) > (item 4 table:get pm10-stat (ticks + 1))
+;    [set no2 (item 2) table:get no2-stat (ticks + 1)]
+;]
+;  output-print  [no2] of patch 0 0
 
 
 
@@ -154,7 +141,7 @@ MONITOR
 97
 249
 hours
-item 1 pm10-stat
+item 1 no2-stat
 17
 1
 11
@@ -508,7 +495,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.3
+NetLogo 6.1.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
