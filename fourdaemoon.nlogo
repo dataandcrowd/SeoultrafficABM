@@ -1,12 +1,12 @@
 extensions [gis csv table]
-globals [pollution-data area roads dilute car-limit-number pm10-stat no2-stat ]
+globals [pollution-data area roads dilute car-limit-number no2-stat no2-stat-rd]
 breed [nodes node]
 breed [area-labels area-label]
 breed [cars car]
 nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 cars-own  [to-node cur-link speed reg-year]
-patches-own [is-research-area? intersection countdown dong-code pm10 no2 o3]
+patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer]
 
 
 to setup
@@ -19,7 +19,7 @@ to setup
   set-cars
   set car-limit-number no-of-cars * 5
 
-  set dilute random 15
+  ask cars [ifelse reg-year >= 2009 [set dilute 5 + random 5][ set dilute 10 + random 5 ]]
   reset-ticks
 end
 
@@ -32,13 +32,12 @@ to go
   meet-traffic-lights
   drive-out-of-hanyang
 ;------------------
-  ;calc-poll
+  calc-poll
   pollute
   impact
-
-
-
   tick
+
+  if ticks = 21600 [stop]
 end
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -50,12 +49,14 @@ to set-gis
   gis:load-coordinate-system (word "GIS/Seoul_4daemoonArea.prj")
   set area  gis:load-dataset "GIS/Seoul_4daemoonArea.shp"
   set roads gis:load-dataset "GIS/Seoul_4DaemoonLink.shp"
-  ;let pm10-data  gis:load-dataset "GIS/pm10.asc"
-  ;let no2-data  gis:load-dataset "GIS/no2.asc"
-  ;let o3-data  gis:load-dataset "GIS/o3.asc"
   gis:set-world-envelope (gis:envelope-union-of gis:envelope-of roads)
 
   ask patches gis:intersecting area [set is-research-area? true]
+  ask patches gis:intersecting roads [set road_buffer true]
+  ask patches with [road_buffer != true] [
+    if any? neighbors with [road_buffer = true][set road_buffer true]]
+  ask patches with [road_buffer != true][set road_buffer false]
+
 
   foreach gis:feature-list-of roads [ vector-feature ->
     ; First, grab the names of the starting and ending node for the current
@@ -97,37 +98,38 @@ to set-gis
             set previous-turtle self
           ]]]]]
 
-;; Display Pollution Data
-  ;gis:apply-raster pm10-data pm10
-  ;gis:apply-raster no2-data no2
-
 
   ; Import daily pollution
-  let p0 csv:from-file "GIS/poll-stats.csv"
+  let p0 csv:from-file "GIS/jongno_rep.csv"
   let poll-value remove-item 0 p0  ;;remove headers in the csv file
   let rep 0  ;; loop
-  set pm10-stat table:make
+
   set no2-stat table:make
+  set no2-stat-rd table:make
 
   foreach poll-value [poll ->
-    if item 1 poll = "pm10" [
+    if item 1 poll = "Back" [
     let counter item 0 poll ;; counter
     let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
     let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put pm10-stat counter diff
+    let no2_ lput item 5 poll value
+    table:put no2-stat counter no2_
   ]
-    if item 1 poll = "no2" [
+    if item 1 poll = "Road" [
     let counter item 0 poll ;; counter
     let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
     let value lput item 4 poll date/hour
-    let diff lput item 5 poll value
-    table:put no2-stat counter diff
+    let no2_ lput item 5 poll value
+    table:put no2-stat-rd counter no2_
   ]
-
   ]
   set rep rep + 1
 
+  ;ask patches with [is-research-area? = true and road_buffer = false]
+  ;[set no2_back (item 2 table:get no2-stat 1) + random-float (item 3 table:get no2-stat 1)]
+
+  ask patches with [is-research-area? = true and road_buffer = true]
+  [set no2_road (item 2 table:get no2-stat-rd 1) + random-float (item 3 table:get no2-stat-rd 1)]
 
 end
 
@@ -207,7 +209,7 @@ to set-cars
   create-cars no-of-cars [
     set size 8
     set speed 0
-    set reg-year 2010 + random 10
+    set reg-year 2019 - random 30
     let l one-of links with [Daero? = true]
     set-next-car-link l [end2] of l
             ]
@@ -255,17 +257,25 @@ end
 
 to add-a-car
   set-default-shape cars "car"
-  if (random-float 1) < rate and no-of-cars < car-limit-number [
+  let vehicle-generator random-float 5 ; 차량생성빈도
+  ifelse ticks mod 120 < 60 [set vehicle-generator vehicle-generator][set vehicle-generator vehicle-generator - 4]
+  if (vehicle-generator) < rate and no-of-cars < car-limit-number [
   create-cars 1 [
     set size 8
     set speed random-float 2
+    set reg-year 2019 - random 30
 
     let r random-float 1
     let l link 232 233
-    if (r > 0.2)[set l link 425 426]
-    if (r > 0.4)[set l link 417 418]
-    if (r > 0.6)[set l link 728 729]
-    if (r > 0.8)[set l link 1629 1630]
+    if (r > 0.1)[set l link 605 606]
+    if (r > 0.2)[set l link 154 155]
+    if (r > 0.3)[set l link 366 374]
+    if (r > 0.4)[set l link 666 667]
+    if (r > 0.5)[set l link 696 704]
+    if (r > 0.6)[set l link 1594 1595]
+    if (r > 0.7)[set l link 1450 1451]
+    if (r > 0.8)[set l link 1383 1384]
+    ;if (r > 0.9)[set l link 603 938]
     set-next-car-link l [end1] of l
     ]
   ]
@@ -315,12 +325,11 @@ to drive-out-of-hanyang
 
  let my_list [426 428 418 729 635 1570 1571 1527 1541 1540 602 595]
  ask cars [
-    if distance min-one-of nodes with [who = 426 or who = 428 or who = 418 or who = 729 ][distance myself] < 1
+    if distance min-one-of nodes with [who = 426 or who = 428 or who = 418 or who = 729 or
+    who = 635 or who = 1570 or who = 1571 or who = 1527 or who = 1541 or who = 1540 or who = 602 or who = 595]
+    [distance myself] < 1
     [die]
     ]
-
-
-
 end
 
 
@@ -328,17 +337,11 @@ end
 
 ;;----------------Set exposure & Impact--------------;;
 to calc-poll
-  ask patches with [pm10 >= 0]
-    [if ticks > 0
-    [set pm10 pm10 + (item 3 table:get pm10-stat (ticks + 1))
-        + random-float 0.01 * (random-float (item 3 table:get pm10-stat (ticks + 1))
-        - random-float (item 3 table:get pm10-stat (ticks + 1)))
-     set no2 no2 + (item 3 table:get no2-stat (ticks + 1))
-        + random-float 0.01 * (random-float (item 3 table:get no2-stat (ticks + 1))
-        - random-float (item 3 table:get no2-stat (ticks + 1)))
+ ;ask patches with [road_buffer = false]
+ ;   [set no2_back (item 2 table:get no2-stat (ticks + 1)) + random-float (item 3 table:get no2-stat 1)]
 
-  ]]
-
+ ask patches with [road_buffer = true]
+    [set no2_road (item 2 table:get no2-stat-rd (ticks + 1)) + random-float (item 3 table:get no2-stat-rd 1)]
 end
 
 
@@ -347,7 +350,9 @@ to pollute
   ask cars [
     let polluting one-of [link-neighbors] of to-node
     ask [link-with polluting] of to-node [set thickness 0.3]
-    ask patch-here [set pcolor black + 1]
+    ifelse reg-year >= 2009 [
+    ask patches in-cone 3 60 [set pcolor black + 1 set no2_road (no2_road * 1.5)]]
+    [ask patches in-cone 4 90 [set pcolor black + 1 set no2_road (no2_road * 2)]]
   ]
 
 end
@@ -367,8 +372,8 @@ end
 GRAPHICS-WINDOW
 322
 24
-810
-513
+923
+634
 -1
 -1
 0.8
@@ -389,7 +394,7 @@ GRAPHICS-WINDOW
 1
 1
 ticks
-30.0
+1000.0
 
 BUTTON
 18
@@ -517,27 +522,17 @@ no-of-cars
 no-of-cars
 0
 100
-50.0
+10.0
 10
 1
 NIL
 HORIZONTAL
 
-CHOOSER
-29
-207
-121
-252
-PM10-parameters
-PM10-parameters
-80 100 150
-1
-
 MONITOR
-36
-288
-107
-333
+29
+214
+100
+259
 total.cars
 count cars
 17
@@ -545,10 +540,10 @@ count cars
 11
 
 MONITOR
-111
-288
-209
-333
+104
+214
+202
+259
 cars-bf-2009
 count cars with [reg-year < 2009]
 17
@@ -556,10 +551,10 @@ count cars with [reg-year < 2009]
 11
 
 MONITOR
-111
-338
-192
-383
+207
+212
+288
+257
 cars-af-09
 count cars with [reg-year >= 2009]
 17
@@ -567,10 +562,10 @@ count cars with [reg-year >= 2009]
 11
 
 SWITCH
-84
-433
-200
-466
+127
+272
+243
+305
 scenario?
 scenario?
 0
@@ -578,10 +573,10 @@ scenario?
 -1000
 
 SLIDER
-33
-392
-125
-425
+30
+272
+122
+305
 rate
 rate
 0

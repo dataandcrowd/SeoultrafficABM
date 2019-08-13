@@ -67,7 +67,7 @@ jongno.aq.fin %>%
 
 
 jongno_stats %>% 
-  slice(rep(1:n(), each = 10)) -> jongno_stats_rep
+  slice(rep(1:n(), each = 3)) -> jongno_stats_rep
 
 write.csv(jongno_stats, "jongno.csv", row.names = F)
 write.csv(jongno_stats_rep, "jongno_rep.csv", row.names = F)

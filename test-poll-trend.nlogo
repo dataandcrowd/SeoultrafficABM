@@ -53,25 +53,25 @@ end
 
 
 to go
-  ;calc-poll
+  calc-poll
   tick
+  if ticks = 21600 [stop]
 end
 
 
 to calc-poll
-;  ask patches
-;  [if ticks > 0 ;and (pm10 + (item 3 table:get pm10-stat (ticks + 1))) > (item 4 table:get pm10-stat (ticks + 1))
-;    [set no2 (item 2) table:get no2-stat (ticks + 1)]
-;]
-;  output-print  [no2] of patch 0 0
+  let i 0
+  while [ticks < 240 ]
+  [ ask patches [set no2_back (item 2 table:get no2-stat (ticks + 1)) + random-float (item 3 table:get no2-stat 1)]
+
+set i i + 1
+  ]
 
 
 
-;  [ if ticks > 0 and (pm10 + (item 3 table:get pm10-stat (ticks + 1))) > (item 4 table:get pm10-stat (ticks + 1))
-;    [set pm10 pm10 + (item 3 table:get pm10-stat (ticks + 1))
-;        + random-float 0.05 * ( random-float (item 2 table:get pm10-stat (ticks + 1))
-;        - random-float (item 2 table:get pm10-stat (ticks + 1)))
-;  ]]
+
+  output-print  [no2_back] of patch 0 0
+
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -149,7 +149,7 @@ item 1 no2-stat
 OUTPUT
 27
 302
-615
+405
 429
 12
 
