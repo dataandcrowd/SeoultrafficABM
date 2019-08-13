@@ -66,5 +66,8 @@ jongno.aq.fin %>%
             no2_sd = sd(no2)) -> jongno_stats
 
 
-write.csv(jongno_stats, "jongno.csv", row.names = F)
+jongno_stats %>% 
+  slice(rep(1:n(), each = 10)) -> jongno_stats_rep
 
+write.csv(jongno_stats, "jongno.csv", row.names = F)
+write.csv(jongno_stats_rep, "jongno_rep.csv", row.names = F)
