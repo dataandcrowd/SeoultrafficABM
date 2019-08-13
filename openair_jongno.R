@@ -59,7 +59,7 @@ ggsave("no2_box_back.png", no2_box_back, width = 10, height = 5, dpi = 600)
 ##############
 
 jongno.aq.fin %>% 
-  mutate(date = week(datetime), label = T, 
+  mutate(date = date(datetime), label = T, 
          type = ifelse(ID == 111121 | ID == 111123, "Back", "Road")) %>% 
   group_by(type, date, hour) %>% 
   summarise(no2_mean = mean(no2),
