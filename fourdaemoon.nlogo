@@ -18,6 +18,8 @@ to setup
   set-cars
   set car-limit-number no-of-cars * 5
   ask cars [ifelse reg-year >= 2009 [set dilute 5 + random 5][ set dilute 10 + random 5 ]]
+
+
   reset-ticks
 end
 
@@ -164,7 +166,7 @@ to activate-links
   ask links [
     set is-road? true
     let way list [line-start] of end1 [line-end] of end2
-    let 대로 ["Jahamun-ro"  "Sajik-ro"  "Samil-daero"  "Yulgok-ro"  "Toegye-ro" "Saemunan-ro 3-gil" "Jangchungdan-ro"
+    let daero ["Jahamun-ro"  "Sajik-ro"  "Samil-daero"  "Yulgok-ro"  "Toegye-ro" "Saemunan-ro 3-gil" "Jangchungdan-ro"
       "Taepyeong-ro"  "Sejong-daero"  "Jong-ro"  "Eulji-ro"  "Seosomun-ro" "Donhwamun-ro" "Sejong-daero 23-gil"]
 
     foreach gis:feature-list-of roads [ vector-feature-sub ->
@@ -175,7 +177,7 @@ to activate-links
       let end-start list vector-end vector-start
 
       if way = start-end [set road-name gis:property-value vector-feature-sub "ROAD_NAME_"]
-      if road-name = one-of 대로 [set thickness .1 set color black set Daero? true]
+      if road-name = one-of daero [set thickness .1 set color black set Daero? true]
       if road-name = 0 or road-name = "" [set road-name [name] of end2 ]
       set max-spd read-from-string mspeed
          ]
@@ -403,15 +405,19 @@ to set-scenario1
 end
 
 
-
 to NOx-plot
-  set-current-plot "NOx trend"
-  ;set-current-pen ""
-  ;set-current-pen ""
-  ;set-current-pen ""
-  ;set-current-pen ""
-end
+  ;intersection ->  node246: 사직로, node217:율곡로, node849:종로, node1615:퇴계로, node1560: 삼일대로, node780:세종대로
 
+  set-current-plot "NOx-plot"
+  set-current-plot-pen "사직로" plot [no2_road] of [patch-here] of node 426
+  set-current-plot-pen "율곡로" plot [no2_road] of [patch-here] of node 217
+  set-current-plot-pen "종로"   plot [no2_road] of [patch-here] of node 849
+  set-current-plot-pen "퇴계로" plot [no2_road] of [patch-here] of node 1615
+  set-current-plot-pen "삼일대로" plot [no2_road] of [patch-here] of node 1560
+  set-current-plot-pen "세종대로" plot [no2_road] of [patch-here] of node 780
+  set-current-plot-pen "평균" plot precision mean [no2_road] of patches with [road_buffer = true] 2
+
+end
 
 
 
@@ -430,15 +436,15 @@ end
 
 @#$#@#$#@
 GRAPHICS-WINDOW
-384
-22
-910
-549
+437
+62
+953
+579
 -1
 -1
-0.7
+0.6
 1
-14
+13
 1
 1
 1
@@ -683,9 +689,9 @@ scenario?
 
 PLOT
 30
-420
+398
 342
-540
+518
 NOx-plot
 NIL
 NIL
@@ -697,15 +703,21 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count turtles"
+"사직로" 1.0 0 -14070903 true "" ""
+"율곡로" 1.0 0 -7500403 true "" ""
+"종로" 1.0 0 -2674135 true "" ""
+"퇴계로" 1.0 0 -955883 true "" ""
+"세종대로" 1.0 0 -1184463 true "" ""
+"삼일대로" 1.0 0 -6459832 true "" ""
+"평균" 1.0 0 -10899396 true "" ""
 
 TEXTBOX
-21
-342
-294
-419
-1.할일: 대로별로 오염물질 그래프 그리기\n2. Scenario On: 노드별로 실제 2009년 이전차량 통제했을 때 어떻게 될 것인지?\n3. 교통량 반영하여 낮시간에는 늘리고 오후 늦은시각부터는 줄이기
-11
+598
+29
+793
+67
+서울 녹색교통진흥지역
+18
 0.0
 1
 
