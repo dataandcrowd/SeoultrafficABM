@@ -6,19 +6,17 @@ breed [cars car]
 nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 cars-own  [to-node cur-link speed reg-year]
-patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer]
+patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer road__name]
 
 
 to setup
   ca
-  import-drawing "GIS/4Daemoon1.png"
   set-gis
   add-labels
   activate-links
   set-signals
   set-cars
   set car-limit-number no-of-cars * 5
-
   ask cars [ifelse reg-year >= 2009 [set dilute 5 + random 5][ set dilute 10 + random 5 ]]
   reset-ticks
 end
@@ -31,12 +29,15 @@ to go
   speed-up
   meet-traffic-lights
   drive-out-of-hanyang
-;------------------
+  kill-cars
   calc-poll
   pollute
   impact
-  tick
+  ;set-scenario ;; we turn this off when testing
+  NOx-plot
 
+
+  tick
   if ticks = 21600 [stop]
 end
 
@@ -52,11 +53,10 @@ to set-gis
   gis:set-world-envelope (gis:envelope-union-of gis:envelope-of roads)
 
   ask patches gis:intersecting area [set is-research-area? true]
-  ask patches gis:intersecting roads [set road_buffer true]
+  ask patches gis:intersecting roads [set road_buffer true ]
   ask patches with [road_buffer != true] [
     if any? neighbors with [road_buffer = true][set road_buffer true]]
   ask patches with [road_buffer != true][set road_buffer false]
-
 
   foreach gis:feature-list-of roads [ vector-feature ->
     ; First, grab the names of the starting and ending node for the current
@@ -82,7 +82,7 @@ to set-gis
               set shape "circle"
               set color one-of base-colors
               set hidden? false
-              set name gis:property-value vector-feature "ROAD_NAME_"
+              ;set name gis:property-value vector-feature "ROAD_NAME_"
 
               ; Here you assign the first-vertex and last-vertex of the entire line
               ; to each node
@@ -96,7 +96,8 @@ to set-gis
               create-link-with previous-turtle
             ]
             set previous-turtle self
-          ]]]]]
+          ]]]]
+  ]
 
 
   ; Import daily pollution
@@ -217,9 +218,10 @@ end
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; go ;;;;
 
+;;;;;;;;;;;
+;;; go ;;;;
+;;;;;;;;;;;
 
 to set-signal-colours
   ask nodes with [intersection? = true] [
@@ -257,25 +259,29 @@ end
 
 to add-a-car
   set-default-shape cars "car"
-  let vehicle-generator random-float 5 ; 차량생성빈도
-  ifelse ticks mod 120 < 60 [set vehicle-generator vehicle-generator][set vehicle-generator vehicle-generator - 4]
-  if (vehicle-generator) < rate and no-of-cars < car-limit-number [
-  create-cars 1 [
+  let hours item 1 table:get no2-stat-rd (ticks + 1)
+  let incoming-vehicles random-float 2 ; 차량생성빈도
+
+  if hours >= 7 and hours <= 10 [set incoming-vehicles 1]
+  if hours >= 11 and hours <= 17 [set incoming-vehicles 4]
+  if hours >= 18 or hours < 7 [set incoming-vehicles 10]
+
+  if (incoming-vehicles) < 2 and no-of-cars < car-limit-number [
+  create-cars 5 [
     set size 8
     set speed random-float 2
     set reg-year 2019 - random 30
 
     let r random-float 1
     let l link 232 233
-    if (r > 0.1)[set l link 605 606]
-    if (r > 0.2)[set l link 154 155]
-    if (r > 0.3)[set l link 366 374]
-    if (r > 0.4)[set l link 666 667]
-    if (r > 0.5)[set l link 696 704]
-    if (r > 0.6)[set l link 1594 1595]
-    if (r > 0.7)[set l link 1450 1451]
-    if (r > 0.8)[set l link 1383 1384]
-    ;if (r > 0.9)[set l link 603 938]
+    if (r > 0.1)[set l link   3 383]
+    if (r > 0.2)[set l link 780 1035]
+    if (r > 0.3)[set l link 803 804]
+    if (r > 0.4)[set l link 1111 1112]
+    if (r > 0.5)[set l link 631 632]
+    if (r > 0.6)[set l link 1185 1186]
+    if (r > 0.7)[set l link 1137 1138]
+    if (r > 0.8)[set l link 1515 1516]
     set-next-car-link l [end1] of l
     ]
   ]
@@ -283,7 +289,13 @@ to add-a-car
 end
 
 
+to kill-cars
+let night item 1 table:get no2-stat-rd (ticks + 1)
+    if (night >= 22 and night < 24 or night < 4) [
+    ask n-of (int(.01 * count cars)) cars [die]
+  ]
 
+end
 
 
 to speed-up
@@ -322,8 +334,6 @@ end
 
 
 to drive-out-of-hanyang
-
- let my_list [426 428 418 729 635 1570 1571 1527 1541 1540 602 595]
  ask cars [
     if distance min-one-of nodes with [who = 426 or who = 428 or who = 418 or who = 729 or
     who = 635 or who = 1570 or who = 1571 or who = 1527 or who = 1541 or who = 1540 or who = 602 or who = 595]
@@ -337,11 +347,10 @@ end
 
 ;;----------------Set exposure & Impact--------------;;
 to calc-poll
- ;ask patches with [road_buffer = false]
- ;   [set no2_back (item 2 table:get no2-stat (ticks + 1)) + random-float (item 3 table:get no2-stat 1)]
-
  ask patches with [road_buffer = true]
     [set no2_road (item 2 table:get no2-stat-rd (ticks + 1)) + random-float (item 3 table:get no2-stat-rd 1)]
+
+
 end
 
 
@@ -351,8 +360,8 @@ to pollute
     let polluting one-of [link-neighbors] of to-node
     ask [link-with polluting] of to-node [set thickness 0.3]
     ifelse reg-year >= 2009 [
-    ask patches in-cone 3 60 [set pcolor black + 1 set no2_road (no2_road * 1.5)]]
-    [ask patches in-cone 4 90 [set pcolor black + 1 set no2_road (no2_road * 2)]]
+    ask patches in-cone 2 60 [set pcolor black + 1 set no2_road (no2_road * 1.1)]]
+    [ask patches in-cone 3 90 [set pcolor black + 1 set no2_road (no2_road * 1.5)]]
   ]
 
 end
@@ -368,17 +377,68 @@ to impact
 
 
 end
+
+
+to set-scenario
+  let admin [dong-code] of patches
+
+  if scenario? = "YES" [
+  ask n-of (int(.9 * count cars with [reg-year < 2009])) cars with [reg-year < 2009]
+  [ if is-research-area? = true
+    [die]]
+  ]
+  if scenario? = "NO" [print "I'm fine thank you"]
+
+
+end
+
+
+to set-scenario1
+  let admin [dong-code] of patches
+
+ ask n-of (int(.9 * count cars with [reg-year < 2009])) cars with [reg-year < 2009]
+  [ if is-research-area? = true
+    [die]]
+
+end
+
+
+
+to NOx-plot
+  set-current-plot "NOx trend"
+  ;set-current-pen ""
+  ;set-current-pen ""
+  ;set-current-pen ""
+  ;set-current-pen ""
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @#$#@#$#@
 GRAPHICS-WINDOW
-322
-24
-923
-634
+384
+22
+910
+549
 -1
 -1
-0.8
+0.7
 1
-10
+14
 1
 1
 1
@@ -394,7 +454,7 @@ GRAPHICS-WINDOW
 1
 1
 ticks
-1000.0
+2000.0
 
 BUTTON
 18
@@ -490,7 +550,7 @@ speed-variation
 speed-variation
 0
 3
-0.2
+0.4
 .1
 1
 NIL
@@ -522,7 +582,7 @@ no-of-cars
 no-of-cars
 0
 100
-10.0
+30.0
 10
 1
 NIL
@@ -561,31 +621,83 @@ count cars with [reg-year >= 2009]
 1
 11
 
-SWITCH
-127
-272
-243
-305
-scenario?
-scenario?
-0
+MONITOR
+29
+266
+113
+311
+Date
+item 0 table:get no2-stat-rd (ticks + 1)
+17
 1
--1000
+11
 
-SLIDER
+MONITOR
+120
+267
+177
+312
+Hour
+item 1 table:get no2-stat-rd (ticks + 1)
+17
+1
+11
+
+MONITOR
+184
+268
+256
+313
+NOx(est.)
+precision mean [no2_road] of patches\n with [road_buffer = true] 2
+17
+1
+11
+
+BUTTON
 30
-272
-122
-305
-rate
-rate
-0
-5
-1.0
-1
-1
+338
+92
+371
+kill cars
+set-scenario1
 NIL
-HORIZONTAL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+CHOOSER
+98
+337
+190
+382
+scenario?
+scenario?
+"NO" "YES"
+1
+
+PLOT
+30
+420
+342
+540
+NOx-plot
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles"
 
 @#$#@#$#@
 ## WHAT IS IT?
