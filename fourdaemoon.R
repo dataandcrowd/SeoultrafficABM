@@ -1,8 +1,6 @@
-#Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
-#Sys.setenv(JAVA_HOME= "/home/hs621/jdk1.8.0_212-amd64/jre")
+Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
+#Sys.setenv(JAVA_HOME= "/usr/lib/jvm/java-11-openjdk-amd64")
 #Sys.setenv(JAVA_HOME= "C:/Program Files/Java/jre1.8.0_211")
-
-Sys.setenv(JAVA_HOME= "/usr/lib/jvm/java-1.11.0-openjdk-amd64")
 
 ## Load packages
 library(nlrx)
@@ -11,13 +9,13 @@ library(rcartocolor)
 library(ggthemes) 
 
 # office
-netlogopath <- file.path("/home/hs621/NetLogo 6.0.4")
+netlogopath <- file.path("/home/hyesop/NetLogo 6.0.4")
 outpath <- file.path("~/out")
 
 ## Step1: Create a nl obejct:
 nl <- nl(nlversion = "6.0.4",
          nlpath = netlogopath,
-         modelpath = file.path("/data/github/seoulbigdata/fourdaemoon.nlogo"),
+         modelpath = file.path("/home/hs621/github/seoulbigdata/fourdaemoon_old.nlogo"),
          jvmmem = 1024)
 
 
@@ -54,4 +52,11 @@ setsim(nl, "simoutput") <- results
 
 # Report spatial data:
 results_unnest <- unnest_simoutput(nl)
+
+
+
+
+rm(nl)
+save.image(paste("seoul_", results$`random-seed`[1], ".RData", sep = ""))
+
 
