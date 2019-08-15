@@ -37,6 +37,7 @@ to go
   impact
   ;set-scenario ;; we turn this off when testing
   NOx-plot
+  traffic-count
 
 
   tick
@@ -409,12 +410,12 @@ to NOx-plot
   ;intersection ->  node246: 사직로, node217:율곡로, node849:종로, node1615:퇴계로, node1560: 삼일대로, node780:세종대로
 
   set-current-plot "NOx-plot"
-  set-current-plot-pen "사직로" plot [no2_road] of [patch-here] of node 426
+  set-current-plot-pen "사직로" plot [no2_road] of [patch-here] of node 91
   set-current-plot-pen "율곡로" plot [no2_road] of [patch-here] of node 217
   set-current-plot-pen "종로"   plot [no2_road] of [patch-here] of node 849
   set-current-plot-pen "퇴계로" plot [no2_road] of [patch-here] of node 1615
   set-current-plot-pen "삼일대로" plot [no2_road] of [patch-here] of node 1560
-  set-current-plot-pen "세종대로" plot [no2_road] of [patch-here] of node 780
+  set-current-plot-pen "세종대로" plot [no2_road] of [patch-here] of node 1035
   set-current-plot-pen "평균" plot precision mean [no2_road] of patches with [road_buffer = true] 2
 
 end
@@ -423,8 +424,15 @@ end
 
 
 
-
-
+to traffic-count
+  set-current-plot "Traffic-plot"
+  set-current-plot-pen "사직로" plot count cars-on node 91
+  set-current-plot-pen "율곡로" plot count cars-on node 217
+  set-current-plot-pen "종로"   plot count cars-on node 849
+  set-current-plot-pen "퇴계로" plot count cars-on node 1615
+  set-current-plot-pen "삼일대로" plot count cars-on node 1560
+  set-current-plot-pen "세종대로" plot count cars-on node 1035
+end
 
 
 
@@ -438,8 +446,8 @@ end
 GRAPHICS-WINDOW
 437
 62
-953
-579
+1038
+672
 -1
 -1
 0.6
@@ -712,14 +720,37 @@ PENS
 "평균" 1.0 0 -10899396 true "" ""
 
 TEXTBOX
-598
-29
-793
-67
+675
+28
+870
+66
 서울 녹색교통진흥지역
 18
 0.0
 1
+
+PLOT
+29
+528
+344
+648
+Traffic-plot
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"사직로" 1.0 0 -7500403 true "" ""
+"율곡로" 1.0 0 -2674135 true "" ""
+"종로" 1.0 0 -955883 true "" ""
+"퇴계로" 1.0 0 -6459832 true "" ""
+"삼일대로" 1.0 0 -1184463 true "" ""
+"세종대로" 1.0 0 -10899396 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?
