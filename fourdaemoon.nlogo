@@ -6,7 +6,7 @@ breed [cars car]
 nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 cars-own  [to-node cur-link speed reg-year]
-patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer road__name]
+patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer]
 
 
 to setup
@@ -35,7 +35,7 @@ to go
   calc-poll
   pollute
   impact
-  ;set-scenario ;; we turn this off when testing
+  set-scenario ;; we turn this off when testing
   NOx-plot
   traffic-count
 
@@ -433,8 +433,6 @@ to traffic-count
   set-current-plot-pen "삼일대로" plot count cars-on node 1560
   set-current-plot-pen "세종대로" plot count cars-on node 1035
 end
-
-
 
 
 
