@@ -9,8 +9,8 @@ library(rcartocolor)
 library(ggthemes) 
 
 # office
-netlogopath <- file.path("/home/hyesop/NetLogo 6.0.4")
-outpath <- file.path("~/out")
+netlogopath <- file.path("/usr/local/Cluster-Apps/netlogo/6.0.4")
+outpath <- file.path("/home/hs621/github/seoulbigdata")
 
 ## Step1: Create a nl obejct:
 nl <- nl(nlversion = "6.0.4",
