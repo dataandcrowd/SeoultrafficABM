@@ -1,5 +1,8 @@
 extensions [gis csv table]
-globals [pollution-data area roads dilute car-limit-number no2-stat no2-stat-rd]
+globals [pollution-data area roads dilute car-limit-number no2-stat no2-stat-rd
+  sajikro yulgokno jongno twegero samildaero sejongdaero roadmean
+  cars_sajik cars_yulgok cars_jongno cars_twege cars_samil cars_sejong
+]
 breed [nodes node]
 breed [area-labels area-label]
 breed [cars car]
@@ -7,8 +10,6 @@ nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
 cars-own  [to-node cur-link speed reg-year]
 patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer]
-
-
 
 
 to setup
@@ -21,6 +22,21 @@ to setup
   set car-limit-number no-of-cars * 5
   ask cars [ifelse reg-year >= 2009 [set dilute 5 + random 5][ set dilute 10 + random 5 ]]
 
+set sajikro [no2_road] of [patch-here] of node 91
+set yulgokno [no2_road] of [patch-here] of node 217
+set jongno [no2_road] of [patch-here] of node 849
+set twegero [no2_road] of [patch-here] of node 1615
+set samildaero [no2_road] of [patch-here] of node 1560
+set sejongdaero [no2_road] of [patch-here] of node 1035
+set roadmean precision mean [no2_road] of patches with [road_buffer = true] 2
+
+
+set cars_sajik  count cars-on node 91
+set cars_yulgok  count cars-on node 217
+set cars_jongno  count cars-on node 849
+set cars_twege count cars-on node 1615
+set cars_samil count cars-on node 1560
+set cars_sejong count cars-on node 1035
 
   reset-ticks
 end
@@ -412,13 +428,13 @@ to NOx-plot
   ;intersection ->  node246: 사직로, node217:율곡로, node849:종로, node1615:퇴계로, node1560: 삼일대로, node780:세종대로
 
   set-current-plot "NOx-plot"
-  set-current-plot-pen "sajikro" plot [no2_road] of [patch-here] of node 91
-  set-current-plot-pen "yulgokno" plot [no2_road] of [patch-here] of node 217
-  set-current-plot-pen "jongno"   plot [no2_road] of [patch-here] of node 849
-  set-current-plot-pen "twegero" plot [no2_road] of [patch-here] of node 1615
-  set-current-plot-pen "samildaero" plot [no2_road] of [patch-here] of node 1560
-  set-current-plot-pen "sejongdaero" plot [no2_road] of [patch-here] of node 1035
-  set-current-plot-pen "roadmean" plot precision mean [no2_road] of patches with [road_buffer = true] 2
+  set-current-plot-pen "사직로" plot [no2_road] of [patch-here] of node 91
+  set-current-plot-pen "율곡로" plot [no2_road] of [patch-here] of node 217
+  set-current-plot-pen "종로"   plot [no2_road] of [patch-here] of node 849
+  set-current-plot-pen "퇴계로" plot [no2_road] of [patch-here] of node 1615
+  set-current-plot-pen "삼일대로" plot [no2_road] of [patch-here] of node 1560
+  set-current-plot-pen "세종대로" plot [no2_road] of [patch-here] of node 1035
+  set-current-plot-pen "평균" plot precision mean [no2_road] of patches with [road_buffer = true] 2
 
 end
 
@@ -428,12 +444,12 @@ end
 
 to traffic-count
   set-current-plot "Traffic-plot"
-  set-current-plot-pen "cars_sajik" plot count cars-on node 91
-  set-current-plot-pen "cars_yulgok" plot count cars-on node 217
-  set-current-plot-pen "cars_jongno"   plot count cars-on node 849
-  set-current-plot-pen "cars_twege" plot count cars-on node 1615
-  set-current-plot-pen "cars_samil" plot count cars-on node 1560
-  set-current-plot-pen "cars_sejong" plot count cars-on node 1035
+  set-current-plot-pen "사직로" plot count cars-on node 91
+  set-current-plot-pen "율곡로" plot count cars-on node 217
+  set-current-plot-pen "종로"   plot count cars-on node 849
+  set-current-plot-pen "퇴계로" plot count cars-on node 1615
+  set-current-plot-pen "삼일대로" plot count cars-on node 1560
+  set-current-plot-pen "세종대로" plot count cars-on node 1035
 end
 
 
@@ -709,13 +725,13 @@ true
 false
 "" ""
 PENS
-"sajikro" 1.0 0 -14070903 true "" ""
-"yulgokno" 1.0 0 -7500403 true "" ""
-"jongno" 1.0 0 -2674135 true "" ""
-"twegero" 1.0 0 -955883 true "" ""
-"sejongdaero" 1.0 0 -1184463 true "" ""
-"samildaero" 1.0 0 -6459832 true "" ""
-"roadmean" 1.0 0 -10899396 true "" ""
+"사직로" 1.0 0 -14070903 true "" ""
+"율곡로" 1.0 0 -7500403 true "" ""
+"종로" 1.0 0 -2674135 true "" ""
+"퇴계로" 1.0 0 -955883 true "" ""
+"세종대로" 1.0 0 -1184463 true "" ""
+"삼일대로" 1.0 0 -6459832 true "" ""
+"평균" 1.0 0 -10899396 true "" ""
 
 TEXTBOX
 675
@@ -743,12 +759,12 @@ true
 false
 "" ""
 PENS
-"cars_sajik" 1.0 0 -7500403 true "" ""
-"cars_yulgok" 1.0 0 -2674135 true "" ""
-"cars_jongno" 1.0 0 -955883 true "" ""
-"cars_twege" 1.0 0 -6459832 true "" ""
-"cars_samil" 1.0 0 -1184463 true "" ""
-"cars_sejong" 1.0 0 -10899396 true "" ""
+"사직로" 1.0 0 -7500403 true "" ""
+"율곡로" 1.0 0 -2674135 true "" ""
+"종로" 1.0 0 -955883 true "" ""
+"퇴계로" 1.0 0 -6459832 true "" ""
+"삼일대로" 1.0 0 -1184463 true "" ""
+"세종대로" 1.0 0 -10899396 true "" ""
 
 @#$#@#$#@
 ## WHAT IS IT?
