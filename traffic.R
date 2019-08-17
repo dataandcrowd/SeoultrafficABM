@@ -36,22 +36,19 @@ summary %>%
             )) %>% 
   ggplot(aes(variable, value, group = 지점명, colour = 지점명)) +
   geom_line(size = 2)+
-  theme_minimal() +
-  theme(legend.position = "bottom")
+  theme_minimal() + 
+  theme(axis.title.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.x=element_text(size = 13, angle = 30),
+        axis.text.y=element_text(size = 13),
+        strip.text.x = element_text(size = 13,
+                                    margin = margin(.1,0,.1,0, "cm")),
+        legend.position = "none",
+        legend.title=element_text(size=13), 
+        legend.text=element_text(size=13) 
+  ) -> traffic_gg
 
-
-
-cbd_melt <- cbd %>% reshape2::melt(id = c("Date", "Day", "Name", "Site", "Direction", "Detail"),
-                                      variable.name = "Hour", value.name = "Value")
-
-cbd_melt$Time <- paste(cbd_melt$Date, substr(cbd_melt$Hour, 5, 5), sep = "-") %>% 
-  as.POSIXct(format = "%Y-%m-%d-%H", tz = "Asia/Seoul")
-  
-cbd_melt %>% 
-  ggplot(aes(Date, Value, group = Name, colour = Name)) +
-  geom_line() +
-  facet_wrap(~Hour, scale = "free") +
-  theme_minimal() +
-  theme(legend.position = "bottom")
+ggsave("result_traffic_trend.png", traffic_gg, width = 10, height = 6, dpi = 600)
 
 
