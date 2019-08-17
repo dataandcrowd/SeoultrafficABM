@@ -117,9 +117,9 @@ no2_melt %>%
   mutate(dh = paste(date, hour, sep = " ")) %>% 
   ggplot(aes(dh, no2, group = scenario, colour = scenario)) +
   geom_line() +
-  ylim(0,300) +
-  facet_wrap(~ road + scenario, labeller = labeller(road = no2.labs)) +
-  theme_minimal() +
+  #ylim(0,160) +
+  facet_wrap(~ road + scenario, scales = "free", labeller = labeller(road = no2.labs)) +
+  theme_tq() +
   theme(axis.title.x=element_blank(),
         axis.ticks.x=element_blank(),
         axis.title.y=element_blank(),
@@ -127,7 +127,7 @@ no2_melt %>%
         axis.text.y=element_text(size = 13),
         strip.text.x = element_text(size = 13,
                                     margin = margin(.1,0,.1,0, "cm")),
-        legend.position = "right",
+        legend.position = "none",
         legend.title=element_text(size=13), 
         legend.text=element_text(size=13) 
   )-> no2line_gg
