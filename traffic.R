@@ -44,11 +44,11 @@ summary %>%
         axis.text.y=element_text(size = 13),
         strip.text.x = element_text(size = 13,
                                     margin = margin(.1,0,.1,0, "cm")),
-        legend.position = "none",
+        legend.position = "bottom",
         legend.title=element_text(size=13), 
         legend.text=element_text(size=13) 
   ) -> traffic_gg
 
-ggsave("result_traffic_trend.png", traffic_gg, width = 10, height = 6, dpi = 600)
+ggsave("result_traffic_trend.png", traffic_gg, width = 8, height = 6, dpi = 600)
 
 
