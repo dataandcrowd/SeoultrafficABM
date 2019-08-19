@@ -1,11 +1,11 @@
 extensions [gis csv table]
-globals [pollution-data area roads dilute car-limit-number no2-stat no2-stat-rd]
+globals [pollution-data area roads dilute car-limit-number no2-stat]
 breed [nodes node]
 breed [area-labels area-label]
 breed [cars car]
 nodes-own [name line-start line-end auto? green-light? intersection?]
 links-own [road-name is-road? max-spd Daero?]
-cars-own  [to-node cur-link speed reg-year]
+cars-own  [to-node cur-link speed class fueltype ]
 patches-own [is-research-area? intersection countdown dong-code no2_road road_buffer]
 
 
@@ -19,9 +19,7 @@ to setup
   set-signals
   set-cars
   set car-limit-number no-of-cars * 5
-  ask cars [ifelse reg-year >= 2009 [set dilute 5 + random 5][ set dilute 10 + random 5 ]]
-
-
+  ask cars [ifelse class <= 2 [set dilute 2 + random 4][ set dilute 5 + random 5 ]]
   reset-ticks
 end
 
@@ -33,17 +31,17 @@ to go
   speed-up
   meet-traffic-lights
   drive-out-of-hanyang
-  kill-cars
-  calc-poll
   pollute
   impact
+  kill-cars
+  calc-poll
   set-scenario ;; we turn this off when testing
-  NOx-plot
+  NO2-plot
   traffic-count
 
 
   tick
-  if ticks = 21600 [stop]
+  if ticks = 13009 [stop export-all-plots "results.csv"]
 end
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -64,9 +62,6 @@ to set-gis
   ask patches with [road_buffer != true][set road_buffer false]
 
   foreach gis:feature-list-of roads [ vector-feature ->
-    ; First, grab the names of the starting and ending node for the current
-    ; vector feature in order to assign common names to all nodes within
-    ; the feature
     let first-vertex gis:property-value vector-feature "UP_FROM_NO"
     let last-vertex gis:property-value vector-feature "UP_TO_NO"
 
@@ -111,7 +106,7 @@ to set-gis
   let rep 0  ;; loop
 
   set no2-stat table:make
-  set no2-stat-rd table:make
+  set no2-stat table:make
 
   foreach poll-value [poll ->
     if item 1 poll = "Back" [
@@ -126,7 +121,7 @@ to set-gis
     let date/hour list (item 2 poll)(item 3 poll) ;; add date and place
     let value lput item 4 poll date/hour
     let no2_ lput item 5 poll value
-    table:put no2-stat-rd counter no2_
+    table:put no2-stat counter no2_
   ]
   ]
   set rep rep + 1
@@ -135,7 +130,7 @@ to set-gis
   ;[set no2_back (item 2 table:get no2-stat 1) + random-float (item 3 table:get no2-stat 1)]
 
   ask patches with [is-research-area? = true and road_buffer = true]
-  [set no2_road (item 2 table:get no2-stat-rd 1) + random-float (item 3 table:get no2-stat-rd 1)]
+  [set no2_road (item 2 table:get no2-stat 1) + random-float (item 3 table:get no2-stat 1)]
 
 end
 
@@ -215,10 +210,25 @@ to set-cars
   create-cars no-of-cars [
     set size 8
     set speed 0
-    set reg-year 2019 - random 30
     let l one-of links with [Daero? = true]
     set-next-car-link l [end2] of l
             ]
+
+  ask n-of (int(.7 * count cars)) cars [
+    set fueltype "Gasoline"
+    let r random-float 1
+    if (0   <= r and r < 0.4)[set class 1 + random 2]
+    if (0.4 <= r and r < 0.8)[set class 3 + random 2]
+    if (0.8 <= r      )[set class 5]
+  ]
+
+  ask cars with [fueltype != "Gasoline"][
+    set fueltype "Diesel"
+    let r random-float 1
+    if (0   <= r and r < 0.8)[set class 3 + random 2]
+    if (0.8 <= r      )[set class 5]
+  ]
+
 end
 
 
@@ -264,30 +274,50 @@ end
 
 to add-a-car
   set-default-shape cars "car"
-  let hours item 1 table:get no2-stat-rd (ticks + 1)
+  let hours item 1 table:get no2-stat (ticks + 1)
   let incoming-vehicles random-float 2 ; 차량생성빈도
 
   if hours >= 7 and hours <= 10 [set incoming-vehicles 1]
   if hours >= 11 and hours <= 17 [set incoming-vehicles 4]
   if hours >= 18 or hours < 7 [set incoming-vehicles 10]
 
-  if (incoming-vehicles) < 2 and no-of-cars < car-limit-number [
-  create-cars 5 [
+  if (incoming-vehicles) < 2 [ ;and no-of-cars < car-limit-number [
+  create-cars 3 [
     set size 8
     set speed random-float 2
-    set reg-year 2019 - random 30
+    set fueltype "undecided"
+    set class "undecided"
 
     let r random-float 1
     let l link 232 233
-    if (r > 0.1)[set l link   3 383]
-    if (r > 0.2)[set l link 780 1035]
-    if (r > 0.3)[set l link 803 804]
-    if (r > 0.4)[set l link 1111 1112]
-    if (r > 0.5)[set l link 631 632]
-    if (r > 0.6)[set l link 1185 1186]
-    if (r > 0.7)[set l link 1137 1138]
-    if (r > 0.8)[set l link 1515 1516]
+    if (0 <= r   and r < 0.1)[set l link 608 613] ; sajikro
+    if (0.1 <= r and r < 0.2)[set l link 429 432] ; jahamunro
+    if (0.2 <= r and r < 0.3)[set l link 213 214] ; yulgokro north(near ehwa)
+    if (0.3 <= r and r < 0.4)[set l link 645 646] ; yulgokro east(near ddm)
+    if (0.4 <= r and r < 0.5)[set l link 1490 1491] ; sowolro
+    if (0.5 <= r and r < 0.6)[set l link 1185 1186] ; jongno
+    if (0.6 <= r and r < 0.7)[set l link 1455 1456] ; samildaero
+    if (0.7 <= r and r < 0.8)[set l link 1364 1365] ; seosomunro
+    if (0.8 <= r and r < 0.9)[set l link 673 674] ; Changgyeonggung-ro
+    if (0.9 <= r and r < 1.0)[set l link 1594 1595] ; Jangchungdan-ro
     set-next-car-link l [end1] of l
+    ]
+  ]
+
+  ifelse (count cars with [class = "Gasoline"] / count cars) <= 0.7 [
+    ask cars with [fueltype = "undecided" and class = "undecided"][
+    set class "Gasoline"
+    let r random-float 1
+    if (0   <= r and r < 0.4)[set class 1 + random 2]
+    if (0.4 <= r and r < 0.8)[set class 3 + random 2]
+    if (0.8 <= r      )[set class 5]
+  ]]
+  [
+  ask cars with [fueltype = "undecided" and class = "undecided"][
+    set class "Diesel"
+    let r random-float 1
+    if (0   <= r and r < 0.8)[set class 3 + random 2]
+    if (0.8 <= r      )[set class 5]
     ]
   ]
 
@@ -295,7 +325,7 @@ end
 
 
 to kill-cars
-let night item 1 table:get no2-stat-rd (ticks + 1)
+let night item 1 table:get no2-stat (ticks + 1)
     if (night >= 22 and night < 24 or night < 4) [
     ask n-of (int(.01 * count cars)) cars [die]
   ]
@@ -352,8 +382,17 @@ end
 
 ;;----------------Set exposure & Impact--------------;;
 to calc-poll
- ask patches with [road_buffer = true]
-    [set no2_road (item 2 table:get no2-stat-rd (ticks + 1)) + random-float (item 3 table:get no2-stat-rd 1)]
+
+
+  ask patches with [road_buffer = true][
+    set no2_road (item 2 table:get no2-stat (ticks + 1)) + random-float (item 3 table:get no2-stat 1)
+    if pcolor = 101 [set no2_road no2_road * 1.1]
+    if pcolor = 102 [set no2_road no2_road * 1.3]
+    if pcolor = 103 [set no2_road no2_road * 1.7]
+
+  ]
+
+
 
 
 end
@@ -364,16 +403,16 @@ to pollute
   ask cars [
     let polluting one-of [link-neighbors] of to-node
     ask [link-with polluting] of to-node [set thickness 0.3]
-    ifelse reg-year >= 2009 [
-    ask patches in-cone 2 60 [set pcolor black + 1 set no2_road (no2_road * 1.1)]]
-    [ask patches in-cone 3 90 [set pcolor black + 1 set no2_road (no2_road * 1.5)]]
+    if class <= 2 [ask patches in-cone 2 60 [set pcolor 101]]
+    if class = 3 and class = 4 [ask patches in-cone 2 60 [set pcolor 102]]
+    if class = 5 [ask patches in-cone 3 90 [set pcolor 103 ]]
   ]
 
 end
 
 
 to impact
-  ask patches with [pcolor = black + 1][
+  ask patches with [pcolor = 101 or pcolor = 102 or pcolor = 103][
     ifelse countdown <= 0
       [ set pcolor white
         set countdown dilute ]
@@ -385,33 +424,29 @@ end
 
 
 to set-scenario
-  let admin [dong-code] of patches
-
-  if scenario? = "YES" [
-  ask n-of (int(.9 * count cars with [reg-year < 2009])) cars with [reg-year < 2009]
+  if scenario? = "YES" and ticks mod 10 = 0[
+  ask n-of (int(.9 * count cars with [class >= 5])) cars with [class >= 5]
   [ if is-research-area? = true
     [die]]
   ]
-  if scenario? = "NO" [print "I'm fine thank you"]
+  if scenario? = "NO" [print "No restrictions"]
 
 
 end
 
 
 to set-scenario1
-  let admin [dong-code] of patches
-
- ask n-of (int(.9 * count cars with [reg-year < 2009])) cars with [reg-year < 2009]
+ ask n-of (int(.9 * count cars with [class >= 5])) cars with [class >= 5]
   [ if is-research-area? = true
     [die]]
 
 end
 
 
-to NOx-plot
+to NO2-plot
   ;intersection ->  node246: 사직로, node217:율곡로, node849:종로, node1615:퇴계로, node1560: 삼일대로, node780:세종대로
 
-  set-current-plot "NOx-plot"
+  set-current-plot "NO2-plot"
   set-current-plot-pen "sajikro" plot [no2_road] of [patch-here] of node 91
   set-current-plot-pen "yulgokno" plot [no2_road] of [patch-here] of node 217
   set-current-plot-pen "jongno"   plot [no2_road] of [patch-here] of node 849
@@ -435,8 +470,6 @@ to traffic-count
   set-current-plot-pen "cars_samil" plot count cars-on node 1560
   set-current-plot-pen "cars_sejong" plot count cars-on node 1035
 end
-
-
 
 
 
@@ -554,9 +587,9 @@ NIL
 1
 
 SLIDER
-29
+21
 133
-201
+193
 166
 speed-variation
 speed-variation
@@ -586,16 +619,16 @@ NIL
 1
 
 SLIDER
-30
+22
 170
-202
+194
 203
 no-of-cars
 no-of-cars
-0
-100
-30.0
-10
+200
+500
+425.0
+25
 1
 NIL
 HORIZONTAL
@@ -614,63 +647,63 @@ count cars
 MONITOR
 104
 214
-202
+169
 259
-cars-bf-2009
-count cars with [reg-year < 2009]
+Gas 1-2
+count cars with [class <= 2 and fueltype = \"Gasoline\"]
 17
 1
 11
 
 MONITOR
-207
-212
-288
-257
-cars-af-09
-count cars with [reg-year >= 2009]
+175
+214
+240
+259
+Gas 3-4
+count cars with [class > 2 and class <= 4 and fueltype = \"Gasoline\"]
 17
 1
 11
 
 MONITOR
-29
-266
-113
-311
+23
+314
+107
+359
 Date
-item 0 table:get no2-stat-rd (ticks + 1)
+item 0 table:get no2-stat (ticks + 1)
 17
 1
 11
 
 MONITOR
-120
-267
-177
-312
+114
+315
+171
+360
 Hour
-item 1 table:get no2-stat-rd (ticks + 1)
+item 1 table:get no2-stat (ticks + 1)
 17
 1
 11
 
 MONITOR
-184
-268
-256
-313
-NOx(est.)
+178
+316
+253
+361
+NO2(est.)
 precision mean [no2_road] of patches\n with [road_buffer = true] 2
 17
 1
 11
 
 BUTTON
-30
-338
-92
-371
+26
+373
+88
+406
 kill cars
 set-scenario1
 NIL
@@ -684,21 +717,21 @@ NIL
 1
 
 CHOOSER
-98
-337
-190
-382
+94
+372
+186
+417
 scenario?
 scenario?
 "NO" "YES"
-1
+0
 
 PLOT
-30
-398
-342
-518
-NOx-plot
+22
+423
+334
+543
+NO2-plot
 NIL
 NIL
 0.0
@@ -728,10 +761,10 @@ TEXTBOX
 1
 
 PLOT
-29
-528
-344
-648
+21
+553
+336
+673
 Traffic-plot
 NIL
 NIL
@@ -749,6 +782,39 @@ PENS
 "cars_twege" 1.0 0 -6459832 true "" ""
 "cars_samil" 1.0 0 -1184463 true "" ""
 "cars_sejong" 1.0 0 -10899396 true "" ""
+
+MONITOR
+243
+213
+294
+258
+Gas 5
+count cars with [class = 5 and fueltype = \"Gasoline\"]
+17
+1
+11
+
+MONITOR
+104
+262
+173
+307
+Diesel 3-4
+count cars with [class <= 4 and fueltype = \"Diesel\"]
+17
+1
+11
+
+MONITOR
+178
+261
+238
+306
+Diesel 5
+count cars with [class = 5 and fueltype = \"Diesel\"]
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
