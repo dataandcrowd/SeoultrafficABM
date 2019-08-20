@@ -18,7 +18,7 @@ to setup
   activate-links
   set-signals
   set-cars
-  set car-limit-number no-of-cars * 5
+  set car-limit-number no-of-cars * 1.5
   ask cars [ifelse class <= 2 [set dilute 2 + random 4][ set dilute 5 + random 5 ]]
   reset-ticks
 end
@@ -41,7 +41,7 @@ to go
 
 
   tick
-  if ticks = 13009 [stop export-all-plots "results.csv"]
+  if ticks = 13008 [stop export-all-plots "results.csv"]
 end
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -275,19 +275,29 @@ end
 to add-a-car
   set-default-shape cars "car"
   let hours item 1 table:get no2-stat (ticks + 1)
-  let incoming-vehicles random-float 2 ; 차량생성빈도
+  let incoming-vehicles ""
 
-  if hours >= 7 and hours <= 10 [set incoming-vehicles 1]
-  if hours >= 11 and hours <= 17 [set incoming-vehicles 4]
-  if hours >= 18 or hours < 7 [set incoming-vehicles 10]
+  if hours >= 7 and hours <= 10 [set incoming-vehicles 5]
+  if hours >= 11 and hours <= 17 [set incoming-vehicles 2]
+  if hours >= 18 and hours <= 21 [set incoming-vehicles 5]
+  if hours >= 22 or hours < 7 [set incoming-vehicles 0]
 
-  if (incoming-vehicles) < 2 [ ;and no-of-cars < car-limit-number [
-  create-cars 3 [
+  if (count cars) < car-limit-number [
+  create-cars incoming-vehicles [
     set size 8
     set speed random-float 2
-    set fueltype "undecided"
-    set class "undecided"
-
+    ifelse (count cars with [fueltype = "Diesel"] / count cars) <= 0.3 [
+    set fueltype "Diesel"
+    let ss random-float 1
+    if (ss < 0.7)[set class 3 + random 2]
+    if (ss >= 0.7 )[set class 5]
+  ][
+    set fueltype "Gasoline"
+    let rr random-float 1
+    if (rr < 0.4)[set class 1 + random 2]
+    if (0.4 <= rr and rr < 0.8)[set class 3 + random 2]
+    if (0.8 <= rr)[set class 5]
+  ]
     let r random-float 1
     let l link 232 233
     if (0 <= r   and r < 0.1)[set l link 608 613] ; sajikro
@@ -301,23 +311,6 @@ to add-a-car
     if (0.8 <= r and r < 0.9)[set l link 673 674] ; Changgyeonggung-ro
     if (0.9 <= r and r < 1.0)[set l link 1594 1595] ; Jangchungdan-ro
     set-next-car-link l [end1] of l
-    ]
-  ]
-
-  ifelse (count cars with [class = "Gasoline"] / count cars) <= 0.7 [
-    ask cars with [fueltype = "undecided" and class = "undecided"][
-    set class "Gasoline"
-    let r random-float 1
-    if (0   <= r and r < 0.4)[set class 1 + random 2]
-    if (0.4 <= r and r < 0.8)[set class 3 + random 2]
-    if (0.8 <= r      )[set class 5]
-  ]]
-  [
-  ask cars with [fueltype = "undecided" and class = "undecided"][
-    set class "Diesel"
-    let r random-float 1
-    if (0   <= r and r < 0.8)[set class 3 + random 2]
-    if (0.8 <= r      )[set class 5]
     ]
   ]
 
@@ -470,7 +463,6 @@ to traffic-count
   set-current-plot-pen "cars_samil" plot count cars-on node 1560
   set-current-plot-pen "cars_sejong" plot count cars-on node 1035
 end
-
 
 
 @#$#@#$#@
@@ -627,7 +619,7 @@ no-of-cars
 no-of-cars
 200
 500
-425.0
+400.0
 25
 1
 NIL
@@ -699,28 +691,11 @@ precision mean [no2_road] of patches\n with [road_buffer = true] 2
 1
 11
 
-BUTTON
-26
-373
-88
-406
-kill cars
-set-scenario1
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 CHOOSER
-94
-372
-186
-417
+267
+316
+359
+361
 scenario?
 scenario?
 "NO" "YES"
