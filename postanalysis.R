@@ -108,8 +108,6 @@ traffic <- bind_rows(no_traffic_1, no_traffic_2, yes_traffic_1, yes_traffic_2)
 ## NO2
 
 no2_melt <- no2 %>% reshape2::melt(id=c("date", "hour", "scenario"), variable.name = "road", value.name = "no2")
-
-
 no2.labs <- c("사직로", "율곡로", "종로4가", "퇴계로",  "세종대로", "삼일대로", "도로평균")
 names(no2.labs) <- c("sajikro", "yulgokno", "jongno", "twegero", "sejongdaero", "samildaero", "roadmean")
 
@@ -117,8 +115,7 @@ no2_melt %>%
   mutate(dh = paste(date, hour, sep = " ")) %>% 
   ggplot(aes(dh, no2, group = scenario, colour = scenario)) +
   geom_line() +
-  #ylim(0,160) +
-  facet_wrap(~ road + scenario, scales = "free", labeller = labeller(road = no2.labs)) +
+  facet_wrap(~ road + scenario, labeller = labeller(road = no2.labs)) +
   theme_tq() +
   theme(axis.title.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -132,8 +129,17 @@ no2_melt %>%
         legend.text=element_text(size=13) 
   )-> no2line_gg
 
-ggsave("result_no2_line.png", no2line_gg, width = 10, height = 6, dpi = 600)
+ggsave("result_no2_line.png", no2line_gg, width = 10, height = 6, dpi = 300)
 
+
+no2_melt %>% 
+  group_by(date, road, scenario ) %>% 
+  summarise(meanno2 = mean(no2)) %>% 
+  reshape2::dcast(date + road ~ scenario) %>% 
+  mutate(minus = No - Yes) %>% 
+  arrange(desc(No), desc(Yes)) %>%
+  filter(date == "2018-03-27") %>% 
+  View()
 
 
 no2_melt %>% 
@@ -154,11 +160,15 @@ no2_melt %>%
         legend.text=element_text(size=13) 
   ) -> no2box_gg
 
-ggsave("result_no2_box.png", no2box_gg, width = 12, height = 6, dpi = 600)
+ggsave("result_no2_box.png", no2box_gg, width = 12, height = 6, dpi = 300)
 
 
 ## Traffic
-traffic_melt <- traffic %>% reshape2::melt(id=c("date", "hour", "scenario"), variable.name = "road", value.name = "count")
+traffic %>% 
+  select(-hour) %>% 
+  group_by(date, scenario) %>% 
+  summarise_if(is.numeric, funs(sum), na.rm=TRUE) %>% 
+  reshape2::melt(id=c("date", "scenario"), variable.name = "road", value.name = "count") -> traffic_melt
 
 traff.labs <- c("사직로", "율곡로", "종로4가", "퇴계로", "삼일대로", "세종대로")
 names(traff.labs) <- c("cars_sajik", "cars_yulgok", "cars_jongno", "cars_twege", "cars_samil", "cars_sejong")

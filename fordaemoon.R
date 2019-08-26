@@ -40,6 +40,37 @@ jongno.aq.fin    <- jongno.aq %>%    filter(datetime < "2018-04-01 01:00:00") %>
 jongno.plot <- jongno.aq.fin %>% 
   mutate(Station = factor(Station, levels = c('종로구', '중구', '종로', '청계천로')))
 
+jongno.plot %>% 
+  mutate(monthly = month(datetime)) %>% 
+  filter(monthly < 4) %>% 
+  group_by(Station, monthly) %>% 
+  summarise_at(vars(no2), funs(n(), mean, sd, min, max, median)) -> monthly.stat
+
+
+jongno.plot %>% 
+  mutate(daily = as.Date(datetime)) %>% 
+  filter(daily >= "2018-01-01" & daily <= "2018-03-31") %>% 
+  group_by(Station, daily) %>% 
+  summarise_at(vars(no2), funs(n(), mean, sd, min, max, median)) -> jongno.stat
+
+
+jongno.stat
+  ggplot(aes(daily, mean, colour = Station)) +
+  geom_line() +
+  geom_hline(yintercept = 60, lwd = 2, alpha = .4, linetype="dashed") +
+  facet_wrap(~Station) +
+  labs(x = "Month", y = "NO2 (ppb)") +
+  theme_tq() +
+  theme(axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        axis.title.x = element_text(size = 15),
+        axis.title.y = element_text(size = 15),
+        strip.text.x = element_text(size = 15,
+                                    margin = margin(.1,0,.1,0, "cm")),) -> no2_daily
+ggsave("no2_daily.png", no2_daily, width = 7, height = 5, dpi = 300)
+
+
+
 jongno.plot %>%
   ggplot(aes(x = factor(hour), y = no2)) +
   geom_boxplot(aes(fill = Station)) +
