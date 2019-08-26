@@ -375,19 +375,12 @@ end
 
 ;;----------------Set exposure & Impact--------------;;
 to calc-poll
-
-
   ask patches with [road_buffer = true][
     set no2_road (item 2 table:get no2-stat (ticks + 1)) + random-float (item 3 table:get no2-stat 1)
     if pcolor = 101 [set no2_road no2_road * 1.1]
     if pcolor = 102 [set no2_road no2_road * 1.3]
     if pcolor = 103 [set no2_road no2_road * 1.7]
-
   ]
-
-
-
-
 end
 
 
@@ -428,14 +421,6 @@ to set-scenario
 end
 
 
-to set-scenario1
- ask n-of (int(.9 * count cars with [class >= 5])) cars with [class >= 5]
-  [ if is-research-area? = true
-    [die]]
-
-end
-
-
 to NO2-plot
   ;intersection ->  node246: 사직로, node217:율곡로, node849:종로, node1615:퇴계로, node1560: 삼일대로, node780:세종대로
 
@@ -463,7 +448,6 @@ to traffic-count
   set-current-plot-pen "cars_samil" plot count cars-on node 1560
   set-current-plot-pen "cars_sejong" plot count cars-on node 1035
 end
-
 
 @#$#@#$#@
 GRAPHICS-WINDOW
