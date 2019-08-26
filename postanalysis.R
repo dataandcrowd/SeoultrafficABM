@@ -7,14 +7,14 @@ library(tidyquant)
 
 back <- read_csv("GIS/jongno_rep.csv") %>% 
   filter(type == "Back") %>% 
-  slice(tail(row_number(), 21600)) %>% 
+  slice(tail(row_number(), 13008)) %>% 
   group_by(date, hour) %>% 
   summarise(no2_mean = mean(no2_mean),
             no2_sd = mean(no2_sd))
 
 road <- read_csv("GIS/jongno_rep.csv") %>% 
   filter(type == "Road") %>% 
-  slice(tail(row_number(), 21600)) %>%  
+  slice(tail(row_number(), 13008)) %>%  
   group_by(date, hour) %>% 
   summarise(no2_mean = mean(no2_mean),
             no2_sd = mean(no2_sd))
@@ -22,7 +22,7 @@ road <- read_csv("GIS/jongno_rep.csv") %>%
 datetime <- read_csv("GIS/jongno_rep.csv") %>%
   filter(type == "Back") %>%
   select(date, hour) %>% 
-  slice(tail(row_number(), 21600))
+  slice(tail(row_number(), 13008))
 
 
 ###############
@@ -30,14 +30,14 @@ datetime <- read_csv("GIS/jongno_rep.csv") %>%
 ###############
 
 ##--Scenario: NO
-no_no2_1 <- read_csv("Result/No_NOx_1.csv") %>% 
+no_no2_1 <- read_csv("Result/No_no2_1.csv") %>% 
   cbind(datetime) %>% 
   group_by(date, hour) %>% 
   summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
   select(-ticks) %>% 
   mutate(scenario = "No")
 
-no_no2_2 <- read_csv("Result/No_NOx_2.csv") %>% 
+no_no2_2 <- read_csv("Result/No_no2_2.csv") %>% 
   cbind(datetime) %>% 
   group_by(date, hour) %>% 
   summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
@@ -45,14 +45,14 @@ no_no2_2 <- read_csv("Result/No_NOx_2.csv") %>%
   mutate(scenario = "No")
 
 ##--Scenario: YES
-yes_no2_1 <- read_csv("Result/Yes_NOx_1.csv") %>% 
+yes_no2_1 <- read_csv("Result/Yes_no2_1.csv") %>% 
   cbind(datetime) %>% 
   group_by(date, hour) %>% 
   summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
   select(-ticks) %>% 
   mutate(scenario = "Yes")
 
-yes_no2_2 <- read_csv("Result/Yes_NOx_2.csv") %>% 
+yes_no2_2 <- read_csv("Result/Yes_no2_2.csv") %>% 
   cbind(datetime) %>% 
   group_by(date, hour) %>% 
   summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
