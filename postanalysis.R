@@ -146,7 +146,7 @@ no2_melt %>%
   ggplot(aes(factor(hour), no2, fill = scenario)) +
   geom_boxplot() +
   ylim(0,160) +
-  facet_wrap(~ road, labeller = labeller(road = no2.labs)) +
+  facet_wrap(~ road, ncol = 2, labeller = labeller(road = no2.labs)) +
   theme_tq() +
   theme(axis.title.x=element_blank(),
         axis.ticks.x=element_blank(),
@@ -155,12 +155,12 @@ no2_melt %>%
         axis.text.y=element_text(size = 13),
         strip.text.x = element_text(size = 13,
                                     margin = margin(.1,0,.1,0, "cm")),
-        legend.position = "right",
+        legend.position = "bottom",
         legend.title=element_text(size=13), 
         legend.text=element_text(size=13) 
   ) -> no2box_gg
 
-ggsave("result_no2_box.png", no2box_gg, width = 12, height = 6, dpi = 300)
+ggsave("result_no2_box.png", no2box_gg, width = 9, height = 9, dpi = 300)
 
 
 ## Traffic
