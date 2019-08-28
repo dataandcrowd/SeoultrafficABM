@@ -138,7 +138,7 @@ no2_melt %>%
   reshape2::dcast(date + road ~ scenario) %>% 
   mutate(minus = No - Yes) %>% 
   arrange(desc(No), desc(Yes)) %>%
-  filter(date == "2018-03-27") %>% 
+  #filter(date == "2018-03-27") %>% 
   View()
 
 
