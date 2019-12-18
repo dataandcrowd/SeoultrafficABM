@@ -34,10 +34,10 @@ to go
   pollute
   impact
   kill-cars
-  calc-poll
-  set-scenario ;; we turn this off when testing
-  NO2-plot
-  traffic-count
+  ;calc-poll
+  ;set-scenario ;; we turn this off when testing
+  ;NO2-plot
+  ;traffic-count
 
 
   tick
@@ -448,7 +448,6 @@ to traffic-count
   set-current-plot-pen "cars_samil" plot count cars-on node 1560
   set-current-plot-pen "cars_sejong" plot count cars-on node 1035
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 437
@@ -1149,7 +1148,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.0
+NetLogo 6.0.4
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
