@@ -85,7 +85,7 @@ to go-to-tree
   let ahead 0
   let left-and-ahead 0
   let right-and-ahead 0
-  
+
   ask boids
   [ ifelse pen? [pd][pu]
     if pcolor = red [set isMobile false]
@@ -93,15 +93,15 @@ to go-to-tree
     ifelse patch-ahead 1 != nobody [set ahead [field] of patch-ahead 1][set ahead 0 rt random 100 fd 1]
     ifelse patch-left-and-ahead 30 1 != nobody [set left-and-ahead [field] of patch-left-and-ahead 30 1][set left-and-ahead 0]
     ifelse patch-right-and-ahead 30 1 != nobody [set right-and-ahead [field] of patch-right-and-ahead 30 1][set right-and-ahead 0]
-    
+
     if (ahead >= left-and-ahead and ahead >= right-and-ahead)
       [fd 1]
-    
+
     if (left-and-ahead > ahead and left-and-ahead >= right-and-ahead)
       [lt 30 fd 1]
-    
+
     if (right-and-ahead > left-and-ahead and right-and-ahead > ahead)
-      [rt 30 fd 1]  
+      [rt 30 fd 1]
      ]
     ]
 end
@@ -114,7 +114,7 @@ to flock  ;; turtle procedure
         [ separate ]
         [ align
           cohere ] ]
-    
+
   if any? trees-on patch-here [ set color yellow ]
 end
 
@@ -190,26 +190,26 @@ end
 ;;; AVOID OBSTACLES
 
 to avoid-tree    ;boid procedure
-  
-  let near-trees sort-by [[distance self] of ?1 < [distance self] of ?2] trees in-cone tree-dist tree-sight-cone
 
-  foreach near-trees [
-    ;let nearest-tree min-one-of trees [distance self] 
+  let near-trees sort-by [ [?1 ?2] -> [distance self] of ?1 < [distance self] of ?2 ] trees in-cone tree-dist tree-sight-cone
 
-    let tree-heading towards ?
-    
+  foreach near-trees [ x ->
+    ;let nearest-tree min-one-of trees [distance self]
+
+    let tree-heading towards x
+
     let angle 0
-  
-    ifelse heading > towards ? [
+
+    ifelse heading > towards x [
       set angle (tree-heading - 90) ;(towards ? - 90)
     ] [
       set angle (tree-heading + 90) ;(towards ? + 90)
     ]
-    
-    turn-away angle max-tree-turn * (1 - (distance ? / (tree-dist * (position ? near-trees + 1))))
+
+    turn-away angle max-tree-turn * (1 - (distance x / (tree-dist * (position x near-trees + 1))))
   ]
-  
-  
+
+
 end
 
 ; To refer to this model in publications, please use:
@@ -218,7 +218,7 @@ end
 ;
 ;
 ; Christina Bergey added the avoid-tree functionality
-; THIS NOTICE IS LEFT IN AS A CITATION AS SOME OF THE 
+; THIS NOTICE IS LEFT IN AS A CITATION AS SOME OF THE
 ; ORIGINAL FLOCKING CODE HAS BEEN RE-USED FOR THIS ADAPTATION
 ;------------------------------------------------------------
 ;
@@ -264,10 +264,10 @@ end
 GRAPHICS-WINDOW
 430
 10
-937
-538
-35
-35
+935
+516
+-1
+-1
 7.0
 1
 10
@@ -331,7 +331,7 @@ population
 population
 1
 30
-10
+10.0
 1
 1
 NIL
@@ -346,7 +346,7 @@ max-align-turn
 max-align-turn
 0.0
 20.0
-5
+5.0
 0.25
 1
 degrees
@@ -361,7 +361,7 @@ max-cohere-turn
 max-cohere-turn
 0.0
 20.0
-3
+3.0
 0.25
 1
 degrees
@@ -391,7 +391,7 @@ vision
 vision
 0.0
 10.0
-3
+3.0
 0.5
 1
 patches
@@ -406,7 +406,7 @@ minimum-separation
 minimum-separation
 0.0
 5.0
-1
+1.0
 0.25
 1
 patches
@@ -421,7 +421,7 @@ tree-dist
 tree-dist
 0
 50
-10
+10.0
 1
 1
 NIL
@@ -436,7 +436,7 @@ max-tree-turn
 max-tree-turn
 0
 20
-20
+20.0
 .1
 1
 NIL
@@ -451,7 +451,7 @@ tree-sight-cone
 tree-sight-cone
 0
 360
-45
+45.0
 15
 1
 NIL
@@ -466,7 +466,7 @@ num-trees
 num-trees
 0
 100
-20
+50.0
 1
 1
 NIL
@@ -503,7 +503,7 @@ Vt
 Vt
 0
 100
-70
+70.0
 10
 1
 NIL
@@ -551,7 +551,7 @@ modulo
 modulo
 1
 5
-4
+4.0
 1
 1
 NIL
@@ -884,9 +884,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.1.0
+NetLogo 6.0.4
 @#$#@#$#@
 set population 200
 setup
@@ -905,7 +904,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@
