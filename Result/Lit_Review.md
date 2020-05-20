@@ -13,3 +13,5 @@ So far, a large body of the literature has focused on the exhaust emission (*cit
 노출기간에 따라서도 연구의 방향이 상당히 달라진다. 단기노출의 경우 hospitalisation / mortality연구는. 장기노출의 경우는 이러한 Effect가 있다. 차이는 다음의 표에서 확인할 수 있다. 이 글의 경우 short-term 효과에 대해서 더 관심이 있으므로 
 
 
+* Spatial and Temporal variability
+
