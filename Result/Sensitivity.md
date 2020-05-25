@@ -78,3 +78,25 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 * Picked a random subway commuter to observe health change
 ![](https://i.imgur.com/af8h0Sw.png)
+
+
+## PM<sub>10</sub> Concentration
+### January 2nd, 2018 by hours
+* Aggregated from minutes to hours
+
+
+* Mean PM<sub>10</sub>
+![](https://i.imgur.com/K7SCJty.png)
+
+
+* Max PM<sub>10</sub>
+![](https://i.imgur.com/J2acpRq.png)
+
+### January 2nd 10:00
+* Mean PM<sub>10</sub>
+![](https://i.imgur.com/o4gJPKP.png)
+
+
+* Max PM<sub>10</sub>
+![](https://i.imgur.com/h35UjEE.png)
+
