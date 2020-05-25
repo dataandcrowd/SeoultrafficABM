@@ -1,10 +1,3 @@
-# Sensitivity analysis
-## Design
-This study considers two sensitivity tests, locally and a globally. Local sensitivity, also known as one-factor-at-a-time method, adjusts one factor while holding the others. Global sensitivity looks at all the possible combinations.
-
-
-![](https://i.imgur.com/3Ncy2dt.png)
-
 ## Input Parameters: Experimental setup
 
 This study selected three parameters: Registered Vehicles, Morning Inbound Cars, Afternoon Inbound Cars, and Evening Inbound Cars. The value ranges, base value, and the interval between each parameter value covered by the sensitivity analysis are in the table below
@@ -17,23 +10,25 @@ This study selected three parameters: Registered Vehicles, Morning Inbound Cars,
 
 
 | Parameter           | Description                                       | Base value | Min    | Max   |
-|---------------------|---------------------------------------------------|------------|--------|-------|
-| Registered Vehicles | Rate of Total registered vehicles in the CBD area | 0.3        | 0.1    | 0.5   |
-| Morning Cars        | Morning Inbound cars by minute                    | 15         | 5      | 30    |
-| Afternoon Cars      | Afternoon Inbound cars by minute                  | 10         | 5      | 20    |
-| Evening Cars        | Evening Inbound cars by minute                    | 3          | 3      | 9     |
+|---------------------|---------------------------------------------------|-----------:|-------:|------:|
+| Registered Vehicles | Rate of Total registered vehicles in the CBD area | 30%        | 10%    | 50%   |
+| Morning Cars        | Morning Inbound cars by minute                    | 15         | 10     | 200   |
+| Afternoon Cars      | Afternoon Inbound cars by minute                  | 10         | 10     | 200   |
+| Evening Cars        | Evening Inbound cars by minute                    | 3          | 10     | 200   |
 | Health loss         | Health loss function for each agent               | .03        | .01    | .05   |
 
 
+## Design: A two step process
+This study considers two sensitivity tests, locally and globally. Local sensitivity, also known as one-factor-at-a-time method, adjusts one factor while holding the others. Global sensitivity looks at all the possible combinations.
 
 
-<!--![](https://i.imgur.com/5Ho2tgW.png) -->
+![](https://i.imgur.com/3Ncy2dt.png)
 
-## How does the PM<sub>10</sub> differ by Sample Rates for Registered Vehicles?
 
-### Profile
-We generated 10%, 30%, and samples of resident vehicles for three fuel types Gasoline, Diesel, and LPG. 
-
+## Local Sensitivity
+### Resident Vehicle Sampling
+* Question: How does the PM<sub>10</sub> differ by Sample Rates for Resident Vehicles?
+* We generated 10%, 30%, and samples of resident vehicles for three fuel types Gasoline, Diesel, and LPG. 
 
 | Fuel Type | 10% | 30% | 50%  |
 |-----------|-----|-----|------|
@@ -43,20 +38,16 @@ We generated 10%, 30%, and samples of resident vehicles for three fuel types Gas
 | Total Count | 440 | 1347 | 2245 |
 
 
-### Overall PM<sub>10</sub> Trend
-
-* Cannot see a noticeable difference with this graph
+* Overall Trend
+    * Cannot see a noticeable difference with this graph
 
 ![](https://i.imgur.com/MAcTVvg.png)
 
-
-
-### PM<sub>10</sub> by Sample Rates
-
-* Seldom difference in background PM<sub>10</sub>
-* Marginal difference in roadside PM<sub>10</sub>
-* Jongno roadside: 68µg/m<sup>3</sup> (10%), 71µg/m<sup>3</sup> (30%), 74µg/m<sup>3</sup> (50%) 
-* Seoul Station roadside: 51µg/m<sup>3</sup> (10%), 50µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%)
+* PM<sub>10</sub> by Sample Rates
+    * Seldom difference in background PM<sub>10</sub>
+    * Marginal difference in roadside PM<sub>10</sub>
+    * Jongno roadside: 68µg/m<sup>3</sup> (10%), 71µg/m<sup>3</sup> (30%), 74µg/m<sup>3</sup> (50%) 
+    * Seoul Station roadside: 51µg/m<sup>3</sup> (10%), 50µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%)
 
 ![Boxplot](https://i.imgur.com/Abo0Jyp.png)
 
@@ -69,7 +60,9 @@ We generated 10%, 30%, and samples of resident vehicles for three fuel types Gas
 
 <br><br>
 
-## How much does the population at risk change by Health Loss parameters?
+
+### Health Loss
+* Question: How much does the population at risk change by Health Loss parameters?
 * Health-loss: .005
     * 8 times peak happened during the simulation
     * Once the risk population reaches 100% (all unwell) and falls, it tends to stay near 15%
@@ -81,7 +74,6 @@ We generated 10%, 30%, and samples of resident vehicles for three fuel types Gas
     * Most people got sick after January 20th (19000 ticks)
 
 ![](https://i.imgur.com/d4SIwEt.png)
-
 
 
 * Picked a random subway commuter to observe health change
