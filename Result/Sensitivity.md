@@ -72,12 +72,17 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
     * 25% sick people were identified after the population at risk first peaked
 * Health-loss: .03 and 0.5
     * Most people got sick after January 20th (19000 ticks)
+![](https://i.imgur.com/SuEB7Zk.png)
 
-![](https://i.imgur.com/d4SIwEt.png)
 
 
 * Picked a random subway commuter to observe health change
-![](https://i.imgur.com/af8h0Sw.png)
+![](https://i.imgur.com/W999sXH.png)
+
+
+* Picked a random driver to observe health change
+![](https://i.imgur.com/wDVlBHM.png)
+
 
 
 ## PM<sub>10</sub> Concentration
