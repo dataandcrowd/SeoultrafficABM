@@ -86,6 +86,21 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 
 ## PM<sub>10</sub> Concentration
+### Temporal: morning
+![](https://i.imgur.com/8mUSSL7.png)
+
+
+### Temporal: afternoon
+![](https://i.imgur.com/o9TLnPj.png)
+
+
+### Temporal: evening
+![](https://i.imgur.com/K9sFdob.png)
+
+
+
+
+
 ### January 2nd, 2018 by hours
 * Aggregated from minutes to hours
 
