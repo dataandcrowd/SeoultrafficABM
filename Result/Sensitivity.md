@@ -64,16 +64,9 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 
 ### Health Loss
-* Question: How much does the population at risk change by Health Loss parameters?
-* Health-loss: .005
-    * 8 times peak happened during the simulation
-    * Once the risk population reaches 100% (all unwell) and falls, it tends to stay near 15%
-    * This means that 15% tend to experience a recurrent after being sick
-* Health-loss: .01
-    * 12 times peak happened during the simulation
-    * 25% sick people were identified after the population at risk first peaked
-* Health-loss: .03 and 0.5
-    * Most people got sick after January 20th (19000 ticks)
+**Q**. How much does the population at risk change by Health Loss parameters?
+By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. 그리고 전체 인구가 피크를 찍을 때는 항상 PM<sub>10</sub>이 100µg/m<sup>3</sup>을 넘었을 때와 거의 패럴랠하다.
+
 
 ![Subway](https://i.imgur.com/eB7NKgd.png)
 ![Drivers](https://i.imgur.com/uJdTduL.png)
@@ -109,7 +102,13 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 
 ### January 2nd, 2018 by hours
-* Aggregated from minutes to hours
+The maps below shows the average and maximum PM<sub>10</sub> concentrations by an hourly aggregation on the 2nd of January, 2018. The background PM<sub>10</sub> maintained between 40 and 80µg/m<sup>3</sup> in the morning rush hours from 7am to 11am.
+
+주로 교차로와 대로변의 PM10이 160-200이며, 분당으로 계산했을때는 최대 400까지 간다.
+교차로는 아무래도 신호대기와 출발하면서 미세먼지 발생량을 높이기 때문이며 대로변에는 진입차량의 증가로 컨제스천이 생긴 까닭이다.
+
+10시의 사례를 보면 도로/비도로, 평균/최대값 
+
 
 
 * Mean PM<sub>10</sub>
