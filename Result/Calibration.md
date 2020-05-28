@@ -32,10 +32,8 @@ The first figure shows the total car estimation by hours. The pink and blue line
 ![](https://i.imgur.com/Bm5OLkM.png)
 
 
-## Traffic Speed
-* Speed
-![](https://i.imgur.com/Ikgjq98.png)
-
+## Comparison with Roadside station
+Jongno와의 비교분석
 
 
 
