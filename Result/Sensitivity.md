@@ -50,6 +50,7 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
     * Jongno roadside: 68µg/m<sup>3</sup> (10%), 71µg/m<sup>3</sup> (30%), 74µg/m<sup>3</sup> (50%) 
     * Seoul Station roadside: 51µg/m<sup>3</sup> (10%), 50µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%)
 
+<!--
 ![Boxplot](https://i.imgur.com/Abo0Jyp.png)
 
 | Rate | Mean PM10_mean | Jongno Back_mean | Jung Back_mean | Jongno Kerb_mean | Seoul Stn_mean | Mean PM10_sd | Jongno Back_sd | Jung Back_sd | Jongno Kerb_sd | Seoul Stn_sd |
@@ -58,7 +59,7 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 | 30%                | 49.57          | 46.38            | 46.39          | 71.57            | 50.62          | 25.39        | 25.3           | 25.31        | 49.67          | 31.7         |
 | 50%                | 49.47          | 46.38            | 46.4           | 74.14            | 51.51          | 25.38        | 25.3           | 25.33        | 50.57          | 32.5         |
 
-
+-->
 <br><br>
 
 
@@ -73,32 +74,37 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
     * 25% sick people were identified after the population at risk first peaked
 * Health-loss: .03 and 0.5
     * Most people got sick after January 20th (19000 ticks)
-![](https://i.imgur.com/SuEB7Zk.png)
 
+![Subway](https://i.imgur.com/eB7NKgd.png)
+![Drivers](https://i.imgur.com/uJdTduL.png)
+
+<br><br>
 
 
 * Picked a random subway commuter to observe health change
-![](https://i.imgur.com/W999sXH.png)
+<!-- ![](https://i.imgur.com/whlrUxG.png) -->
+![](https://i.imgur.com/9T68SXW.png)
 
 
 * Picked a random driver to observe health change
-![](https://i.imgur.com/wDVlBHM.png)
+<!-- ![](https://i.imgur.com/CSYqNDB.png) -->
+![](https://i.imgur.com/P6nGTPO.png)
 
 
 
 ## PM<sub>10</sub> Concentration
-### Temporal: morning
+* Temporal: morning
 ![](https://i.imgur.com/8mUSSL7.png)
 
-
-### Temporal: afternoon
+* Temporal: afternoon
 ![](https://i.imgur.com/o9TLnPj.png)
 
-
-### Temporal: evening
+* Temporal: evening
 ![](https://i.imgur.com/K9sFdob.png)
 
 
+**Q**: Why isn't the number of inbound vehicles proportionate to the PM<sub>10</sub> values in the afternoon and evening?
+**A**: In the morning hours, there are only resident vehicles and a few of randomly moving vehicles that are present in the study domain. This will allow as many vehicle agents per minute as possible into the domain. Since the model does not contain an outflow function for vehicles, it would take much time for the vehicles to enter the CBD once the road capacity is full. That is why the number of vehicles in the afternoon does not have a systematic PM<sub>10</sub> rise in proportionate to the number of vehicles. In the evening, the temporal shape of the PM<sub>10</sub> is very alike to the number of cars with only a less than 10µg/m<sup>3</sup> difference on average. This is because the outbound effect removes the non-residental cars during the night hours. The model bascially removes 10% of the total non-residental cars every minute between 10pm and 4am. Hence, 저녁차량 감소 효과 때문에 모양이 같아진다고 할 수 있다.
 
 
 
