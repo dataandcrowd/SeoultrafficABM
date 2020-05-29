@@ -74,14 +74,19 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 <br><br>
 
 
-* Picked a random subway commuter to observe health change
-<!-- ![](https://i.imgur.com/whlrUxG.png) -->
+**Picked a random subway commuter to observe health change**
+
+This figure shows the temporal trend of health during the simulation by health loss parameters. It is seen that the person has experienced a sudden arrgravation of health on the 17th of January, recovered up to a third of its original health status, but lost again the next day. Its health status plateus just above 100 most of the time but undergoes a numer of oscillations. This shape occurs due to the recovery function which only recovers when health is below the 100 threshold. This could mean that a commuter, whose health deteriorates due to a sudden PM<sub>10</sub> rise can have acute health crises until s/he gets a medical treatment. 
+
 ![](https://i.imgur.com/9T68SXW.png)
 
 
-* Picked a random driver to observe health change
-<!-- ![](https://i.imgur.com/CSYqNDB.png) -->
+**Picked a random driver to observe health change**
+
+On the other hand, resident commuters who drive to their workplaces show a gradually decreasing trend of health during the simulation, at a maximum of a third at the `.02` parameter, although the raw data contains presents a noiser recover and decline. Thus, it is certain that, compared to the subway commuters, resident drivers experience less spikes of ambient PM<sub>10</sub> episodes due to the protection of buildings and transits as well as short commuting time.
+
 ![](https://i.imgur.com/P6nGTPO.png)
+
 
 
 
