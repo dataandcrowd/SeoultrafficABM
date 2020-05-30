@@ -46,4 +46,6 @@ The first figure shows the total car estimation by hours. The pink and blue line
 | 20     | 68.58  | 120.92 | 114.57 | 116.14 | 123.29 | 50.36       |
 
 
+![](https://i.imgur.com/QyYnzNs.png)
+![](https://i.imgur.com/bcyFACV.png)
 
