@@ -28,12 +28,22 @@ The first figure shows the total car estimation by hours. The pink and blue line
 **Calibration Idea**: I am thinking of controlling the inbound vehicles based on the hourly plot. since there are 10 points and the input time is based on minutes, I can disaggregate the hourly stats into minutes. For example, the inflow stats at 8am is 1600, which is 26.6 cars per minute.
 
 ![](https://i.imgur.com/bswStew.png)
-![](https://i.imgur.com/HsrkkHc.png)
-![](https://i.imgur.com/Bm5OLkM.png)
+![](https://i.imgur.com/Pp88Lb9.png)
+
+<!--![](https://i.imgur.com/HsrkkHc.png)
+![](https://i.imgur.com/Bm5OLkM.png) -->
 
 
 ## Comparison with Roadside station
-Jongno와의 비교분석
+
+* By Emission Factors
+ 
+| Factor | Jongno | Samil  | Sejong | Pirun  | Yulgok | Observation |
+|--------|--------|--------|--------|--------|--------|-------------|
+| 1      | 47.49  | 50.11  | 49.82  | 49.87  | 50.24  | 50.36       |
+| **5**  | 51.94  | 65.02  | 63.41  | 63.86  | 65.78  | 50.36       |
+| 10     | 57.44  | 83.6   | 80.54  | 81.32  | 84.96  | 50.36       |
+| 20     | 68.58  | 120.92 | 114.57 | 116.14 | 123.29 | 50.36       |
 
 
 
