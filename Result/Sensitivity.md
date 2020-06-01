@@ -41,25 +41,21 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 * Overall Trend
     * Cannot see a noticeable difference with this graph
-
-![](https://i.imgur.com/MAcTVvg.png)
-
-* PM<sub>10</sub> by Sample Rates
     * Seldom difference in background PM<sub>10</sub>
     * Marginal difference in roadside PM<sub>10</sub>
-    * Jongno roadside: 68µg/m<sup>3</sup> (10%), 71µg/m<sup>3</sup> (30%), 74µg/m<sup>3</sup> (50%) 
-    * Seoul Station roadside: 51µg/m<sup>3</sup> (10%), 50µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%)
+    * Jongno roadside: 52µg/m<sup>3</sup> (10%), 51µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%), 52µg/m<sup>3</sup> (90%) 
 
-<!--
-![Boxplot](https://i.imgur.com/Abo0Jyp.png)
+| Car ratio | Jongno | Sejong | Yulgok | Samil | Pirun |
+|-----------|--------|--------|--------|-------|-------|
+| 10%       | 52.32  | 67.55  | 65.44  | 64.55 | 65.69 |
+| 30%       | 51.66  | 63.54  | 65.79  | 64.99 | 63.85 |
+| 50%       | 51.73  | 62.31  | 65.99  | 65.26 | 62.47 |
+| 90%       | 52.9   | 60.07  | 66.77  | 65.83 | 60.48 |
 
-| Rate | Mean PM10_mean | Jongno Back_mean | Jung Back_mean | Jongno Kerb_mean | Seoul Stn_mean | Mean PM10_sd | Jongno Back_sd | Jung Back_sd | Jongno Kerb_sd | Seoul Stn_sd |
-|--------------------|----------------|------------------|----------------|------------------|----------------|--------------|----------------|--------------|----------------|--------------|
-| 10%                | 49.82          | 46.39            | 46.38          | 68.97            | 51.19          | 25.41        | 25.3           | 25.29        | 48.51          | 32.52        |
-| 30%                | 49.57          | 46.38            | 46.39          | 71.57            | 50.62          | 25.39        | 25.3           | 25.31        | 49.67          | 31.7         |
-| 50%                | 49.47          | 46.38            | 46.4           | 74.14            | 51.51          | 25.38        | 25.3           | 25.33        | 50.57          | 32.5         |
+![](https://i.imgur.com/Shi8jqB.jpg)
 
--->
+
+
 <br><br>
 
 
