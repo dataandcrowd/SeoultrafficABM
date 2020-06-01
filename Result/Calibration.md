@@ -37,13 +37,23 @@ The first figure shows the total car estimation by hours. The pink and blue line
 ## Comparison with Roadside station
 
 * By Emission Factors
- 
+    - The *N* assumes the emission from the number of vehicles
+    - Thus, in the ABM, one vehicle will represent *N* number of vehicles
+    - *N*(number of cars) in the Emission formula was tested in 1, 5, 10, and 20
+    - Observation was imported from Jongno station so we will match the value with Jongno's result
+    - `Emission 1` was comparable across road points with less than 1µg/m<sup>3</sup> difference, while `Emission 20` had almost twice as higher in all stations except Jongno
+    - `Emission 5` in Jongno at 51.94 and this was the closest value for the observation value at 50.36.
+    - The figures below show a more visual comparison between the emission factors
+    - Scatter plots inform a correlation coeffient by emission factors: `r` score in `Emission 5` was the second highest. 
+    - But as per the statistics and the time-series plot we think that `Emission 5` was the most appropriate value
+
 | Factor | Jongno | Samil  | Sejong | Pirun  | Yulgok | Observation |
 |--------|--------|--------|--------|--------|--------|-------------|
 | 1      | 47.49  | 50.11  | 49.82  | 49.87  | 50.24  | 50.36       |
-| **5**  | 51.94  | 65.02  | 63.41  | 63.86  | 65.78  | 50.36       |
+| **5**  | **51.94**  | **65.02**  | **63.41**  | **63.86**  | **65.78**  | **50.36** |
 | 10     | 57.44  | 83.6   | 80.54  | 81.32  | 84.96  | 50.36       |
 | 20     | 68.58  | 120.92 | 114.57 | 116.14 | 123.29 | 50.36       |
+
 
 
 ![](https://i.imgur.com/QyYnzNs.png)
