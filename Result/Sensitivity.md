@@ -101,7 +101,8 @@ On the other hand, resident commuters who drive to their workplaces show a margi
 
 
 
-### January 2nd, 2018 by hours
+
+## Spatial Output
 The maps below shows the average and maximum PM<sub>10</sub> concentrations by an hourly aggregation on the 2nd of January, 2018. The background PM<sub>10</sub> maintained between 40 and 80µg/m<sup>3</sup> in the morning rush hours from 7am to 11am.
 
 주로 교차로와 대로변의 PM10이 160-200이며, 분당으로 계산했을때는 최대 400까지 간다.
@@ -111,18 +112,18 @@ The maps below shows the average and maximum PM<sub>10</sub> concentrations by a
 
 
 
-* Mean PM<sub>10</sub>
-![](https://i.imgur.com/K7SCJty.png)
+* Mean PM<sub>10</sub> by hours 
+![](https://i.imgur.com/MeFDvj1.png)
 
 
-* Max PM<sub>10</sub>
-![](https://i.imgur.com/J2acpRq.png)
-
-### January 2nd 10:00
-* Mean PM<sub>10</sub>
-![](https://i.imgur.com/o4gJPKP.png)
+* Max PM<sub>10</sub> by hours 
+![](https://i.imgur.com/TkjoHaK.png)
 
 
-* Max PM<sub>10</sub>
-![](https://i.imgur.com/h35UjEE.png)
+* Mean PM<sub>10</sub> at 10PM + ts daily plot
+![](https://i.imgur.com/6vkIpJI.png)
+
+
+* Max PM<sub>10</sub> at 10PM + ts daily plot
+![](https://i.imgur.com/6NDCeRX.png)
 
