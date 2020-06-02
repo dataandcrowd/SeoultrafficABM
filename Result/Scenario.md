@@ -1,6 +1,8 @@
 # Scenario
-## 10% Car Reduction
+## 30% Ban
+* How much PM10 changed?
+* How much population Health changed?
 
-## 50% Car Reduction
-
-## 90% Car Reduction
+## 50% Ban
+* How much PM10 changed?
+* How much population Health changed?
