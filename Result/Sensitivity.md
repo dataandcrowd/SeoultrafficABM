@@ -64,8 +64,11 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. 그리고 전체 인구가 피크를 찍을 때는 항상 PM<sub>10</sub>이 100µg/m<sup>3</sup>을 넘었을 때와 거의 패럴랠하다.
 
 ![Subway](https://i.imgur.com/w0WnFO1.png)
-![Drivers](https://i.imgur.com/GaUvw40.png)
+![](https://i.imgur.com/GB3uwkK.png)
 
+
+![Drivers](https://i.imgur.com/GaUvw40.png)
+![](https://i.imgur.com/toelq2F.png)
 <br><br>
 
 
@@ -81,6 +84,7 @@ This figure shows the temporal trend of health during the simulation by health l
 On the other hand, resident commuters who drive to their workplaces show a marginally decreasing trend of health during the simulation, although the raw data contains presents a noiser recover and decline. Thus, it is certain that, compared to the subway commuters, resident drivers experience less spikes of ambient PM<sub>10</sub> episodes due to the protection of buildings and transits as well as short commuting time.
 
 ![](https://i.imgur.com/38UdfuW.png)
+
 
 
 
