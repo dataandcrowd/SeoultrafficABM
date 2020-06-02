@@ -1,8 +1,8 @@
 # Scenario
-## 30% Ban
+## 50% Ban
 * How much PM10 changed?
 * How much population Health changed?
 
-## 50% Ban
+## 90% Ban
 * How much PM10 changed?
 * How much population Health changed?
