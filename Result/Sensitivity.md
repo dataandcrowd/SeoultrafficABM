@@ -45,12 +45,14 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
     * Marginal difference in roadside PM<sub>10</sub>
     * Jongno roadside: 52µg/m<sup>3</sup> (10%), 51µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%), 52µg/m<sup>3</sup> (90%) 
 
-| Car ratio | Jongno | Sejong | Yulgok | Samil | Pirun |
-|-----------|--------|--------|--------|-------|-------|
-| 10%       | 52.32  | 67.55  | 65.44  | 64.55 | 65.69 |
-| 30%       | 51.66  | 63.54  | 65.79  | 64.99 | 63.85 |
-| 50%       | 51.73  | 62.31  | 65.99  | 65.26 | 62.47 |
-| 90%       | 52.9   | 60.07  | 66.77  | 65.83 | 60.48 |
+| Car ratio | 10%   | 30%   | 50%   | 90%   |
+|-----------|-------|-------|-------|-------|
+| Jongno    | 52.32 | 51.66 | 51.73 | 52.9  |
+| Sejong    | 67.55 | 63.54 | 62.31 | 60.07 |
+| Yulgok    | 65.44 | 65.79 | 65.99 | 66.77 |
+| Samil     | 64.55 | 64.99 | 65.26 | 65.83 |
+| Pirun     | 65.69 | 63.85 | 62.47 | 60.48 |
+
 
 ![](https://i.imgur.com/Shi8jqB.jpg)
 
@@ -61,9 +63,12 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 ### Health Loss
 **Q**. How much does the population at risk change by Health Loss parameters?
-By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. 그리고 전체 인구가 피크를 찍을 때는 항상 PM<sub>10</sub>이 100µg/m<sup>3</sup>을 넘었을 때와 거의 패럴랠하다.
+By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. Also, the time when the population at risk peaked paralleled with the PM<sub>10</sub> exceeded 100µg/m<sup>3</sup>.
 
 ![Subway](https://i.imgur.com/w0WnFO1.png)
+
+In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 해당일의 PM<sub>10</sub> 값을 분석한 결과, 초과함.
+
 ![](https://i.imgur.com/GB3uwkK.png)
 
 
