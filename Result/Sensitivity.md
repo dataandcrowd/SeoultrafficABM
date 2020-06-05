@@ -68,12 +68,13 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 ![Subway](https://i.imgur.com/w0WnFO1.png)
 
 In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 해당일의 PM<sub>10</sub> 값을 분석한 결과, 초과함.
+![employees](https://i.imgur.com/qxOPNUW.png)
 
-![](https://i.imgur.com/GB3uwkK.png)
 
 
 ![Drivers](https://i.imgur.com/GaUvw40.png)
-![](https://i.imgur.com/toelq2F.png)
+![](https://i.imgur.com/tGJXOba.png)
+
 <br><br>
 
 
