@@ -97,16 +97,16 @@ On the other hand, resident commuters who drive to their workplaces show a margi
 
 ## PM<sub>10</sub> Concentration
 * Temporal: morning
-![](https://i.imgur.com/8mUSSL7.png)
+![](https://i.imgur.com/nyULkc0.png)
 
 * Temporal: afternoon
-![](https://i.imgur.com/o9TLnPj.png)
+![](https://i.imgur.com/1mORCus.png)
 
 * Temporal: evening
-![](https://i.imgur.com/K9sFdob.png)
+![](https://i.imgur.com/b2DLu4g.png)
 
-
+<!--
 **Q**: Why isn't the number of inbound vehicles proportionate to the PM<sub>10</sub> values in the afternoon and evening?
 **A**: In the morning hours, there are only resident vehicles and a few of randomly moving vehicles that are present in the study domain. This will allow as many vehicle agents per minute as possible into the domain. Since the model does not contain an outflow function for vehicles, it would take much time for the vehicles to enter the CBD once the road capacity is full. That is why the number of vehicles in the afternoon does not have a systematic PM<sub>10</sub> rise in proportionate to the number of vehicles. In the evening, the temporal shape of the PM<sub>10</sub> is very alike to the number of cars with only a less than 10µg/m<sup>3</sup> difference on average. This is because the outbound effect removes the non-residental cars during the night hours. The model bascially removes 10% of the total non-residental cars every minute between 10pm and 4am. Hence, 저녁차량 감소 효과 때문에 모양이 같아진다고 할 수 있다.
 
-
+-->
