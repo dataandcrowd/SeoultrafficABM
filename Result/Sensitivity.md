@@ -65,15 +65,20 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 **Q**. How much does the population at risk change by Health Loss parameters?
 By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. Also, the time when the population at risk peaked paralleled with the PM<sub>10</sub> exceeded 100µg/m<sup>3</sup>.
 
-![Subway](https://i.imgur.com/w0WnFO1.png)
+![](https://i.imgur.com/UE88cLU.png)
+![](https://i.imgur.com/RMyuIzP.png)
+
+
 
 In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 해당일의 PM<sub>10</sub> 값을 분석한 결과, 초과함.
-![employees](https://i.imgur.com/qxOPNUW.png)
+![](https://i.imgur.com/j9FXvrb.png)
 
 
 
-![Drivers](https://i.imgur.com/GaUvw40.png)
-![](https://i.imgur.com/tGJXOba.png)
+* Drivers
+
+
+![](https://i.imgur.com/0In02v7.png)
 
 <br><br>
 
@@ -82,15 +87,15 @@ In terms of health distribution, subway commuters experienced a sudden health de
 
 This figure shows the temporal trend of health during the simulation by health loss parameters. It is seen that the person has experienced a sudden arrgravation of health on the 17th of January, recovered up to a third of its original health status, but lost again the next day. Its health status plateus just above 100 most of the time but undergoes a numer of oscillations. This shape occurs due to the recovery function which only recovers when health is below the 100 threshold. This could mean that a commuter, whose health deteriorates due to a sudden PM<sub>10</sub> rise can have acute health crises until s/he gets a medical treatment. 
 
-![](https://i.imgur.com/X7araPi.png)
+
+![](https://i.imgur.com/8QWfel6.png)
 
 
 **Picked a random driver to observe health change**
 
 On the other hand, resident commuters who drive to their workplaces show a marginally decreasing trend of health during the simulation, although the raw data contains presents a noiser recover and decline. Thus, it is certain that, compared to the subway commuters, resident drivers experience less spikes of ambient PM<sub>10</sub> episodes due to the protection of buildings and transits as well as short commuting time.
 
-![](https://i.imgur.com/38UdfuW.png)
-
+![](https://i.imgur.com/7gUZni7.png)
 
 
 
