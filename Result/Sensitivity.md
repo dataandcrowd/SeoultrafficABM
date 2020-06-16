@@ -27,16 +27,12 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 
 ## Local Sensitivity
-### Resident Vehicle Sampling
-* Question: How does the PM<sub>10</sub> differ by Sample Rates for Resident Vehicles?
-* We generated 10%, 30%, and samples of resident vehicles for three fuel types Gasoline, Diesel, and LPG. 
+### Non-Resident Vehicle Sampling
+* Question: How does the PM<sub>10</sub> differ by Sample Rates for Non-Resident Vehicles?
 
-| Fuel Type | 10% | 30% | 50%  |
-|-----------|-----|-----|------|
-| Gasoline  | 156 | 468 | 780  |
-| Diesel    | 264 | 792 | 1320 |
-| LPG       | 20  | 87  | 145  |
-| Total Count | 440 | 1347 | 2245 |
+
+
+
 
 
 * Overall Trend
@@ -72,7 +68,9 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 
 In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 해당일의 PM<sub>10</sub> 값을 분석한 결과, 초과함.
 ![](https://i.imgur.com/j9FXvrb.png)
-![](https://i.imgur.com/0In02v7.png)
+![](https://i.imgur.com/aQdJcnE.png)
+
+
 
 <br><br>
 
@@ -95,14 +93,6 @@ On the other hand, resident commuters who drive to their workplaces show a margi
 
 
 ## PM<sub>10</sub> Concentration
-* Temporal: morning
-![](https://i.imgur.com/nyULkc0.png)
-
-* Temporal: afternoon
-![](https://i.imgur.com/1mORCus.png)
-
-* Temporal: evening
-![](https://i.imgur.com/b2DLu4g.png)
 
 <!--
 **Q**: Why isn't the number of inbound vehicles proportionate to the PM<sub>10</sub> values in the afternoon and evening?
