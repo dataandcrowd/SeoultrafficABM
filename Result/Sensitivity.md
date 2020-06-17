@@ -3,54 +3,41 @@
 
 This study selected three parameters: Registered Vehicles, Morning Inbound Cars, Afternoon Inbound Cars, and Evening Inbound Cars. The value ranges, base value, and the interval between each parameter value covered by the sensitivity analysis are in the table below
 
-* resident cars: 10%, 30%, 50%
-* temporary cars - morning: min / max
-* temporary cars - afternoon: min / max
-* temporary cars - evening: min / max
+* Non-resident cars: 2.5% 5% 10% 20%
+* Emission Factors: 1, 5, 10, 20
 * health loss?
 
 
 | Parameter           | Description                                       | Base value | Min    | Max   |
 |---------------------|---------------------------------------------------|-----------:|-------:|------:|
-| Registered Vehicles | Rate of Total registered vehicles in the CBD area | 30%        | 10%    | 50%   |
-| Morning Cars        | Morning Inbound cars by minute                    | 15         | 10     | 200   |
-| Afternoon Cars      | Afternoon Inbound cars by minute                  | 10         | 10     | 200   |
-| Evening Cars        | Evening Inbound cars by minute                    | 3          | 10     | 200   |
+| Non-registered Vehicles | Rate of Total registered vehicles in the CBD area | 5%        | 2.5%    | 20%   |
 | Health loss         | Health loss function for each agent               | .03        | .01    | .05   |
+|Emission Factor         | Vehicle's emission     | 5        | 1    | 20   |
 
-
+<!--
 ## Design: A two step process
 This study considers two sensitivity tests, locally and globally. Local sensitivity, also known as one-factor-at-a-time method, adjusts one factor while holding the others. Global sensitivity looks at all the possible combinations.
 
 
 ![](https://i.imgur.com/3Ncy2dt.png)
-
+-->
 
 ## Local Sensitivity
 ### Non-Resident Vehicle Sampling
 * Question: How does the PM<sub>10</sub> differ by Sample Rates for Non-Resident Vehicles?
-
-
-
-
-
-
 * Overall Trend
-    * Cannot see a noticeable difference with this graph
-    * Seldom difference in background PM<sub>10</sub>
-    * Marginal difference in roadside PM<sub>10</sub>
-    * Jongno roadside: 52µg/m<sup>3</sup> (10%), 51µg/m<sup>3</sup> (30%), 51µg/m<sup>3</sup> (50%), 52µg/m<sup>3</sup> (90%) 
-
-| Car ratio | 10%   | 30%   | 50%   | 90%   |
-|-----------|-------|-------|-------|-------|
-| Jongno    | 52.32 | 51.66 | 51.73 | 52.9  |
-| Sejong    | 67.55 | 63.54 | 62.31 | 60.07 |
-| Yulgok    | 65.44 | 65.79 | 65.99 | 66.77 |
-| Samil     | 64.55 | 64.99 | 65.26 | 65.83 |
-| Pirun     | 65.69 | 63.85 | 62.47 | 60.48 |
 
 
-![](https://i.imgur.com/Shi8jqB.jpg)
+| car_ratio | Jongno | Sejong | Yulgok | Samil | Pirun |
+|-----------|--------|--------|--------|-------|-------|
+| 0%        | 49.91  | 53.78  | 49.56  | 55.97 | 51.35 |
+| 2.5%      | 57.85  | 71.71  | 75.61  | 72.68 | 73.72 |
+| 5%        | 59.79  | 74.75  | 78.31  | 74.56 | 77.8  |
+| 10%       | 59.37  | 75.21  | 78.96  | 74.48 | 78.03 |
+| 20%       | 57.68  | 74.43  | 78.24  | 71.49 | 77.4  |
+
+![](https://i.imgur.com/35I7i0V.png)
+![](https://i.imgur.com/ALBBXuj.png)
 
 
 
@@ -61,8 +48,8 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 **Q**. How much does the population at risk change by Health Loss parameters?
 By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. Also, the time when the population at risk peaked paralleled with the PM<sub>10</sub> exceeded 100µg/m<sup>3</sup>.
 
-![](https://i.imgur.com/UE88cLU.png)
-![](https://i.imgur.com/RMyuIzP.png)
+![Employees](https://i.imgur.com/TMBBHhP.png)
+![Drivers](https://i.imgur.com/H4cBFay.png)
 
 
 
