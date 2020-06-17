@@ -46,16 +46,22 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 ### Health Loss
 **Q**. How much does the population at risk change by Health Loss parameters?
-By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `0.007`, `.01`, and `.02` have a total of 8, 10, 11, 13, and 14 peaks respectively. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. Also, the time when the population at risk peaked paralleled with the PM<sub>10</sub> exceeded 100µg/m<sup>3</sup>.
+By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `.01`, and `.05` have several peaks, but the shape of the curve looks similar. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. Also, the time when the population at risk peaked paralleled with the PM<sub>10</sub> exceeded 100µg/m<sup>3</sup>.
 
-![Employees](https://i.imgur.com/TMBBHhP.png)
-![Drivers](https://i.imgur.com/H4cBFay.png)
+| With 5% cars | Zero Cars |
+|-----------|--------|
+|![Employees](https://i.imgur.com/TMBBHhP.png) |![](https://i.imgur.com/iCRSfir.png)  |
+|![Drivers](https://i.imgur.com/H4cBFay.png) |![](https://i.imgur.com/jJJSSNv.png) |
 
 
 
-In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 해당일의 PM<sub>10</sub> 값을 분석한 결과, 초과함.
-![](https://i.imgur.com/j9FXvrb.png)
-![](https://i.imgur.com/aQdJcnE.png)
+### Health Distribution
+
+In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 
+
+![HC_Employees](https://i.imgur.com/j9FXvrb.png)
+
+![HC_Drivers](https://i.imgur.com/aQdJcnE.png)
 
 
 
