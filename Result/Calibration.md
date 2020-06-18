@@ -47,4 +47,4 @@ According to the 2018 Traffic Monitoring Center at Seoul Metropolitan Government
 **pm10_rd: Observation data**
 
 ![](https://i.imgur.com/OC1aK90.png)
-![](https://i.imgur.com/3jKzVaw.png)
+![](https://i.imgur.com/i12fog7.png)
