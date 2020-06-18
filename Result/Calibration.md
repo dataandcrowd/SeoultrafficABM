@@ -20,9 +20,8 @@ There are 10 entry points that enable vehicles to enter the CBD. The roads inclu
 ## Traffic Count
 According to the 2018 Traffic Monitoring Center at Seoul Metropolitan Government, I got various plots that I can calibrate with.
 
+![](https://i.imgur.com/TIZLbml.png)
 
-![](https://i.imgur.com/df1qtqm.png)
-![](https://i.imgur.com/vf5SCsP.png)
 
 
 ## Comparison with Roadside station
