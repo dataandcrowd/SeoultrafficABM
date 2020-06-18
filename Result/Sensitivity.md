@@ -55,40 +55,33 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 
 
 
-### Health Distribution
 
-In terms of health distribution, subway commuters experienced a sudden health decline between January 16th and 30th, and maintained until the end of the simulation. The great decline was due to the elevation of PM<sub>10</sub> that exceeded 100µg/m<sup>3</sup> about 2-3 days that did not happen in early January. The density of the curve varies can be seen by dates, but in fact varies by whether the agents are outdoors when PM<sub>10</sub> exceeds 100µg/m<sup>3</sup>. For example, the agents health on February 26th and March 12th is distributed across 0-110. 
-
-![HC_Employees](https://i.imgur.com/j9FXvrb.png)
-
-![HC_Drivers](https://i.imgur.com/aQdJcnE.png)
-
-
-
-<br><br>
-
-
+### Random Person
 **Picked a random subway commuter to observe health change**
 
 This figure shows the temporal trend of health during the simulation by health loss parameters. It is seen that the person has experienced a sudden arrgravation of health on the 17th of January, recovered up to a third of its original health status, but lost again the next day. Its health status plateus just above 100 most of the time but undergoes a numer of oscillations. This shape occurs due to the recovery function which only recovers when health is below the 100 threshold. This could mean that a commuter, whose health deteriorates due to a sudden PM<sub>10</sub> rise can have acute health crises until s/he gets a medical treatment. 
 
+| Near | Far |
+|-----------|--------|
+|![](https://i.imgur.com/6XW0Yp6.png) | ![](https://i.imgur.com/nVBdprG.png)
+|
 
-![](https://i.imgur.com/8QWfel6.png)
+
+
 
 
 **Picked a random driver to observe health change**
 
 On the other hand, resident commuters who drive to their workplaces show a marginally decreasing trend of health during the simulation, although the raw data contains presents a noiser recover and decline. Thus, it is certain that, compared to the subway commuters, resident drivers experience less spikes of ambient PM<sub>10</sub> episodes due to the protection of buildings and transits as well as short commuting time.
 
-![](https://i.imgur.com/7gUZni7.png)
 
+| Near | Far |
+|-----------|--------|
+|![](https://i.imgur.com/EewT5u2.png)|![](https://i.imgur.com/PsAirV0.png) |
 
 
 
 ## PM<sub>10</sub> Concentration
 
-<!--
-**Q**: Why isn't the number of inbound vehicles proportionate to the PM<sub>10</sub> values in the afternoon and evening?
-**A**: In the morning hours, there are only resident vehicles and a few of randomly moving vehicles that are present in the study domain. This will allow as many vehicle agents per minute as possible into the domain. Since the model does not contain an outflow function for vehicles, it would take much time for the vehicles to enter the CBD once the road capacity is full. That is why the number of vehicles in the afternoon does not have a systematic PM<sub>10</sub> rise in proportionate to the number of vehicles. In the evening, the temporal shape of the PM<sub>10</sub> is very alike to the number of cars with only a less than 10µg/m<sup>3</sup> difference on average. This is because the outbound effect removes the non-residental cars during the night hours. The model bascially removes 10% of the total non-residental cars every minute between 10pm and 4am. Hence, 저녁차량 감소 효과 때문에 모양이 같아진다고 할 수 있다.
+![](https://i.imgur.com/1W69mxl.png)
 
--->
