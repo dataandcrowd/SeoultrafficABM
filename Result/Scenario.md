@@ -7,6 +7,12 @@
 * How much PM10 changed?
 * How much population Health changed?
 
+<!--
+![](https://i.imgur.com/sEMgYjU.png)
+![](https://i.imgur.com/aSqpTJR.png)
+![](https://i.imgur.com/o5QZ1ML.png)
+![](https://i.imgur.com/qrMjNC9.png)
+-->
 
 ## Health Distribution
 
