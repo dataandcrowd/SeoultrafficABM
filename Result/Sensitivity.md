@@ -36,9 +36,12 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 | 10%       | 59.37  | 75.21  | 78.96  | 74.48 | 78.03 |
 | 20%       | 57.68  | 74.43  | 78.24  | 71.49 | 77.4  |
 
-![](https://i.imgur.com/35I7i0V.png)
-![](https://i.imgur.com/ALBBXuj.png)
 
+
+![](https://i.imgur.com/35I7i0V.png)
+<!--
+![](https://i.imgur.com/ALBBXuj.png)
+-->
 
 
 <br><br>
@@ -53,7 +56,11 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 |![Employees](https://i.imgur.com/TMBBHhP.png) |![](https://i.imgur.com/iCRSfir.png)  |
 |![Drivers](https://i.imgur.com/H4cBFay.png) |![](https://i.imgur.com/jJJSSNv.png) |
 
-
+**Q**. Why is there a difference between the subway commuters and resident drivers?
+* There isn't much difference on the subway commuter's health because most of the time the commuters are walking across the background zones not the roadside
+* Drivers are experiencing higher chances of extreme levels of PM<sub>10</sub> emission and this can be compared in the 0.01 plot. 30% difference is observed
+* The Drivers, although with no extra cars coming in to the CBD, have 25%, 50% at risk. This can be due to the effect of background PM10 but also other resident driver's emission
+* In short, while the subway commuters are constantly affected by the background PM<sub>10</sub> levels during their commute, the resident drivers have relatively short period of commute time during the weekend but have an extreme exposure to PM<sub>10</sub>, which result in rapid health loss over time. 
 
 
 ### Random Person
@@ -65,9 +72,6 @@ This figure shows the temporal trend of health during the simulation by health l
 |-----------|--------|
 |![](https://i.imgur.com/6XW0Yp6.png) | ![](https://i.imgur.com/nVBdprG.png)
 |
-
-
-
 
 
 **Picked a random driver to observe health change**
@@ -82,6 +86,8 @@ On the other hand, resident commuters who drive to their workplaces show a margi
 
 
 ## PM<sub>10</sub> Concentration
+The figure below shows how different emission factors affect PM10 concentrations. Apart from `emission = 1`, emissions 5, 10, and 20 show a linearly increased PM10. For instance, taking PM10 levels on January the 8th, 15th, 22nd, and 29th at 10am, Emission 5 일때는 100, 100, 100, 100 였지만, 10일 때는 100, 100, 100, 100 이었고, 20일 때는 100, 100, 100, 100으로 나타났다. 또한 종로를 제외하고는 대부분의 8차선 대로들의 농도는 비슷한 것으로 밝혀졌다. 한 가지 차이라면 차량정체가 심한곳과 덜 심한 곳일 수도 있지만 어쨌건 겁나 차이 난다. 호호호
+
 
 ![](https://i.imgur.com/1W69mxl.png)
 
