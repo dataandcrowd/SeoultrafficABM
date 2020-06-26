@@ -16,3 +16,55 @@
     * A more effective approach to further reduce emissions from car brake systems should rely on a holistic approach in which the search for innovative materials, i.e., friction materials, disc treatments and disc coatings, is certainly an important prerequisite to reduce emissions without jeopardizing the effective braking action.
 
 
+
+### (Review Paper) Urban air quality: The challenge of traffic non-exhaust emissions [Amato, 2014](https://www.sciencedirect.com/science/article/pii/S030438941400315X?via%3Dihub)
+
+* Intro
+    - Road transport emissions account for a significant share of this burden. While important technological improvements have been made for reducing particulate matter (PM) emissions from motor exhausts, no actions are currently in place to reduce the non-exhaust part of emissions such as those from brake wear, road wear, tyre wear and road dust resuspension.
+    - “non-exhaust” sources contribute easily as much and often more than the tailpipe exhaust to the ambient air PM concentrations in cities, and their relative contribution to ambient PM is destined to increase in the future, posing obvious research and policy challenges.
+
+* Health effects
+    - Particle mass, size and (surface) chemistry all affect PM toxicity. One of the biological mechanisms causing toxicity is oxidative stress which is often related to transition metals and/or redox active organics such as quinone
+    - Brake and tyre wear particles have higher oxidative potential than other traffic-related sources and their effect is very local (50–100 m from the source) yielding more oxidant PM (per μg/m3) at road sites rather than at urban background sites. 
+    - Tyre wear particles have been shown to induce Reactive Oxygen Species (ROS) formation and inflammatory reaction in human alveolar cells, as well as inflammatory response in mouse lungs
+    - Gustafsson et al. [18] showed at least as high inflammatory potential from road wear PM10 compared to diesel engine exhaust particles. Brake wear particles damage have been linked to oxidative stress and inflammatory responses in the lung using incubations of lung cells with brake wear particles
+    - Epidemiological studies related specifically to non-exhaust sources are still very few, again due to the difficult task of obtaining long time series of specific tracers and the lack of personal exposure data for risk assessment studies.
+
+
+* Measurements and source contributions
+    - Ambient air measurements across Europe have revealed a total non-exhaust contribution (wear emissions + resuspension) to PM10 comparable to that of tailpipe emissions, with a clear exacerbation in Scandinavian and Mediterranean countries due to winter tyres and drier climate, respectively
+    - Ketzel et al. estimated that in several European countries a large part (about 50–85% depending on the location) of the total traffic PM10 emissions originates from non-exhaust sources. 
+    - In Southern Spain for example, from 2004 to 2011 road dust contributions to PM10 levels measured at a number of sites did not decrease, while motor exhaust contributions decreased (p < 0.001) by 0.4 (0.57–0.24) μg m−3 year−1
+    - Further research is necessary to better separate individual contributions from road dust resuspension, brake, tyre and road wear given that the relative toxicity and mitigation measures are different.
+    - Generally resuspension seems dominant in terms of mass, although its contribution can vary widely across Europe since road humidity dominates the emission potential: ∼12% of PM10 in UK, 20–35% in Spain and Greece, up to 90% in Scandinavian countries during late winter and spring when studded tyres and road sanding contribute
+    - Tyre wear generally contributes the least of the non-exhaust sources (10% at Marylebone Road in London) with a mean contribution to PM10 always below 2% 
+    - Road wear contribution estimates are more common in Scandinavian countries where studded tyres generate high abrasion and airborne mineral dust is dominated by road wear particle suspension [35], but road wear can be substantial also where studded tyres are not used, due to low quality pavement material and constructions
+    - The contribution of road sanding and deposited Saharan dust are difficult to separate from that of pavement wear due to comparable chemical composition, as well as the interaction (sand wearing pavement) and its variation in time and space.
+
+
+* Mitigation and Policy
+    - The optimal mitigation techniques and strategies needed to abate PM non-exhaust emissions from road traffic are still an open question. 
+    - The possible strategies to reduce non-exhaust emissions can be categorized as those aimed at minimizing the sources by 
+    - (i) improving wear properties of materials  
+    - (ii) reducing the wear potential of traffic (e.g. studded tyres)
+    - those aimed at minimizing suspension to air by (i) removing/immobilizing dust from road surface (road cleaning), (ii) binding dust to road surface and 
+    - (iii) adjusting traffic (less traffic, lower speed, less heavy vehicles). The optimum strategy likely involves a combination of the three categories.
+    - Although more research is needed, recent studies suggest that beside the wear resistance of rock materials used for road pavement [63], [64], other factors can reduce road wear emission potential: larger stone size, lower texture depth, road pavement construction type (e.g. rubber mixed asphalt, porous asphalt) and good operation and maintenance
+    - The lack of research focusing on preventive measures has directed interest towards mitigating measures, aimed at minimizing suspension to air. Road cleaning activities were found to reduce road dust resuspension only when water was used, due to the increase of road moisture content (rather than actual removal of dust). However, **road washing activities were more effective in drier climates such as the Mediterranean region (up to 10% of daily PM10) while vacuum-sweeping alone did not provide evidence of effectiveness in the short-term**
+
+
+### 한국의 케이스 Characterization of non-exhaust coarse and fine particles from on-road driving and laboratory measurements Kwak [2013](https://www.sciencedirect.com/science/article/pii/S0048969713004622) 
+
+
+### Sources and variability of inhalable road dust particles in three European cities [2011](https://www.sciencedirect.com/science/article/pii/S1352231011005942)
+
+
+
+### Loadings, chemical patterns and risks of inhalable road dust particles in an Atlantic city in the north of Portugal [2020](https://www.sciencedirect.com/science/article/pii/S0048969720331132)
+
+* Intro
+    * Regulatory programmes aimed at reducing air pollution from road traffic have exclusively focused on tailpipe exhaust emissions. However, it has been shown that the contribution of non-exhaust primary particles to the total traffic generated airborne particulate material is significant in urban areas
+    * Denier van der Gon et al. (2013) found that the proportion between non-exhaust and exhaust particles strongly increased in the last two decades due to the successful implementation of exhaust emission control technologies and improvement of fuel quality.
+    * Lawrence et al. (2013) combined motorway tunnel sampling and source apportionment modelling. The application of principal component analysis and multiple linear regression analysis enabled to identify the emission sources for 82% of the total PM10 mass inside the tunnel.
+    * Weinbruch et al. (2014) quantified the contribution of the three traffic-related components (exhaust, abrasion, and resuspension) to curbside and urban background PM10 and PM1 levels in the urban/industrial Ruhr area (Germany), based on the analysis of individual particles by scanning electron microscopy. The total contribution of traffic to PM10 was estimated to be 27% at the urban background station and 48% at the curbside station.
+    * 
