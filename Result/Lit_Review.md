@@ -68,3 +68,45 @@
     * Lawrence et al. (2013) combined motorway tunnel sampling and source apportionment modelling. The application of principal component analysis and multiple linear regression analysis enabled to identify the emission sources for 82% of the total PM10 mass inside the tunnel.
     * Weinbruch et al. (2014) quantified the contribution of the three traffic-related components (exhaust, abrasion, and resuspension) to curbside and urban background PM10 and PM1 levels in the urban/industrial Ruhr area (Germany), based on the analysis of individual particles by scanning electron microscopy. The total contribution of traffic to PM10 was estimated to be 27% at the urban background station and 48% at the curbside station.
     * 
+
+
+
+
+
+## Traffic-ABM and Health
+### Agent-based modelling to estimate exposures to urban air pollution from transportation: Exposure disparities and impacts of high-resolution data: [Guram et al 2019](https://www.sciencedirect.com/science/article/pii/S019897151830156X#f0015)
+
+* In this study, we developed and used an exposure modeling framework that integrates an activity-based travel demand simulator (DaySim), a dynamic traffic assignment model (MATSim), a mobile-source emissions estimator (MOVES), and a dispersion model (R-LINE) to estimate disaggregate and subgroup exposures to NOx from passenger car emissions in the Tampa area for an average winter day in 2010. 
+* The authors give a stepwise approach which firstly employs DaySim to model individual activity and merges MATSim that implements automobile journeys when planned. NOx is emitted and dispersed during the journey by MOVES and R-LINE toolkits
+* The model was simulated for a day between 3:00 am to 2:59 am with a temporal resolution of 1 min on a typical weekday
+* DaySim activity-based travel-demand model system comprises a suite of econometric models
+* DaySim requires input data on individual-level demographic characteristics that are representative of the study area population, parcel-level land-use information, and transportation system characteristics. 
+* DaySim does not model their travel routes/paths between different activity locations. ⇒ covered by MATSim
+* MATSim updates and optimizes the agents' daily schedules (i.e., their plans) to generate travel routes subject to the network capacity and travel time constraints. Therefore, in every iteration of the constrained optimization process, MATSim selects a plan from a short list of competing plans stored in memory, executes it, and then calculates a utility score for the plan
+* MOVES requires information on vehicle activity (traffic volumes and speeds), along with the vehicle fleet mix, fuels used, roadway characteristics, and area weather. In our framework, MOVES is applied at the project level in batch mode using the link-specific vehicle activity data output from MATSim (and input roadway characteristics) to estimate emissions (in grams) from individual roadway links for each hour of the day.
+* The exposure modeling component of our framework involves combining the spatiotemporal locations of simulated individuals with the spatiotemporal distributions of pollutant concentration to estimate measures of person-level exposure. The output from MATSim contains a sequential activity-record for each individual.
+* Specifically, the daily activity-based exposure for each individual in the study sample is calculated as E = ∑cσΔtσ, with cσ and Δtσ representing the ambient concentration and the time spent at each spatiotemporal location of discretized activity and travel, σ (e.g. latitude, longitude, time of day). A daily exposure concentration, C, for each individual is also calculated by dividing exposure (E) by the averaging period (24 h).
+* The mean daily exposure found here is somewhat lower than the earlier study, but the maximum exposure is substantially higher. Hence, large-scale agent-based modeling approaches that employ high-resolution activity-based exposure estimation may have value for capturing the high-end exposures that could otherwise be missed. 
+* During off-work hours, higher exposures were concentrated in the residential pockets between the university area and I-275, along I-275, and near downtown. During the morning commute (~5:00–8:00 am), the high exposure areas shifted from the residential pockets and spread out across the urban core of Tampa, especially along major highways and suburban areas. During work hours (~8:00 am until 5:00 pm), the spatial distribution remained fairly constant and the downtown area had the highest exposure densities. During the evening commute (~5:00–7:00 pm), high exposure densities spread across the urban core of Tampa and its suburbs, although levels were more diffuse than during the morning commute.
+* Impact of the resolution of data on exposure estimates. 
+    * Use of both low-resolution activity and low-resolution concentration data (i.e. activities and concentrations at block-group centroids with travel time assigned equally to the origin and destination block groups) led to 10% lower mean exposure (positive overall error, ε) than using high-resolution data, suggesting underestimation on average.
+    * Exposure error distributions only varied substantially from this population-level error distribution for the daily travel time categories.
+    * Moreover, we found that use of low-resolution data modified the relative rank of group-level mean exposures (not shown). Specifically, low-resolution data led to higher mean exposure for medium travellers (31–60 min per day) than for heavy travellers (>60 min.), rather than the reverse.
+    * Conversely, the below poverty and middle-income groups had disproportionately high exposures at all exposure levels. For the below-poverty group a steep increase in disparity is also observed at the highest exposure levels.
+    * Concerning racial and ethnic categories, subgroup mean exposure was higher than the population mean for blacks (higher by 6%), Hispanics (4%), Asians (2%), and other races (2%). Conversely, it was slightly lower (by 2%) than the population mean for whites and non-Hispanics. 
+    * Overall, exposures to passenger car emissions were higher for individuals residing in urban zones and with higher daily travel times. Exposures were also higher for the lower-to-middle-income households, blacks, Hispanics, Asians, and people of working ages (19–65).
+    * individuals from below poverty and middle-income households, children (aged 0–18), and adults over 65 years had slightly smaller exposure errors compared to the population, suggesting a lower propensity for underestimation of exposures on average.
+
+
+* Limitations
+    * First, Study area. 1 day modelling period
+    * Second, the study only included activities of residents within the transportation modeling domain to characterize the traffic-related air pollution. Impacts due to activities of non-residents who visit or travel through the region are not considered
+    * Third, we only simulated the automobile travel mode. Hence the exposures of individuals and groups who choose other modes (transit, biking, walking) is not well represented.
+    * Finally, as in any large-scale and multi-domain modeling study, uncertainties of model outcomes ought to be considered when interpreting the results. 
+
+* Conclusion
+    * Although simulated NOx concentrations were generally low, concentrations at a few near-roadway locations were high enough to be a potential concern for human health. 
+    * Additionally, our results confirmed the persistence of disparities in exposure to traffic-related air pollution between population subgroups in the study area. 
+    * Finally, the resolution of data on activity, travel, and concentration was found to be important to the accuracy of exposure estimation; use of low-resolution data, particularly concentration data, may lead to underestimation of exposures on average (and both under- and overestimation of exposures for individuals). 
+    * Hence this study adds to the body of literature demonstrating the usefulness of transportation modeling for estimating individual-level population exposure at high resolution.
+    * Further, the framework presented here provides a helpful tool for continued investigation of the impacts of potential urban design scenarios on exposures to traffic-related air pollution and their distribution among the population.
