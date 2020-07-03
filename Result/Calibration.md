@@ -37,13 +37,13 @@ According to the 2018 Traffic Monitoring Center at Seoul Metropolitan Government
     - Scatter plots inform a correlation coeffient by emission factors: `r` score in `Emission 5` was the second highest. 
     - But as per the statistics and the time-series plot we think that `Emission 5` was the most appropriate value
 
-| emission_factor 	| Jongno 	| Sejong 	| Yulgok 	| Samil 	| Pirun 	| pm10_rd 	|
-|-----------------	|--------	|--------	|--------	|-------	|-------	|---------	|
-| 1               	| 48.8   	| 51.7   	| 52.5   	| 51.8  	| 52.1  	| 50.4    	|
-| **5**               	| **58.3**   	| **72.9**   	| **77**     	| **73.6**  	| **74.8**  	| **50.4**    	|
-| 10              	| 70     	| 99.1   	| 108    	| 101   	| 103   	| 50.4    	|
-| 20              	| 93.7   	| 152    	| 169    	| 156   	| 160   	| 50.4    	|
+| Emission | Jongno | pm10_rd |
+|----------|--------|---------|
+| 1        | 43.4   | 50.4    |
+| 5        | 60.0   | 50.4    |
+| 10       | 81.4   | 50.4    |
+| 20       | 123.3  | 50.4    |
 **pm10_rd: Observation data**
 
-![](https://i.imgur.com/OC1aK90.png)
-![](https://i.imgur.com/i12fog7.png)
+
+![](https://i.imgur.com/27GZwnX.png)
