@@ -12,10 +12,14 @@
 ![](https://i.imgur.com/afBVJas.png)
 
 ### Resident Drivers
-![](https://i.imgur.com/yH4SE62.png)
-![](https://i.imgur.com/aakBFcq.png)
 
-![](https://i.imgur.com/DxLPCxy.png)
+|  |
+|-------|
+|![](https://i.imgur.com/aakBFcq.png) |
+|↕ Same Image Different Y-Axis (Making it easier to compare with Subway commuters) |
+|![](https://i.imgur.com/yH4SE62.png) |
+
+
 
 <!--
 ## Health Distribution
