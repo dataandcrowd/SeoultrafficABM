@@ -55,8 +55,12 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 
 | With 5% cars | Zero Cars |
 |-----------|--------|
-|![Employees](https://i.imgur.com/CXeXW1l.png) |![](https://i.imgur.com/iCRSfir.png)  |
-|![Drivers](https://i.imgur.com/BFiAnCV.png) |![](https://i.imgur.com/jJJSSNv.png) |
+|![](https://i.imgur.com/Zha2t7i.png) |![](https://i.imgur.com/s8tAUhq.png) |
+|![](https://i.imgur.com/ZX42O7W.png) |![](https://i.imgur.com/Zc9SKdQ.png) |
+| Same Image but with different Y-axis compared to the Image above ↕ |Same Image but with different Y-axis compared to the Image above ↕ |
+|![](https://i.imgur.com/zLzb9yz.png) |![](https://i.imgur.com/5ZRDY9m.png) |
+
+
 
 
 
@@ -78,8 +82,12 @@ This figure shows the temporal trend of health during the simulation by health l
 
 On the other hand, resident commuters who drive to their workplaces show a marginally decreasing trend of health during the simulation, although the raw data contains presents a noiser recover and decline. Thus, it is certain that, compared to the subway commuters, resident drivers experience less spikes of ambient PM<sub>10</sub> episodes due to the protection of buildings and transits as well as short commuting time.
 
+| With 5% cars | Zero Cars |
+|-----------|--------|
+|![](https://i.imgur.com/rhBHTWD.png) |![](https://i.imgur.com/UnMXKXy.png)
+ |
 
-![](https://i.imgur.com/rhBHTWD.png)
+
 
 
 
