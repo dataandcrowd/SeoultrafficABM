@@ -37,6 +37,7 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 | 20%       | 60.84  | 61.50  | 63.62  | 63.98 | 63.98 |
 
 
+![](https://i.imgur.com/6StPV0M.png)
 
 
 <br><br>
