@@ -49,9 +49,11 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 ### Health Loss
 **Q**. How much does the population at risk change by Health Loss parameters?
-<!--
-By the time the onset is discovered, the vast majority of agents have their nominal health decreased by 100, which is a third of the initial status. Thus, as the parameter rises, the earlier and more frequent the unwell population spike will appear. Health loss parameters `0.003`, `0.005`, `.01`, and `.05` have several peaks, but the shape of the curve looks similar. Additionally, since most of the agent's health centered around 100, there is a constant oscillation of risk population maintaining the figures e.g. almost 25% of the population at risk is observed in paramter `.01`. Also, the time when the population at risk peaked paralleled with the PM<sub>10</sub> exceeded 100µg/m<sup>3</sup>.
--->
+* The shape of the appearance and resurgence is proportionate to the parameter increase
+* Below .05, less than 13% of the subway commuters experienced health problems due to high PM<sub>10</sub>
+* In .1, the population at risk doubled the number of parameter .05
+* Over .15, the population at risk soared to 100% at tis highest (around 10 times) when the commuters were exposed to high PM<sub>10</sub>
+* This test indicates that the shape is similar between parameters and there is a tipping point between .1 and .15
 
 | With 5% cars | Zero Cars |
 |-----------|--------|
@@ -63,24 +65,19 @@ By the time the onset is discovered, the vast majority of agents have their nomi
 
 
 
-
-
 **Q**. Why is there a difference between the subway commuters and resident drivers?
-* There isn't much difference on the subway commuter's health because most of the time the commuters are walking across the background zones not the roadside
-* Drivers are experiencing higher chances of extreme levels of PM<sub>10</sub> emission and this can be compared in the 0.01 plot. 30% difference is observed
-* The Drivers, although with no extra cars coming in to the CBD, have 25%, 50% at risk. This can be due to the effect of background PM10 but also other resident driver's emission
-* In short, while the subway commuters are constantly affected by the background PM<sub>10</sub> levels during their commute, the resident drivers have relatively short period of commute time during the weekend but have an extreme exposure to PM<sub>10</sub>, which result in rapid health loss over time. 
 
+* While the subway commuters are constantly affected by the background PM<sub>10</sub> levels during their commute, the resident drivers have relatively short period of commute time during the weekend but have an extreme exposure to PM<sub>10</sub>, which result in rapid health loss over time. 
 
-### Random Person
-**Picked a random subway commuter to observe health change**
+<br><br>
 
-This figure shows the temporal trend of health during the simulation by health loss parameters. It is seen that the person has experienced a sudden arrgravation of health on the 17th of January, recovered up to a third of its original health status, but lost again the next day. Its health status plateus just above 100 most of the time but undergoes a numer of oscillations. This shape occurs due to the recovery function which only recovers when health is below the 100 threshold. This could mean that a commuter, whose health deteriorates due to a sudden PM<sub>10</sub> rise can have acute health crises until s/he gets a medical treatment. 
+ **Choosing a Random Person**
 
-
-**Picked a random driver to observe health change**
-
-On the other hand, resident commuters who drive to their workplaces show a marginally decreasing trend of health during the simulation, although the raw data contains presents a noiser recover and decline. Thus, it is certain that, compared to the subway commuters, resident drivers experience less spikes of ambient PM<sub>10</sub> episodes due to the protection of buildings and transits as well as short commuting time.
+* Red: Health of a random subway commuter
+* Blue: Health of a random driver
+* 붉은색 dip은 부분부분 나타나는 데 반해 파란색의 dip은 조금이지만 길게 나타남
+* 전체적으로 지하철 승객의 건강이 더 빠르게 안좋아진 것으로 보임
+* Zero Cars와 평균치에서 차이는 거의 드러나지 않았지만, 차량 운전자의 건강상태가 조금 다르게 나타난다. 
 
 | With 5% cars | Zero Cars |
 |-----------|--------|
@@ -94,7 +91,7 @@ On the other hand, resident commuters who drive to their workplaces show a margi
 
 
 ## PM<sub>10</sub> Concentration
-The figure below shows how different emission factors affect PM10 concentrations. Apart from `emission = 1`, emissions 5, 10, and 20 show a linearly increased PM10. For instance, taking PM10 levels on January the 8th, 15th, 22nd, and 29th at 10am, Emission 5 일때는 100, 100, 100, 100 였지만, 10일 때는 100, 100, 100, 100 이었고, 20일 때는 100, 100, 100, 100으로 나타났다. 또한 종로를 제외하고는 대부분의 8차선 대로들의 농도는 비슷한 것으로 밝혀졌다. 한 가지 차이라면 차량정체가 심한곳과 덜 심한 곳일 수도 있지만 어쨌건 겁나 차이 난다. 호호호
+
 
 | Emission | Jongno | Sejong | Yulgok | Samil | Pirun |
 |-----------------|--------|--------|--------|-------|-------|
