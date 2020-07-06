@@ -16,9 +16,9 @@ Looking closer to a specific time, 10:00am on January the 2nd, there was a spati
 
 
 * Mean PM<sub>10</sub> at 10PM + ts daily plot
-![](https://i.imgur.com/JPIWQbi.png)
+![](https://i.imgur.com/UFVjRub.png)
 
 
 * Max PM<sub>10</sub> at 10PM + ts daily plot
-![](https://i.imgur.com/oKvcqhA.png)
+![](https://i.imgur.com/ov4Y9CO.png)
 
