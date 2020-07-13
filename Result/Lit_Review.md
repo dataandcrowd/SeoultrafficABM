@@ -110,3 +110,13 @@
     * Finally, the resolution of data on activity, travel, and concentration was found to be important to the accuracy of exposure estimation; use of low-resolution data, particularly concentration data, may lead to underestimation of exposures on average (and both under- and overestimation of exposures for individuals). 
     * Hence this study adds to the body of literature demonstrating the usefulness of transportation modeling for estimating individual-level population exposure at high resolution.
     * Further, the framework presented here provides a helpful tool for continued investigation of the impacts of potential urban design scenarios on exposures to traffic-related air pollution and their distribution among the population.
+
+
+## [Yang, L. et al. (2018)](https://www.mdpi.com/2413-8851/2/2/36) An Agent-Based Modeling Framework for Simulating Human Exposure to Environmental Stresses in Urban Areas
+
+* Intro: Dynamics of Environment Exposure
+    * human exposure to the urban environment is strongly linked to various processes that are inherent in human mobility, distinctly local and individual characteristics (e.g., clothing type, traveling tool, physical quality) and finally, to the quality of the natural, built, and social environment.
+
+* Modeling Approaches for Assessing Environment Exposures
+    * Schnell et al. [24] criticized such models: (1) they underestimate concentrations of risk factors using limited monitoring measurements; (2) the complexity of pollutant distribution patterns was hardly accurate in these models; and (3) the indoor environment was ignored when using only outdoor monitoring data. Beyond Schnell’s criticism, these models mostly focus on a single stressor of concern, and describe a few pathways through which the receptor—either a human or another organism—can be exposed
+    * 
