@@ -1,5 +1,14 @@
 # Scenario
 ## Vehicle Restriction
+| Scenario          	| Type              	| Jongno (µg/m3) 	| Sejong (µg/m3) 	| Yulgok (µg/m3) 	| Samil (µg/m3)   	| Pirun (µg/m3)  	|
+|-------------------	|-------------------	|----------------	|----------------	|----------------	|---------	|---------	|
+| Business as Usual 	| PM10              	| 60.7           	| 61.3           	| 62.5           	| 62.4    	| 63.6    	|
+| 50% Restriction   	| PM10              	| 58             	| 59.6           	| 60.2           	| 61.2    	| 61.3    	|
+|                   	| Difference to BAU 	| 2.7            	| 1.7            	| 2.3            	| 1.2     	| 2.3     	|
+|                   	|                   	| -4.40%         	| -2.80%         	| -3.70%         	| -1.90%  	| -3.60%  	|
+| 90% Restriction   	| PM10              	| 47.9           	| 49.8           	| 48.1           	| 51      	| 47.9    	|
+|                   	| Difference to BAU 	| 12.8           	| 11.5           	| 14.4           	| 11.4    	| 15.7    	|
+|                   	|                   	| -21.10%        	| -18.80%        	| -23.00%        	| -18.30% 	| -24.70% 	|
 
 ![](https://i.imgur.com/Jbwz2jw.png)
 ![](https://i.imgur.com/kc8QYmp.png)
@@ -13,12 +22,7 @@
 
 ### Resident Drivers
 
-|  |
-|-------|
-|![](https://i.imgur.com/aakBFcq.png) |
-|↕ Same Image Different Y-Axis (Making it easier to compare with Subway commuters) |
-|![](https://i.imgur.com/yH4SE62.png) |
-
+![](https://i.imgur.com/9FI8LXF.png)
 
 
 <!--
