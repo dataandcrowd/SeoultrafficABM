@@ -100,23 +100,32 @@ This study considers two sensitivity tests, locally and globally. Local sensitiv
 
 
 ## Dispersion and Dilution
+This section examines the sensitivity of dispersion and dilution parameters that affect roadside PM10. The variables are conceptualised in the Figure below. By default, each vehicle disperses non-exhaust PM10 on the neighbouring patches by a degree of 60° and dilutes in 0-3 minutes. With the duration of dilution controlled, the first experiment simulated the range of dispersion at 45° and 90°. Then controlling the dispersion to 60°, the next experiment simulated slowed the dilution process by 5+α and 10+α. 
+
 ![](https://i.imgur.com/13IecEv.png)
 
 ### Dilution
+* all roads were very sensitive to the dilution period 
+* If this analysis was to experiment the length of dust resuspension in the real world (i.e. 3 minutes of dust floating until dilution), the deterioration of PM10 can be explained by the floating particles from the vehicles that mixed well with the atmosphere.
+
 
 | emission_factor 	| countdown 	| Jongno 	| Sejong 	| Yulgok 	| Samil 	| Pirun 	|
 |-----------------	|-----------	|--------	|--------	|--------	|-------	|-------	|
 | 1               	| 5         	| 42.3   	| 42.2   	| 42.1   	| 42.2  	| 42    	|
-| 1               	| 10        	| 41.9   	| 41.8   	| 41.7   	| 41.8  	| 41.7  	|
+|                	| 10        	| 41.9   	| 41.8   	| 41.7   	| 41.8  	| 41.7  	|
 | 5               	| 5         	| 65.5   	| 65.6   	| 66.3   	| 66.2  	| 67.1  	|
-| 5               	| 10        	| 67.4   	| 67.3   	| 67.7   	| 67.7  	| 68.5  	|
+|                	| 10        	| 67.4   	| 67.3   	| 67.7   	| 67.7  	| 68.5  	|
 | 10              	| 5         	| 93.9   	| 95.4   	| 96.3   	| 95.7  	| 98.7  	|
-| 10              	| 10        	| 99     	| 99.2   	| 100    	| 99.6  	| 102   	|
+|               	| 10        	| 99     	| 99.2   	| 100    	| 99.6  	| 102   	|
 | 20              	| 5         	| 153    	| 150    	| 155    	| 155   	| 159   	|
-| 20              	| 10        	| 164    	| 160    	| 165    	| 164   	| 167   	|
+|               	| 10        	| 164    	| 160    	| 165    	| 164   	| 167   	|
 
 
 ### Dispersion
+* The sensitivity to dispersion was less sensitive to the roads except Jongno, where the 90° dispersion was 2-14µg/m3 higher than the 45° dispersion 
+* Jongno was more sensitive because the site location was distant to the pavement not ‘in the middle of the road’. 
+* The sensitivity of Jongno implies that the range of dispersion might not be sensitive to the PM10 on roads but are likely to affect 3-10% higher PM10 to people walking near kerbsides.
+
 
 | emission_factor 	| poll_cone 	| Jongno 	| Sejong 	| Yulgok 	| Samil 	| Pirun 	|
 |-----------------	|-----------	|--------	|--------	|--------	|-------	|-------	|
