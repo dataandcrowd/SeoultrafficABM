@@ -120,3 +120,6 @@
 * Modeling Approaches for Assessing Environment Exposures
     * Schnell et al. [24] criticized such models: (1) they underestimate concentrations of risk factors using limited monitoring measurements; (2) the complexity of pollutant distribution patterns was hardly accurate in these models; and (3) the indoor environment was ignored when using only outdoor monitoring data. Beyond Schnell’s criticism, these models mostly focus on a single stressor of concern, and describe a few pathways through which the receptor—either a human or another organism—can be exposed
     * 
+
+
+## [Breuer et al 2020](https://www.sciencedirect.com/science/article/pii/S0048969720320994) The impact of diesel vehicles on NOx and PM10 emissions from road transport in urban morphological zones: A case study in North Rhine-Westphalia, Germany
