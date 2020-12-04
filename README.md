@@ -23,3 +23,18 @@ This method is very useful because **unique individuals** can be created and the
 
 ## What are you testing?
 For our study, we test whether reducing traffic can alleviate the pollution levels and whether taking a polluted but quicker path or less polluted but longer path makes a difference to pedestrians' exposure levels.
+
+
+## Where to find details?
+You can go to the Wiki tab (https://github.com/mrsensible/SeoultrafficABM/wiki) for more information. The details include:
+
+* Change logs
+* Model interface/purpose
+* Non-exhaust emission (NEE)
+* A* algorithm: a pathfinding algorithm for vehicles
+* Sensitivity analysis and Calibration
+* Spatial Output
+* Scenario Forecasting
+
+
+
