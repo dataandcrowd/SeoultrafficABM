@@ -37,4 +37,9 @@ You can go to the Wiki tab (https://github.com/mrsensible/SeoultrafficABM/wiki) 
 * Scenario Forecasting
 
 
+## Contacts
+If you want to discover more, feel free to contact me via
 
+* personal email: shinhyesop@gmail.com
+* work email: hs621@cam.ac.uk
+* twitter DM: @hyesop
