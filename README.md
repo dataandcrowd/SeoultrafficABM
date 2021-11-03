@@ -41,5 +41,5 @@ You can go to the Wiki tab (https://github.com/mrsensible/SeoultrafficABM/wiki) 
 If you want to discover more, feel free to contact me via
 
 * personal email: shinhyesop@gmail.com
-* work email: hs621@cam.ac.uk
+* work email: Hyesop.Shin@glasgow.ac.uk
 * twitter DM: @hyesop
