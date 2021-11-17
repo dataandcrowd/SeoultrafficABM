@@ -4,6 +4,7 @@ library(feather)
 library(janitor)
 library(reshape2)
 
+unzip(zipfile = "CBD_CarRatio_819.zip")
 
 p <- read_feather("CBD_CarRatio_819.feather") %>% 
   clean_names() %>% 

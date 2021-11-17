@@ -4,6 +4,8 @@ library(janitor)
 library(data.table)
 library(cowplot)
 
+unzip(zipfile = "CBD_CarCount.zip")
+
 cc <- read_feather("CBD_CarCount.feather") %>% clean_names() %>% select(step, count_cars = count_cars_with_random_car_true)
 dt <- fread("../GIS/jongno_pm10.csv") %>% 
   filter(type == "Back") %>% 

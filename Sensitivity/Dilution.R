@@ -5,6 +5,7 @@ library(reshape2)
 library(data.table)
 library(cowplot)
 
+unzip(zipfile = "CBD_Dilution_1_1490.zip")
 
 
 emission <- read_feather("CBD_Dilution_1_1490.feather") %>% clean_names() %>% 

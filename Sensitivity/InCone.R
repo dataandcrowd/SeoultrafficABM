@@ -5,7 +5,7 @@ library(reshape2)
 library(data.table)
 library(cowplot)
 
-
+unzip(zipfile = "CBD_InCone_1_5773.zip")
 
 emission <- read_feather("CBD_InCone_1_5773.feather") %>% clean_names() %>% 
   select(emission_factor, poll_cone, step, Jongno = jongno_kerb_p, 

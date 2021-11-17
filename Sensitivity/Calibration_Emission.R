@@ -5,9 +5,9 @@ library(reshape2)
 library(data.table)
 library(cowplot)
 
+unzip(zipfile = "Sensitivity_Emission.R")
 
-
-emission0 <- read_feather("CBD_Emission_8849.feather") %>% clean_names() %>% 
+emission0 <- read_feather("CBD_Emission.feather") %>% clean_names() %>% 
   select(emission_factor, step, Jongno = jongno_kerb_p, 
          Sejong = sejong_p, Yulgok = yulgok_p, Samil = samil_p, Pirun = pirum_p) 
 

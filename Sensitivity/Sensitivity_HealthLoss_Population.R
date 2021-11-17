@@ -6,6 +6,8 @@ library(reshape2)
 library(cowplot)
 
 #########################
+unzip(zipfile = "CBD_HL.zip")
+
 hl <- read_feather("CBD_HL.feather")# %>% clean_names()
 
 
