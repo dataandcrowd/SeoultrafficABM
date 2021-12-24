@@ -1,8 +1,9 @@
-Sys.setenv(JAVA_HOME= "/Library/Java/JavaVirtualMachines/jdk1.8.0_311.jdk/Contents/Home")
+#Sys.setenv(JAVA_HOME= "/Library/Java/JavaVirtualMachines/jdk1.8.0_311.jdk/Contents/Home")
+Sys.setenv(JAVA_HOME= "C:/Program Files/Java/jre1.8.0_311/bin")
 
 library(nlrx)
 # Windows default NetLogo installation path (adjust to your needs!):
-netlogopath <- file.path("C:/Program Files/NetLogo 6.0.3")
+netlogopath <- file.path("C:/Program Files/NetLogo 6.0.4")
 modelpath <- file.path(netlogopath, "app/models/Sample Models/Biology/Wolf Sheep Predation.nlogo")
 outpath <- file.path("C:/out")
 # Unix default NetLogo installation path (adjust to your needs!):
