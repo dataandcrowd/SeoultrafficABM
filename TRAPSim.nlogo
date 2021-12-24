@@ -217,7 +217,7 @@ to go
   validation-plot
   age-plot
   tick
-
+  store-raster
 
 end
 
@@ -1457,6 +1457,16 @@ to age-plot
  set-current-plot-pen "Walkers" plot(count(employees with [health < 100]) / count employees * 100)
 
 end
+
+;;-----------
+to store-raster
+  let patches_out nobody
+  ask one-of patches [
+    set patches_out gis:patch-dataset pm10
+  ]
+
+  gis:store-dataset patches_out (word "Spatial_Output/patch_out_check" "_" but-first (word (100000 + ticks)) ".asc")
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 632
@@ -2338,12 +2348,27 @@ NetLogo 6.0.4
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="macro" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
+    <timeLimit steps="99999"/>
+    <enumeratedValueSet variable="emission-factor">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="medication">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="health_loss">
+      <value value="0.01"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="awareness">
-      <value value="&quot;not yet&quot;"/>
-      <value value="&quot;&quot;"/>
+      <value value="&quot;no&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="car_ratio">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="no-of-employees">
+      <value value="1932"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
