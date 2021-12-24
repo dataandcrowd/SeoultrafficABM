@@ -1,7 +1,7 @@
 #Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
 #Sys.setenv(JAVA_HOME= "/usr/lib/jvm/java-11-openjdk-amd64")
-Sys.setenv(JAVA_HOME= "C:/Program Files/Java/jre1.8.0_311/bin")
-
+Sys.setenv(JAVA_HOME= "/usr/bin/java")
+#Sys.setenv(JAVA_HOME= "C:/Program Files/Java/jre1.8.0_311/bin")
 
 #.libPaths("/home/hs621/renv/lib/R/library")
 
@@ -11,16 +11,21 @@ library(dplyr)
 library(feather)
 library(landscapemetrics)
 
-# Software
+############
+# Software #
+############
 #netlogopath <- file.path("/usr/local/Cluster-Apps/netlogo/6.0.4")
 #outpath <- file.path("/home/hs621/github/chapter5")
 
-netlogopath <- file.path("C:/Program Files/NetLogo 6.2.0")
-outpath <- file.path("D:/github/SeoultrafficABM")
+netlogopath <- file.path("/Applications/NetLogo 6.2.0")
+outpath <- file.path("/Users/hyesop/github/SeoultrafficABM")
+
+#netlogopath <- file.path("C:/Program Files/NetLogo 6.2.0")
+#outpath <- file.path("D:/github/SeoultrafficABM")
 
 
 ## Step1: Create a nl obejct:
-nl <- nl(nlversion = "6.2.0",
+nl <- nl(nlversion = "6.0.4",
          nlpath = netlogopath,
          modelpath = file.path(outpath, "TRAPSim.nlogo"),
          jvmmem = 1024)
