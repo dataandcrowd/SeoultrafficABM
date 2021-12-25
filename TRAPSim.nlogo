@@ -217,7 +217,7 @@ to go
   validation-plot
   age-plot
   tick
-  store-raster
+  if(export-raster = "yes")[store-raster]
 
 end
 
@@ -1928,6 +1928,16 @@ Drivers_p
 17
 1
 11
+
+CHOOSER
+383
+34
+477
+79
+export-raster
+export-raster
+"no" "yes"
+0
 
 @#$#@#$#@
 ## WHAT IS IT?
