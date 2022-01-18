@@ -222,7 +222,8 @@ to set-gis
   ask patches [ set pcolor white ]                                     ;; set a white background
   set area  gis:load-dataset "GIS/Seoul_4daemoonArea.shp"              ;; set shapefile
   set roads gis:load-dataset "GIS/Seoul_4DaemoonLink.shp"              ;; set road network
-  gis:set-world-envelope (gis:envelope-union-of gis:envelope-of roads) ;; set spatial extent
+  let world_envelope gis:load-dataset "GIS/Seoul_4DaemoonLink_buffer.shp" ;; set spatial extent
+  gis:set-world-envelope (gis:envelope-union-of gis:envelope-of world_envelope) ;; set spatial extent
 
 
 ;; Assign subdistrict name
@@ -1476,7 +1477,7 @@ GRAPHICS-WINDOW
 1
 0
 0
-1
+0
 1
 0
 154
@@ -2356,7 +2357,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.4
+NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
