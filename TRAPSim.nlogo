@@ -172,17 +172,10 @@ to go
                                count cars with [not random-car]) * 100) 3
   set Walkers_p    precision ((count(employees with [health < 100]) / count employees) * 100) 3
   set mean-pm10    precision mean [pm10] of patches with [is-research-area? = true] 3
-  ;set e_nearroad   precision ((count employees with [work-near-roads? and health < 100] /
-  ;                             count employees with [work-near-roads? ]) * 100) 3
-  ;set e_farroad   precision ((count employees with [work-near-roads? != true and health < 100] /
-  ;                             count employees with [work-near-roads? != true ]) * 100) 3
-  ;set d_nearroad   precision ((count cars with [not random-car and work-near-roads? = true and health < 100] /
-  ;                             count cars with [not random-car and work-near-roads? = true]) * 100) 3
-  ;set d_farroad   precision ((count cars with [not random-car and work-near-roads? != true and health < 100] /
-  ;                             count cars with [not random-car and work-near-roads? != true]) * 100) 3
 
 
-  if (ticks + 1) >= 127740 [stop]
+  if (export-raster = "no" and (ticks + 1) >= 127740) or (export-raster = "yes" and (ticks + 1) >= 1442) [stop]
+  ;if (ticks + 1) >= 127740 [stop]
   ask cars [
     let is-weekend? item 6 table:get pm10-road (ticks + 1)
     let what-time?  item 1 table:get pm10-road (ticks + 1)
@@ -1465,7 +1458,7 @@ to store-raster
     set patches_out gis:patch-dataset pm10
   ]
 
-  gis:store-dataset patches_out (word "Spatial_Output/patch_out_check" "_" but-first (word (100000 + ticks)) ".asc")
+  gis:store-dataset patches_out (word "Spatial_Output/patch_out_check" "_" but-first (word (10000 + ticks)) ".asc")
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -1902,7 +1895,7 @@ car_ratio
 00
 .1
 0.05
-.01
+.005
 1
 NIL
 HORIZONTAL
@@ -1938,6 +1931,16 @@ export-raster
 export-raster
 "no" "yes"
 0
+
+TEXTBOX
+475
+403
+569
+436
+BAU: 0.05\n50% ban: 0.025\n90% ban: 0.005
+10
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
