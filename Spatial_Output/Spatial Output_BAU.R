@@ -47,6 +47,12 @@ max_time02 <- max(time02[[1:60]])
 
 # Change to Data Frame
 # mean
+
+
+
+#eval(parse(text=paste0("as.data.frame(mean_time", 13, ", xy = TRUE)")))
+
+
 time08_df <- as.data.frame(mean_time08, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
@@ -66,7 +72,7 @@ time18_df <- as.data.frame(mean_time18, xy = TRUE) %>%
                       values_to = 'PM10') %>%
   mutate(variable = case_when(variable == "mean" ~ "18:00"))
 
-time03_df <- as.data.frame(mean_time02, xy = TRUE) %>% 
+time02_df <- as.data.frame(mean_time02, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
@@ -92,7 +98,7 @@ time18_df_max <- as.data.frame(max_time18, xy = TRUE) %>%
                       values_to = 'PM10') %>%
   mutate(variable = case_when(variable == "max" ~ "18:00"))
 
-time03_df_max <- as.data.frame(max_time02, xy = TRUE) %>% 
+time02_df_max <- as.data.frame(max_time02, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
@@ -100,8 +106,8 @@ time03_df_max <- as.data.frame(max_time02, xy = TRUE) %>%
 
 
 # Stack
-stack_df <- bind_rows(time08_df, time13_df, time18_df, time03_df)
-stack_df_max <- bind_rows(time08_df_max, time13_df_max, time18_df_max, time03_df_max)
+stack_df <- bind_rows(time08_df, time13_df, time18_df)
+stack_df_max <- bind_rows(time08_df_max, time13_df_max, time18_df_max)
 
 
 # Add categorical value for plotting
@@ -145,27 +151,15 @@ stack_df %>%
                            levels = c("< 20", "20-40", "40-60", "60-80", "80-100", "100-120", "> 120", "NA"))) %>% 
   ggplot(aes(x,y)) +
   geom_raster(aes(fill = PM10_cat, group = PM10_cat)) +
-  labs(#x = "Relative Distance (m)", y = "Relative Distance (m)", 
-       title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
-       subtitle = "Scenario: Business-as-Usual") +
-  facet_wrap(~variable) + 
+  labs(title = (expression(paste("      Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
+       subtitle = "       Scenario: Business-as-Usual") +
+  facet_wrap(~variable, ncol = 3) + 
   scale_fill_manual(values = cols, aesthetics = c("colour", "fill")) +
   theme_void() + 
-  theme(legend.position = "bottom") -> p
+  theme(legend.position = "none") -> p
 
-p
 
 # Plot
-#ggplot() + 
-#  geom_raster(data = stack_df, 
-#              aes(x = x, y = y, fill = PM10)) +
-#  facet_wrap(~variable) +
-#  scale_fill_gradientn(colours = rev(terrain.colors(10))) +
-#  coord_equal() + 
-#  labs(x = "Relative Distance (m)", y = "Relative Distance (m)", 
-#       title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
-#       subtitle = "Inbound Traffic: Business-as-Usual") +
-#  theme_minimal()  
 
 stack_df_max %>% 
   mutate(PM10_cat = factor(PM10_cat, 
@@ -173,15 +167,52 @@ stack_df_max %>%
   ggplot(aes(x,y)) +
   geom_raster(aes(fill = PM10_cat, group = PM10_cat)) +
   labs(#x = "Relative Distance (m)", y = "Relative Distance (m)", 
-    title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
-    subtitle = "Scenario: Business-as-Usual") +
-  facet_wrap(~variable) + 
+    title = (expression(paste("      Hourly Maximum Concentrations of ", PM[10], " in Seoul CBD"))),
+    subtitle = "       Scenario: Business-as-Usual",
+    fill= (expression(PM[10]))) +
+  facet_wrap(~variable, ncol = 3) + 
   scale_fill_manual(values = cols, aesthetics = c("colour", "fill")) +
   theme_void() + 
   theme(legend.position = "bottom") -> p1
 
-p1
+#p1
+
+final <- plot_grid(p, p1, labels = c('A', 'B'), ncol = 1, align = "v", rel_heights = c(.85, 1), label_size = 12)
+save_plot("Spatial_BAU.pdf", final, base_height = 7, base_width = 7)
+#save_plot("Spatial_BAU.jpg", final, base_height = 7, base_width = 7)
 
 
-save_plot("Spatial_BAU_mean.pdf", p, base_height = 8, base_width = 6)
-save_plot("Spatial_BAU_max.pdf", p1, base_height = 8, base_width = 6)
+################################
+#--Find the nearest location--##
+################################
+
+# Samil
+time08_df %>% 
+  filter(x >= 198980 & x <= 199080 & y >= 451250 & y <= 451350) %>% 
+  pull(PM10) %>% mean
+# Samil near
+time08_df %>% 
+  filter(x >= 198940 & x <= 199050 & y >= 451050 & y <= 451080) %>% 
+  pull(PM10) %>% mean
+
+
+# Jongno
+time08_df %>% 
+  filter(x >= 199758 & x <= 199858 & y >= 452301 & y <= 452401) %>% 
+  pull(PM10) %>% mean
+
+# Jongno near
+time08_df %>% 
+  filter(x >= 199572 & x <= 199672 & y >= 452379 & y <= 452479) %>% 
+  pull(PM10) %>% mean
+
+
+# Sejong
+time08_df %>% 
+  filter(x >= 197884 & x <= 197984 & y >= 452752 & y <= 452852) %>% 
+  pull(PM10) %>% mean
+
+time08_df %>% 
+  filter(x >= 197734 & x <= 197834 & y >= 452605 & y <= 452705) %>% 
+  pull(PM10) %>% mean
+
