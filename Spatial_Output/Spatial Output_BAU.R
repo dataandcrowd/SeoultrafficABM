@@ -4,7 +4,7 @@ library(raster)
 library(cowplot)
 library(RColorBrewer)
 
-files <- list.files(path="Spatial_Output/BAU/", pattern="asc", all.files=FALSE, full.names=TRUE,recursive=TRUE)
+files <- list.files(path="BAU/", pattern="asc", all.files=FALSE, full.names=TRUE,recursive=TRUE)
 
 time10 <- rast(files[  2: 61])
 time11 <- rast(files[ 62:121])
@@ -38,12 +38,12 @@ time09 <- rast(files[1382:1441])
 mean_time08 <- mean(time08[[1:60]])
 mean_time13 <- mean(time13[[1:60]])
 mean_time18 <- mean(time18[[1:60]])
-mean_time21 <- mean(time21[[1:60]])
+mean_time02 <- mean(time02[[1:60]])
 
 max_time08 <- max(time08[[1:60]])
 max_time13 <- max(time13[[1:60]])
 max_time18 <- max(time18[[1:60]])
-max_time21 <- max(time21[[1:60]])
+max_time02 <- max(time02[[1:60]])
 
 # Change to Data Frame
 # mean
@@ -51,79 +51,63 @@ time08_df <- as.data.frame(mean_time08, xy = TRUE) %>%
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "mean" ~ "08:00"))
+  mutate(variable = case_when(variable == "mean" ~ "08:00"))
 
 
 time13_df <- as.data.frame(mean_time13, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "mean" ~ "13:00"))
+  mutate(variable = case_when(variable == "mean" ~ "13:00"))
 
 time18_df <- as.data.frame(mean_time18, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "mean" ~ "18:00"))
+  mutate(variable = case_when(variable == "mean" ~ "18:00"))
 
-time21_df <- as.data.frame(mean_time21, xy = TRUE) %>% 
+time03_df <- as.data.frame(mean_time02, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "mean" ~ "21:00"))
+  mutate(variable = case_when(variable == "mean" ~ "02:00"))
 
 # max
 time08_df_max <- as.data.frame(max_time08, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "max" ~ "08:00"))
+  mutate(variable = case_when(variable == "max" ~ "08:00"))
 
 
 time13_df_max <- as.data.frame(max_time13, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "max" ~ "13:00"))
+  mutate(variable = case_when(variable == "max" ~ "13:00"))
 
 time18_df_max <- as.data.frame(max_time18, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "max" ~ "18:00"))
+  mutate(variable = case_when(variable == "max" ~ "18:00"))
 
-time21_df_max <- as.data.frame(max_time21, xy = TRUE) %>% 
+time03_df_max <- as.data.frame(max_time02, xy = TRUE) %>% 
   tidyr::pivot_longer(cols = !c(x, y), 
                       names_to = 'variable', 
                       values_to = 'PM10') %>%
-  mutate(x = x - 197000,
-         y = y - 450000,
-         variable = case_when(variable == "max" ~ "21:00"))
+  mutate(variable = case_when(variable == "max" ~ "02:00"))
 
 
 # Stack
-stack_df <- bind_rows(time08_df, time13_df, time18_df, time21_df)
-stack_df_max <- bind_rows(time08_df_max, time13_df_max, time18_df_max, time21_df_max)
+stack_df <- bind_rows(time08_df, time13_df, time18_df, time03_df)
+stack_df_max <- bind_rows(time08_df_max, time13_df_max, time18_df_max, time03_df_max)
 
 
 # Add categorical value for plotting
 stack_df %>% 
   mutate(PM10_cat = case_when(
-    PM10 == 0 ~ "No Data", 
+    PM10 == 0 ~ "NA", 
     PM10 > 0 & PM10 < 20 ~ "< 20",
     PM10 >= 20 & PM10 < 40 ~ "20-40",
     PM10 >= 40 & PM10 < 60 ~ "40-60",
@@ -132,8 +116,21 @@ stack_df %>%
     PM10 >= 100 & PM10 < 120 ~ "100-120",
     TRUE ~ "> 120")) -> stack_df
 
-cols <- c("No Data" = "#fcfcfc",
-          "< 20" = "#FFFFB2", 
+
+stack_df_max %>% 
+  mutate(PM10_cat = case_when(
+    PM10 == 0 ~ "NA", 
+    PM10 > 0 & PM10 < 20 ~ "< 20",
+    PM10 >= 20 & PM10 < 40 ~ "20-40",
+    PM10 >= 40 & PM10 < 60 ~ "40-60",
+    PM10 >= 60 & PM10 < 80 ~ "60-80",
+    PM10 >= 80 & PM10 < 100 ~ "80-100",
+    PM10 >= 100 & PM10 < 120 ~ "100-120",
+    TRUE ~ "> 120")) -> stack_df_max
+
+
+cols <- c("NA" = "#fcfcfc",
+          "< 20" = "#FAF6A4", 
           "20-40" = "#FECC5C",
           "40-60" = "#FD8D3C",
           "60-80" = "#F03B20",
@@ -145,12 +142,12 @@ cols <- c("No Data" = "#fcfcfc",
 
 stack_df %>% 
   mutate(PM10_cat = factor(PM10_cat, 
-                           levels = c("< 20", "20-40", "40-60", "60-80", "80-100", "100-120", "> 120", "No Data"))) %>% 
+                           levels = c("< 20", "20-40", "40-60", "60-80", "80-100", "100-120", "> 120", "NA"))) %>% 
   ggplot(aes(x,y)) +
   geom_raster(aes(fill = PM10_cat, group = PM10_cat)) +
   labs(#x = "Relative Distance (m)", y = "Relative Distance (m)", 
        title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
-       subtitle = "Inbound Traffic: Business-as-Usual") +
+       subtitle = "Scenario: Business-as-Usual") +
   facet_wrap(~variable) + 
   scale_fill_manual(values = cols, aesthetics = c("colour", "fill")) +
   theme_void() + 
@@ -170,20 +167,21 @@ p
 #       subtitle = "Inbound Traffic: Business-as-Usual") +
 #  theme_minimal()  
 
-
-ggplot() + 
-  geom_raster(data = stack_df_max, 
-              aes(x = x, y = y, fill = PM10)) +
-  facet_wrap(~variable) +
-  scale_fill_gradientn(colours = rev(terrain.colors(10))) +
-  coord_equal() + 
-  labs(x = "Relative Distance (m)", y = "Relative Distance (m)", 
-       title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
-       subtitle = "Inbound Traffic: Business-as-Usual") +
-  theme_minimal()  -> p1
+stack_df_max %>% 
+  mutate(PM10_cat = factor(PM10_cat, 
+                           levels = c("< 20", "20-40", "40-60", "60-80", "80-100", "100-120", "> 120", "NA"))) %>% 
+  ggplot(aes(x,y)) +
+  geom_raster(aes(fill = PM10_cat, group = PM10_cat)) +
+  labs(#x = "Relative Distance (m)", y = "Relative Distance (m)", 
+    title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
+    subtitle = "Scenario: Business-as-Usual") +
+  facet_wrap(~variable) + 
+  scale_fill_manual(values = cols, aesthetics = c("colour", "fill")) +
+  theme_void() + 
+  theme(legend.position = "bottom") -> p1
 
 p1
 
 
 save_plot("Spatial_BAU_mean.pdf", p, base_height = 8, base_width = 6)
-save_plot("Spatial_BAU_max.pdf", p1, base_height = 6, base_width = 6)
+save_plot("Spatial_BAU_max.pdf", p1, base_height = 8, base_width = 6)
