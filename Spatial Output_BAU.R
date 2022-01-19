@@ -119,19 +119,56 @@ time21_df_max <- as.data.frame(max_time21, xy = TRUE) %>%
 stack_df <- bind_rows(time08_df, time13_df, time18_df, time21_df)
 stack_df_max <- bind_rows(time08_df_max, time13_df_max, time18_df_max, time21_df_max)
 
-# Plot
-ggplot() + 
-  geom_raster(data = stack_df, 
-              aes(x = x, y = y, fill = PM10)) +
-  facet_wrap(~variable) +
-  scale_fill_gradientn(colours = rev(terrain.colors(10))) +
-  coord_equal() + 
-  labs(x = "Relative Distance (m)", y = "Relative Distance (m)", 
+
+# Add categorical value for plotting
+stack_df %>% 
+  mutate(PM10_cat = case_when(
+    PM10 == 0 ~ "No Data", 
+    PM10 > 0 & PM10 < 20 ~ "< 20",
+    PM10 >= 20 & PM10 < 40 ~ "20-40",
+    PM10 >= 40 & PM10 < 60 ~ "40-60",
+    PM10 >= 60 & PM10 < 80 ~ "60-80",
+    PM10 >= 80 & PM10 < 100 ~ "80-100",
+    PM10 >= 100 & PM10 < 120 ~ "100-120",
+    TRUE ~ "> 120")) -> stack_df
+
+cols <- c("No Data" = "#fcfcfc",
+          "< 20" = "#FFFFB2", 
+          "20-40" = "#FECC5C",
+          "40-60" = "#FD8D3C",
+          "60-80" = "#F03B20",
+          "80-100" = "#BD0026",
+          "100-120" = "#252525",
+          "> 120" = "#525252")
+
+
+
+stack_df %>% 
+  mutate(PM10_cat = factor(PM10_cat, 
+                           levels = c("< 20", "20-40", "40-60", "60-80", "80-100", "100-120", "> 120", "No Data"))) %>% 
+  ggplot(aes(x,y)) +
+  geom_raster(aes(fill = PM10_cat, group = PM10_cat)) +
+  labs(#x = "Relative Distance (m)", y = "Relative Distance (m)", 
        title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
        subtitle = "Inbound Traffic: Business-as-Usual") +
-  theme_minimal()  -> p
+  facet_wrap(~variable) + 
+  scale_fill_manual(values = cols, aesthetics = c("colour", "fill")) +
+  theme_void() + 
+  theme(legend.position = "bottom") -> p
 
 p
+
+# Plot
+#ggplot() + 
+#  geom_raster(data = stack_df, 
+#              aes(x = x, y = y, fill = PM10)) +
+#  facet_wrap(~variable) +
+#  scale_fill_gradientn(colours = rev(terrain.colors(10))) +
+#  coord_equal() + 
+#  labs(x = "Relative Distance (m)", y = "Relative Distance (m)", 
+#       title = (expression(paste("Hourly Averaged Concentrations of ", PM[10], " in Seoul CBD"))),
+#       subtitle = "Inbound Traffic: Business-as-Usual") +
+#  theme_minimal()  
 
 
 ggplot() + 
@@ -148,5 +185,5 @@ ggplot() +
 p1
 
 
-save_plot("Spatial_BAU_mean.pdf", p, base_height = 6, base_width = 6)
+save_plot("Spatial_BAU_mean.pdf", p, base_height = 8, base_width = 6)
 save_plot("Spatial_BAU_max.pdf", p1, base_height = 6, base_width = 6)
