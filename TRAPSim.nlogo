@@ -171,7 +171,7 @@ to go
   set Drivers_p    precision ((count cars with [not random-car and health < 100] /
                                count cars with [not random-car]) * 100) 3
   set Walkers_p    precision ((count(employees with [health < 100]) / count employees) * 100) 3
-  set mean-pm10    precision mean [pm10] of patches with [is-research-area? = true] 3
+  set mean-pm10    precision mean [pm10] of patches with [is-research-area? = true and road_buffer = false] 2
 
 
   if (export-raster = "no" and (ticks + 1) >= 127740) or (export-raster = "yes" and (ticks + 1) >= 1442) [stop]
@@ -1476,8 +1476,8 @@ GRAPHICS-WINDOW
 1
 1
 0
-0
-0
+1
+1
 1
 0
 154
@@ -2362,10 +2362,15 @@ NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="air quality" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
-    <timeLimit steps="99999"/>
+    <timeLimit steps="127740"/>
+    <metric>mean-pm10</metric>
+    <metric>JongnoKerb_p</metric>
+    <metric>Sejong_p</metric>
+    <metric>Pirum_p</metric>
+    <metric>Yulgok_p</metric>
     <enumeratedValueSet variable="emission-factor">
       <value value="5"/>
     </enumeratedValueSet>
