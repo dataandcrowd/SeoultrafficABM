@@ -6,6 +6,7 @@ globals [
   roads
   streets
   mean-pm10
+  back_pm10_sample
   pm10-back pm10-road pm10-others
   t_sajik t_jahamoon t_daesagwan t_daehak t_jongno
   t_dongho t_ns2ho t_soparo t_saemunan t_ssm
@@ -161,7 +162,8 @@ end
 
 ;;---------------------------------------------------------
 to go
-  set Jongno_p     precision ([pm10] of patch 134 98) 2
+  set back_pm10_sample precision ([pm10] of patch 81 91) 2
+  set Jongno_p     precision ([pm10] of patch 88 94) 2
   set Jung_p       precision ([pm10] of patch 38 68) 2
   set JongnoKerb_p precision ([pm10] of patch 105 95) 2
   set Samil_p      precision ([pm10] of patch 77 77) 2 ;"Samil-daero"
@@ -171,7 +173,7 @@ to go
   set Drivers_p    precision ((count cars with [not random-car and health < 100] /
                                count cars with [not random-car]) * 100) 3
   set Walkers_p    precision ((count(employees with [health < 100]) / count employees) * 100) 3
-  set mean-pm10    precision mean [pm10] of patches with [is-research-area? = true and road_buffer = false] 2
+  set mean-pm10    precision mean [pm10] of patches with [is-research-area? = true] 2
 
 
   if (export-raster = "no" and (ticks + 1) >= 127740) or (export-raster = "yes" and (ticks + 1) >= 1442) [stop]
@@ -2365,8 +2367,9 @@ NetLogo 6.2.0
   <experiment name="air quality" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
-    <timeLimit steps="127740"/>
+    <timeLimit steps="127741"/>
     <metric>mean-pm10</metric>
+    <metric>back_pm10_sample</metric>
     <metric>JongnoKerb_p</metric>
     <metric>Sejong_p</metric>
     <metric>Pirum_p</metric>
