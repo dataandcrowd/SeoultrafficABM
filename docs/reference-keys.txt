@@ -1,5 +1,0 @@
-fig:study-area
-fig:pollution-trend
-study-area-and-data-collection
-study-area
-air-pollution
