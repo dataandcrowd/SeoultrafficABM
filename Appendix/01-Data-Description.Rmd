@@ -29,7 +29,6 @@ knitr::include_graphics("Figs/data_linegraph.png")
 
 ```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Number of times each station exceeded the hourly standard of 100µg/m<sup>3</sup>"}
 library(tidyverse)
-library(kableExtra)
 library(flextable)
 
 df <- tibble(
@@ -90,12 +89,46 @@ We used an annual daily average of OD matrix 2015 provided by the Korean Transpo
 Amongst 15 modes of transport^[Walking, passenger car, carpooled people, city bus, regional bus, town bus, intercity bus, express bus, other buses, subway, rail, speed rail, taxi, small freight, large freight, motorbike, bicycle, and others], we took the counts of passenger cars as proxy data to assign the origins and destinations for resident agents. As the model is not suitable to implement the entire population, we converted the raw OD matrix to a fractional OD matrix to assign the agents irrespective of sample sizes. Note that the boundaries of the administrative area in 2015 might not always match the boundaries of the daytime population or vehicle registration zones in 2018 due to rapid population change that resulted from urban regeneration and gentrification. The OD matrix for subway commuters is omitted because the destinations at the subdistrict level were already assigned in the setup.
 
 
-The fraction of OD data simply filters the counts of passenger cars and converts to a scale of 0-1. As mentioned earlier, there is a mismatch of administrative codes between the year the vehicle counts were collected and the year that the OD matrix was generated, in other words, some admin codes were in 2015 are missing in 2018. The result is shown in Table 3.
+The fraction of OD data simply filters the counts of passenger cars and converts to a scale of 0-1. As mentioned earlier, there is a mismatch of administrative codes between the year the vehicle counts were collected and the year that the OD matrix was generated, in other words, some admin codes were in 2015 are missing in 2018. The result is shown in Table \@ref(tab:table2).
 
 
 It is worth raising the caveat of using a fractional OD matrix that matches the data too exactly when using a subsample of the population: an accumulation error may occur that gives a sum more than the total number of agents that exist. In mathematics, the so-called rounding error or floating-point precision error occurs when “the result produced by a given algorithm using exact arithmetic and the result produced by the same algorithm using finite-precision, rounded arithmetic.” [@Ueberhuber1997]. In this model, this occurs when the counts of the allocated agents (by origin/destination) are larger than the counts of the agents. The opposite would not be a problem because the agents can be given another arbitrary destination or perhaps be removed. 
 
 
-For example, 33 agents of origin 1101053 will be allocated to each sub-district including itself. The model will calculate 33×0.19, then 33×0.01 (see Table 3), and so on, which will total 30. As mentioned, the three agents that do not have an allocation can be allocated to an arbitrary destination but were removed for this study. However, in two sub-districts, 1101060 and 1102058, each sub-district had 10 agents, but the arithmetic results returned 11 agents and 13 agents. To avoid these computational problems float values were reduced until the error disappeared. The adjustment might seem arbitrary but is necessary for model consistency and the difference of agents would not be too problematic as it would not noticeably change the emission levels. 
+For example, 33 agents of origin 1101053 will be allocated to each sub-district including itself. The model will calculate 33×0.19, then 33×0.01 (see Table \@ref(tab:table2)), and so on, which will total 30. As mentioned, the three agents that do not have an allocation can be allocated to an arbitrary destination but were removed for this study. However, in two sub-districts, 1101060 and 1102058, each sub-district had 10 agents, but the arithmetic results returned 11 agents and 13 agents. To avoid these computational problems float values were reduced until the error disappeared. The adjustment might seem arbitrary but is necessary for model consistency and the difference of agents would not be too problematic as it would not noticeably change the emission levels. 
+
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Codes and Names of the Administrative boundary of the Study Area"}
+
+df1 <- tibble(
+ Code = as.factor(c(1101053, 1101054, 1101060, 1101061, 1101063, 1101064, 1101073, 1102052, 1102054, 1102055, 1102057, 1102059, 1102060)),
+Name = c("Sajik", "Samcheong", "Gahoe", "Jongno 1.2.3.4-ga", "Jongno 5.6-ga", "Ewha", "Hyehwa", "Sogong", "Hoehyun", "Myungdong", "Pildong", "Gwanghee", "Euljiro")
+)
+
+flextable(df1) 
+```
 
 
+**A fractional OD matrix for resident drivers**. The first column is the admin codes of origins and the first row is the admin codes used to allocate destinations
+
+```{r table3, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="A fractional OD matrix for resident drivers. The first column is the admin codes of origins and the first row is the admin codes used to allocate destinations"}
+tabl <- 
+"
+|     Code    	|     1101053    	|     1101054    	|     1101060    	|     1101061    	|     1101063    	|     1101064    	|     1101072    	|     1101073    	|     1102052    	|     1102054    	|     1102055    	|     1102057    	|     1102058    	|     1102059    	|     1102060    	|
+|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|---	|
+|     1101053    	|     0.19    	|     0    	|     0.01    	|     0.2    	|     0.01    	|     0    	|     0.37    	|     0.01    	|     0.01    	|     0.07    	|     0.09    	|     0    	|     0    	|     0    	|     0.04    	|
+|     1101054    	|     0    	|     0.29    	|     0.06    	|     0.14    	|     0    	|     0.06    	|     0.3    	|     0.07    	|     0.03    	|     0.04    	|     0    	|     0    	|     0    	|     0    	|     0    	|
+|     1101060    	|     0    	|     0.07    	|     0.17    	|     0.3    	|     0.07    	|     0    	|     0.07    	|     0    	|     0.05    	|     0    	|     0    	|     0.04    	|     0    	|     0.06    	|     0    	|
+|     1101061    	|     0.06    	|     0.04    	|     0.07    	|     0.48    	|     0.02    	|     0    	|     0.02    	|     0.02    	|     0.02    	|     0.03    	|     0.05    	|     0.01    	|     0.02    	|     0.12    	|     0.02    	|
+|     1101063    	|     0.05    	|     0    	|     0    	|     0.15    	|     0.14    	|     0.04    	|     0.2    	|     0    	|     0.05    	|     0.1    	|     0.22    	|     0    	|     0    	|     0.03    	|     0.02    	|
+|     1101072    	|     0.34    	|     0.01    	|     0.02    	|     0.1    	|     0.01    	|     0.06    	|     0.36    	|     0.05    	|     0.01    	|     0.01    	|     0.01    	|     0    	|     0    	|     0    	|     0.01    	|
+|     1101073    	|     0    	|     0.08    	|     0    	|     0.03    	|     0    	|     0.06    	|     0.01    	|     0.5    	|     0.15    	|     0.08    	|     0.01    	|     0    	|     0    	|     0.08    	|     0    	|
+|     1102052    	|     0.04    	|     0    	|     0.01    	|     0.11    	|     0    	|     0.01    	|     0.01    	|     0.06    	|     0.3    	|     0.1    	|     0.26    	|     0.02    	|     0.05    	|     0.02    	|     0.01    	|
+|     1102054    	|     0.13    	|     0.01    	|     0    	|     0.07    	|     0.01    	|     0    	|     0.01    	|     0.08    	|     0.03    	|     0.23    	|     0.27    	|     0.01    	|     0.02    	|     0.01    	|     0.11    	|
+|     1102055    	|     0.13    	|     0.01    	|     0    	|     0.05    	|     0.03    	|     0.01    	|     0.09    	|     0.03    	|     0.19    	|     0.05    	|     0.26    	|     0.02    	|     0.01    	|     0.07    	|     0.06    	|
+|     1102057    	|     0    	|     0    	|     0.01    	|     0.04    	|     0    	|     0.03    	|     0    	|     0    	|     0.11    	|     0.34    	|     0.23    	|     0.13    	|     0.01    	|     0.07    	|     0.03    	|
+|     1102058    	|     0    	|     0    	|     0    	|     0.2    	|     0    	|     0    	|     0    	|     0    	|     0.16    	|     0.17    	|     0.07    	|     0.05    	|     0.16    	|     0.04    	|     0.03    	|
+|     1102059    	|     0    	|     0.01    	|     0.01    	|     0.15    	|     0.04    	|     0    	|     0    	|     0    	|     0.02    	|     0.19    	|     0.25    	|     0.06    	|     0.01    	|     0.23    	|     0.02    	|
+|     1102060    	|     0.04    	|     0    	|     0.01    	|     0.1    	|     0.02    	|     0    	|     0    	|     0.01    	|     0    	|     0.17    	|     0.05    	|     0.06    	|     0.07    	|     0.05    	|     0.42    	|
+"
+cat(tabl)
+```

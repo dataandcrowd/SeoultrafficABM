@@ -1,0 +1,3 @@
+## Non-Exhaust Emissions and Dispersion
+
+Recent studies from the UK and Europe equally documented the main sources of non-exhaust emissions such as tyre wear, brake wear, and road surface wear [@AirQualityExpertGroup2019; @EMEP/EEA2019]. A few papers included resuspension as a fourth contributor, but this study articulates resuspension in the dispersion section below. Figure 1 illustrates the non-exhaust emissions, dispersion, and dilution.
