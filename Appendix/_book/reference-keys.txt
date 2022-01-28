@@ -1,5 +1,12 @@
 fig:study-area
 fig:pollution-trend
+tab:table1
+fig:traffic-map
+fig:traffic-hourly
+fig:traffic-hourly2
 study-area-and-data-collection
 study-area
 air-pollution
+population
+traffic-count
+od-matrix
