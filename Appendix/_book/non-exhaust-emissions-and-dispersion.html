@@ -55,7 +55,26 @@
 <h1>
 <span class="header-section-number">Appendix 2</span> Non-Exhaust Emissions and Dispersion<a class="anchor" aria-label="anchor" href="#non-exhaust-emissions-and-dispersion"><i class="fas fa-link"></i></a>
 </h1>
-<p>Recent studies from the UK and Europe equally documented the main sources of non-exhaust emissions such as tyre wear, brake wear, and road surface wear.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Air Quality Expert Group, &lt;span&gt;“&lt;span class="nocase"&gt;Non-Exhaust Emissions from Road Traffic&lt;/span&gt;”&lt;/span&gt; (Department for Environment, Food; Rural Affairs, 2019); EMEP/EEA, &lt;span&gt;“&lt;span&gt;EMEP/EEA Air Pollutant Emission Inventory Guidebook 2019&lt;/span&gt;”&lt;/span&gt; (European Environment Agency, 2019), &lt;a href="https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-b-vi/view" role="doc-biblioref"&gt;https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-b-vi/view&lt;/a&gt;.&lt;/p&gt;'><sup>6</sup></a></span> A few papers included resuspension as a fourth contributor, but this study articulates resuspension in the dispersion section below. Figure 1 illustrates the non-exhaust emissions, dispersion, and dilution.</p>
+<p>Recent studies from the UK and Europe equally documented the main sources of non-exhaust emissions such as tyre wear, brake wear, and road surface wear.<span class="citation"><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Air Quality Expert Group, &lt;span&gt;“&lt;span class="nocase"&gt;Non-Exhaust Emissions from Road Traffic&lt;/span&gt;”&lt;/span&gt; (Department for Environment, Food; Rural Affairs, 2019); EMEP/EEA, &lt;span&gt;“&lt;span&gt;EMEP/EEA Air Pollutant Emission Inventory Guidebook 2019&lt;/span&gt;”&lt;/span&gt; (European Environment Agency, 2019), &lt;a href="https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-b-vi/view" role="doc-biblioref"&gt;https://www.eea.europa.eu/publications/emep-eea-guidebook-2019/part-b-sectoral-guidance-chapters/1-energy/1-a-combustion/1-a-3-b-vi/view&lt;/a&gt;.&lt;/p&gt;'><sup>6</sup></a></span> A few papers included resuspension as a fourth contributor, but this study articulates resuspension in the dispersion section below. Figure <a href="non-exhaust-emissions-and-dispersion.html#fig:nee">2.1</a> illustrates the non-exhaust emissions, dispersion, and dilution.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:nee"></span>
+<img src="Figs/method_nee.png" alt="Graphical explanation of non-exhaust emissions, dispersion, and dilution" width="80%"><p class="caption">
+Figure 2.1: Graphical explanation of non-exhaust emissions, dispersion, and dilution
+</p>
+</div>
+<p>According to <span class="citation">EMEP/EEA,<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;&lt;span&gt;“&lt;span&gt;EMEP/EEA Air Pollutant Emission Inventory Guidebook 2019&lt;/span&gt;.”&lt;/span&gt;&lt;/p&gt;"><sup>7</sup></a></span> the total of non-exhaust emissions is estimated with the following equation <a href="non-exhaust-emissions-and-dispersion.html#eq:nee-total">(2.1)</a>.</p>
+<p><span class="math display" id="eq:nee-total">\[\begin{equation}
+\tag{2.1}
+NEE_{total}=NEE_{Tyre}+NEE_{Brake}+NEE_{Road}
+\end{equation}\]</span></p>
+<ul>
+<li>NEE<sub>Total</sub>: the total non-exhaust PM emissions</li>
+<li>NEE<sub>Tyre</sub>: PM emissions from tyre wear</li>
+<li>NEE<sub>Brake</sub>: PM emissions from brake wear</li>
+<li>NEE<sub>Road</sub>: PM emissions due to road abrasion</li>
+</ul>
+<p>This equation was designed to measure the bulk emissions from a number of vehicles (e.g. 20g/km from 10 vehicles in a 5km trip between 10:00-15:00). However, it is inappropriate to measure the emissions of vehicles that have separate journeys. To find a solution, this study manipulates N<sub>j</sub> at an appropriate number based on sensitivity analysis, converts emission levels from g/km to µg/30m (equal to a size of one patch in the simulation), and spatial and temporal units at 30m and on a minute-by-minute basis. For example, one passenger car (j) has an emission factor of .0107 (.0067-.0162) (g/km) (see Table 1), and to get an estimate of PM<sub>10</sub>, the size distribution F<sub>s,i</sub> converts the TSP estimate to PM<sub>10</sub> multiplying by a fraction of 0.6 (see Table 2). This can result in 32.1µg/m3 per patch with an uncertainty range of 20.1 - 48.6.</p>
+<p>In terms of vehicle speed, EEA sets the parameter V at 1.39 below 40km/h, and declining effect of (-0.00974 * V + 1.78) between 40-90km/h. It assumes that frequent brakes and accelerations are expected below 40km/h but less as the vehicle speeds up. Mileage (M<sub>j</sub>) was not used for this study as this study focuses on the emission and the immediate dispersion of particles, not the activity of vehicles.</p>
 
 </div>
 
@@ -81,7 +100,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Appendices for Environmental Modelling and Software</strong>" was written by Hyesop Shin. It was last built on 2022-01-28.</p>
+    <p>"<strong>Appendices for Environmental Modelling and Software</strong>" was written by Hyesop Shin. It was last built on 2022-01-29.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

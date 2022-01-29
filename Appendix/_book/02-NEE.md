@@ -1,3 +1,26 @@
 # Non-Exhaust Emissions and Dispersion
 
-Recent studies from the UK and Europe equally documented the main sources of non-exhaust emissions such as tyre wear, brake wear, and road surface wear [@AirQualityExpertGroup2019; @EMEP/EEA2019]. A few papers included resuspension as a fourth contributor, but this study articulates resuspension in the dispersion section below. Figure 1 illustrates the non-exhaust emissions, dispersion, and dilution.
+Recent studies from the UK and Europe equally documented the main sources of non-exhaust emissions such as tyre wear, brake wear, and road surface wear [@AirQualityExpertGroup2019; @EMEP/EEA2019]. A few papers included resuspension as a fourth contributor, but this study articulates resuspension in the dispersion section below. Figure \@ref(fig:nee) illustrates the non-exhaust emissions, dispersion, and dilution.
+
+<div class="figure" style="text-align: center">
+<img src="Figs/method_nee.png" alt="Graphical explanation of non-exhaust emissions, dispersion, and dilution" width="80%" />
+<p class="caption">(\#fig:nee)Graphical explanation of non-exhaust emissions, dispersion, and dilution</p>
+</div>
+
+According to @EMEP/EEA2019, the total of non-exhaust emissions is estimated with the following equation \@ref(eq:nee-total).
+
+\begin{equation}
+(\#eq:nee-total)
+NEE_{total}=NEE_{Tyre}+NEE_{Brake}+NEE_{Road}
+\end{equation}
+
+* NEE~Total~: the total non-exhaust PM emissions
+* NEE~Tyre~: PM emissions from tyre wear
+* NEE~Brake~: PM emissions from brake wear
+* NEE~Road~: PM emissions due to road abrasion
+
+This equation was designed to measure the bulk emissions from a number of vehicles (e.g. 20g/km from 10 vehicles in a 5km trip between 10:00-15:00). However, it is inappropriate to measure the emissions of vehicles that have separate journeys. To find a solution, this study manipulates N~j~ at an appropriate number based on sensitivity analysis, converts emission levels from g/km to µg/30m (equal to a size of one patch in the simulation), and spatial and temporal units at 30m and on a minute-by-minute basis. For example, one passenger car (j) has an emission factor of .0107 (.0067-.0162) (g/km) (see Table 1), and to get an estimate of PM~10~, the size distribution F~s,i~ converts the TSP estimate to PM~10~ multiplying by a fraction of 0.6 (see Table 2). This can result in 32.1µg/m3 per patch with an uncertainty range of 20.1 - 48.6.
+
+
+In terms of vehicle speed, EEA sets the parameter V at 1.39 below 40km/h, and declining effect of (-0.00974 * V + 1.78) between 40-90km/h. It assumes that frequent brakes and accelerations are expected below 40km/h but less as the vehicle speeds up. Mileage (M~j~) was not used for this study as this study focuses on the emission and the immediate dispersion of particles, not the activity of vehicles. 
+
