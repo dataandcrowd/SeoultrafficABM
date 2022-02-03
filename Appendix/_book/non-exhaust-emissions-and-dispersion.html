@@ -73,9 +73,26 @@ NEE_{total}=NEE_{Tyre}+NEE_{Brake}+NEE_{Road}
 <li>NEE<sub>Brake</sub>: PM emissions from brake wear</li>
 <li>NEE<sub>Road</sub>: PM emissions due to road abrasion</li>
 </ul>
+<p>Each component will be investigated in the following sections.</p>
+<div id="tyre-wear" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Tyre Wear<a class="anchor" aria-label="anchor" href="#tyre-wear"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>NEE<sub>Tyre</sub>: Total emissions for the defined time and spatial boundary (g)</li>
+<li>N<sub>j</sub>: Number of vehicles in category <em>j</em> within the defined spatial boundary</li>
+<li>M<sub>j</sub>: Mileage (km) driven by each vehicle in category j during the defined time <em>(not used)</em>
+</li>
+<li>EF<sub>Tyre</sub>, j: TSP mass emission factor for vehicles in category <em>j</em> (g/km)</li>
+<li>F<sub>s,i</sub>: Mass fraction of particles that can be attributed to particle size class <em>i</em>
+</li>
+<li>S(V): Correction factor for a mean vehicle travelling speed <em>V</em>
+</li>
+</ul>
 <p>This equation was designed to measure the bulk emissions from a number of vehicles (e.g. 20g/km from 10 vehicles in a 5km trip between 10:00-15:00). However, it is inappropriate to measure the emissions of vehicles that have separate journeys. To find a solution, this study manipulates N<sub>j</sub> at an appropriate number based on sensitivity analysis, converts emission levels from g/km to µg/30m (equal to a size of one patch in the simulation), and spatial and temporal units at 30m and on a minute-by-minute basis. For example, one passenger car (j) has an emission factor of .0107 (.0067-.0162) (g/km) (see Table 1), and to get an estimate of PM<sub>10</sub>, the size distribution F<sub>s,i</sub> converts the TSP estimate to PM<sub>10</sub> multiplying by a fraction of 0.6 (see Table 2). This can result in 32.1µg/m3 per patch with an uncertainty range of 20.1 - 48.6.</p>
 <p>In terms of vehicle speed, EEA sets the parameter V at 1.39 below 40km/h, and declining effect of (-0.00974 * V + 1.78) between 40-90km/h. It assumes that frequent brakes and accelerations are expected below 40km/h but less as the vehicle speeds up. Mileage (M<sub>j</sub>) was not used for this study as this study focuses on the emission and the immediate dispersion of particles, not the activity of vehicles.</p>
 
+</div>
 </div>
 
   <div class="chapter-nav">
@@ -83,7 +100,10 @@ NEE_{total}=NEE_{Tyre}+NEE_{Brake}+NEE_{Road}
 <div class="next"><a href="references.html">References</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#non-exhaust-emissions-and-dispersion"><span class="header-section-number">2</span> Non-Exhaust Emissions and Dispersion</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#non-exhaust-emissions-and-dispersion"><span class="header-section-number">2</span> Non-Exhaust Emissions and Dispersion</a></li>
+<li><a class="nav-link" href="#tyre-wear"><span class="header-section-number">2.1</span> Tyre Wear</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -100,7 +120,7 @@ NEE_{total}=NEE_{Tyre}+NEE_{Brake}+NEE_{Road}
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Appendices for Environmental Modelling and Software</strong>" was written by Hyesop Shin. It was last built on 2022-01-29.</p>
+    <p>"<strong>Appendices for Environmental Modelling and Software</strong>" was written by Hyesop Shin. It was last built on 2022-02-03.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

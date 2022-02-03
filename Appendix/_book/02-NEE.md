@@ -19,6 +19,17 @@ NEE_{total}=NEE_{Tyre}+NEE_{Brake}+NEE_{Road}
 * NEE~Brake~: PM emissions from brake wear
 * NEE~Road~: PM emissions due to road abrasion
 
+Each component will be investigated in the following sections.
+
+## Tyre Wear
+
+- NEE~Tyre~: Total emissions for the defined time and spatial boundary (g)
+- N~j~: Number of vehicles in category _j_ within the defined spatial boundary
+- M~j~: Mileage (km) driven by each vehicle in category j during the defined time _(not used)_
+- EF~Tyre~, j: TSP mass emission factor for vehicles in category _j_ (g/km)
+- F~s,i~: Mass fraction of particles that can be attributed to particle size class _i_
+- S(V): Correction factor for a mean vehicle travelling speed _V_
+
 This equation was designed to measure the bulk emissions from a number of vehicles (e.g. 20g/km from 10 vehicles in a 5km trip between 10:00-15:00). However, it is inappropriate to measure the emissions of vehicles that have separate journeys. To find a solution, this study manipulates N~j~ at an appropriate number based on sensitivity analysis, converts emission levels from g/km to µg/30m (equal to a size of one patch in the simulation), and spatial and temporal units at 30m and on a minute-by-minute basis. For example, one passenger car (j) has an emission factor of .0107 (.0067-.0162) (g/km) (see Table 1), and to get an estimate of PM~10~, the size distribution F~s,i~ converts the TSP estimate to PM~10~ multiplying by a fraction of 0.6 (see Table 2). This can result in 32.1µg/m3 per patch with an uncertainty range of 20.1 - 48.6.
 
 
