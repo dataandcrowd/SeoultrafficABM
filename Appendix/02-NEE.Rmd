@@ -34,3 +34,42 @@ This equation was designed to measure the bulk emissions from a number of vehicl
 
 In terms of vehicle speed, EEA sets the parameter V at 1.39 below 40km/h, and declining effect of (-0.00974 * V + 1.78) between 40-90km/h. It assumes that frequent brakes and accelerations are expected below 40km/h but less as the vehicle speeds up. Mileage (M~j~) was not used for this study as this study focuses on the emission and the immediate dispersion of particles, not the activity of vehicles. 
 
+```{r table-emission-factors, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="TSP (Total Suspended Particles) emission factors for source category road vehicle tyre wear [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+df <- tibble::tibble(
+  `Vehicle class (j)` = c("Two-wheeled vehicles", "Passenger cars", "Light-duty trucks", "Heavy-duty vehicles"),
+  `TSP emission factor (g/km)` = c(0.0046, 0.0107, 0.0169, "Separate equation"),
+  `Uncertainty range` = c("0.0042-0.0053", "0.0067-0.0162", "0.0088-0.0217", "0.0227-0.0898")
+)
+flextable(df) %>% autofit()
+```
+
+
+```{r table-emission-particles, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Size distribution of tyre wear particles [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+
+df <- tibble(
+  `Particle size class (i)` = c("TSP", "PM10", "PM2.5", "PM1", "PM0.1"),
+  `Mass Fraction of TSP` = c(1, 0.6, 0.42, 0.06, 0.048)
+)
+flextable(df) %>% autofit()
+```
+
+```{r table-speed, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Speed Correction [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+
+df <- tibble::tibble(
+  `Velocity (km/h)` = c("V<40", "40 ≤ V ≤ 90", "V >90"),
+  `Factors (V)` = c(1.39, "-0.00974*V+1.78", 0.902)
+)
+flextable(df) %>% autofit()
+```
+
+
+
+
+
+

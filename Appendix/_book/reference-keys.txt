@@ -7,6 +7,9 @@ fig:traffic-hourly2
 tab:table2
 fig:nee
 eq:nee-total
+tab:table-emission-factors
+tab:table-emission-particles
+tab:table-speed
 study-area-and-data-collection
 study-area
 air-pollution
