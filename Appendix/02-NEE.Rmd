@@ -22,6 +22,11 @@ Each component will be investigated in the following sections.
 
 ## Tyre Wear
 
+\begin{equation}
+  NEE_{Tyre}=\sum_{i=1}^{n}N_j \times M_j \times EF_{Tyre,j} \times F_{s,i} \times S(V)
+  (\#eq:nee_tyre)
+\end{equation}
+
 - NEE~Tyre~: Total emissions for the defined time and spatial boundary (g)
 - N~j~: Number of vehicles in category _j_ within the defined spatial boundary
 - M~j~: Mileage (km) driven by each vehicle in category j during the defined time _(not used)_
@@ -69,7 +74,73 @@ flextable(df) %>% autofit()
 ```
 
 
+## Brake Wear
+The equation for brake wear is the same as tyre wear and has only a few differences in parameters.
+
+\begin{equation} 
+  NEE_{Brake}=\sum_{i=1}^{n}N_j \times M_j \times EF_{Brake,j} \times F_{s,i} \times S(V)
+  (\#eq:brake-wear)
+\end{equation} 
+
+* NEE~Tyre~: Total emission for the defined time and spatial boundary (g/km)
+* N~j~: Number of vehicles in category j within the defined spatial boundary
+* M~j~: Mileage (km) driven by each vehicle in category j during the defined time (not used)
+* EF~Tyre,j~: TSP mass emission factor for vehicles in category j (g/km)
+* F~s,i~: mass fraction of Particles that can be attributed to particle size class i
+* S(V): Correction factor for a mean vehicle travelling speed \textit{V}
 
 
+As mentioned in the tyre wear equation, emission factors for passenger cars must fit a unit set in the virtual environment. Thus, the EF~Br,j~ value of .0075 (g/km) converts to 21.5 (µg/patch). The size distribution of PM~10~ is 0.98. The brake wear, particularly from the linings, are worn out quickly when the driver accelerates and decelerates frequently, and this tends to happen when the traffic volume is high. Again, mileage (M~j~) was not used for this study as this study focuses on the emission and the immediate dispersion of particles, not the activity of vehicles.
 
+
+```{r table-emission-factors1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="TSP (Total Suspended Particles) emission factors for source category road vehicle brake wear [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+df <- tibble::tibble(
+  `Vehicle class (j)` = c("Two-wheeled vehicles", "Passenger cars", "Light-duty trucks", "Heavy-duty vehicles"),
+  `TSP emission factor (g/km)` = c(0.0037, 0.0075, 0.0117, "Separate equation"),
+  `Uncertainty range` = c("0.0022-0.0050", "0.0044-0.0010", "0.0088-0.0145", "0.0235-0.0420")
+)
+flextable(df) %>% autofit()
+```
+
+
+```{r table-emission-particles1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Size distribution of brake wear particles [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+
+df <- tibble(
+  `Particle size class (i)` = c("TSP", "PM10", "PM2.5", "PM1", "PM0.1"),
+  `Mass Fraction of TSP` = c(1, 0.98, 0.39, 0.1, 0.08)
+)
+flextable(df) %>% autofit()
+```
+
+```{r table-speed1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Speed Correction [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+
+df <- tibble::tibble(
+  `Velocity (km/h)` = c("V<40", "40 ≤ V ≤ 90", "V >90"),
+  `Factors (V)` = c(1.67, "-0.0270*V+2.75", 0.185)
+)
+flextable(df) %>% autofit()
+```
+
+
+## Surface Wear (i.e. Road Abrasion)
+
+Road surface wear is caused by the appearance of wheel marks when the vehicle passes over the road or parts of the road are destroyed by heavy vehicles. The formula is as follows.
+
+
+\begin{equation}
+   NEE_{Surface}=\sum_{i=1}^{n}N_j \times M_j \times EF_{SW,j}
+   (\#eq:nee_surface)
+\end{equation}
+
+*	NEE~Surface~: Total emissions for the defined time and spatial boundary (g)
+*	N~j~: Number of vehicles in category j within the defined spatial boundary
+*	M~j~: Mileage (km) driven by each vehicle in category j during the defined time (not used)
+*	EF~SW,j~ = TSP mass emission factor from surface wear for vehicles in category j (g/km)
+*	F~s,i~ = Mass fraction of TSP that can be attributed to particle size class i
 
