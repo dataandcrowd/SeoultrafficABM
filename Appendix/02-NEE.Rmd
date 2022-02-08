@@ -144,3 +144,51 @@ Road surface wear is caused by the appearance of wheel marks when the vehicle pa
 *	EF~SW,j~ = TSP mass emission factor from surface wear for vehicles in category j (g/km)
 *	F~s,i~ = Mass fraction of TSP that can be attributed to particle size class i
 
+
+
+```{r table-emission-factors3, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="TSP (Total Suspended Particles) emission factors for source category road surface wear [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+df <- tibble::tibble(
+  `Vehicle class (j)` = c("Two-wheeled vehicles", "Passenger cars", "Light-duty trucks", "Heavy-duty vehicles"),
+  `TSP emission factor (g/km)` = c(0.0006, 0.0015, 0.0015, 0.0076)
+)
+flextable(df) %>% autofit()
+```
+
+
+```{r table-emission-particles3, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Size distribution of surface wear particles [@EMEP/EEA2019]"}
+library(flextable)
+library(tidyverse)
+
+df <- tibble(
+  `Particle size class (i)` = c("TSP", "PM10", "PM2.5"),
+  `Mass Fraction of TSP` = c(1, 0.5, 0.27)
+)
+flextable(df) %>% autofit()
+```
+
+## Dispersion and Dilution
+There are many dispersion models applicable for exhaust emissions, but according to early research [@Beevers2013a; @Panko2013] , many things related to non-exhaust dispersion remain unknown. The University of California, Riverside (UCR) team is conducting an ongoing project to understand the severity of non-exhaust emissions at nearer roads and is currently testing non-exhaust parameters in their existing dispersion model ([link](https://ww2.arb.ca.gov/resources/documents/brake-tire-wear-emissions)). In line with the UCR project, this study also attempts to disperse pollution with a spread function, in-cone in NetLogo, as a surrogate of dust resuspension.
+
+
+Dilution with non-combustible dust varies by meteorological or ventilation conditions. Less road dust would be generated on rainy days due to the additional weight that is deposited by the particle substances on the ground, and during night hours when there is less traffic. Cities like Seoul have employed water spraying trucks to spray moisture on the roads on dry days, which adheres to the particles on the ground as well as keeps the resuspension low as possible. Since this study does not consider humidity or rain effects, the model will use the case from [@Nikolova2014], where it takes 110 seconds to dilute completely. In NetLogo, this is assigned as three random ticks – ranging between 0-2 minutes. This study further investigates the sensitivity of road PM~10~ by controlling both dispersion ranges and the extension of dilution.
+
+
+## Application Inside the Simulation
+It is worth mentioning that the units change inside the *in silico* environment. Since one patch is equivalent to 30 metres and one car represents 10 vehicles, a car moving from one patch to the next means 10 cars moving 30 metres. The vehicle speed inside the simulation is assigned in Table\@ref(tab:table-netlogo-speed).
+
+
+```{r table-netlogo-speed, echo=FALSE, message=FALSE, warnings=FALSE, results='asis', tab.cap="Conversion of Vehicle Speed in NetLogo"}
+library(flextable)
+library(tidyverse)
+
+df <- tibble(
+  Original = c("5km/h", "10km/h", "20km/h", "40km/h"),
+  Simulation = c(0.25, 0.5, 1, 2)
+)
+flextable(df) %>% autofit()
+```
+
+In published studies, the emissions are calculated by g/km based on the total distance of which the car has travelled [@Srimuruganandam2010;@Ferm2015]. @Smit2010 argued that the atmospheric pollution is combined with emissions, humidity, wind, temperature, and other uncertain factors, and therefore the calibration process is normally tested in places where there are fewer confounding variables, e.g. tunnels. Calibration with observational values can be inaccurate, but more than 15 studies have chosen this method due to restricted conditions [@SMITH2020105188].
+
