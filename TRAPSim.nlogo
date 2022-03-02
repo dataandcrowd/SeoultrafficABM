@@ -1,4 +1,4 @@
-extensions [gis csv table nw ]
+extensions [gis csv table nw ]                ; GIS extension for NetLogo to import GIS shapefiles, csv extension to import csv files, table to create tables for variables, nw to create road networks from shapefiles 
 
 globals [
   pollution-data
@@ -19,16 +19,16 @@ globals [
   d_farroad e_farroad
 ]
 
-breed [nodes node]
+breed [nodes node]                           ; Breeds allows the modeller to easily ask some sets of agents to run commands or otherwise take actions
 breed [area-labels area-label]
 breed [buildings building]
 breed [s_entrances s_entrance]
 breed [cars car]
 breed [employees employee]
 breed [drivers driver]
-
-links-own [
-  road-name
+                                             ; XXX-own is the attributed tied to each entity group
+links-own [                                  ; For instance, road-name, is-road?, max-spd, Daero?, and weight appear in the attribute table of each road segment
+  road-name                                  
   is-road?
   max-spd
   Daero?
@@ -139,8 +139,8 @@ drivers-own [
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 to setup
-  ca
-  set-gis
+  ca  ; clear everything
+  set-gis                                             
   add-labels
   activate-links
   set-signals
@@ -155,13 +155,15 @@ to setup
   set-road-ends
   set-pm10
   set-pm10-others
-  ask cars with [not random-car] [to-work-setup]
+  ask cars with [not random-car] [to-work-setup] ;; We setup the OD for resident vehicles
   reset-ticks
 
 end
 
 ;;---------------------------------------------------------
 to go
+
+;;---This section is a list of global variables that run in the Behaviorspace or on the HPC-----
   set back_pm10_sample precision ([pm10] of patch 81 91) 2
   set Jongno_p     precision ([pm10] of patch 88 94) 2
   set Jung_p       precision ([pm10] of patch 38 68) 2
@@ -174,10 +176,11 @@ to go
                                count cars with [not random-car]) * 100) 3
   set Walkers_p    precision ((count(employees with [health < 100]) / count employees) * 100) 3
   set mean-pm10    precision mean [pm10] of patches with [is-research-area? = true] 2
-
-
+;;---------------------------------------------------------------------
+;;-- Stop condition--
   if (export-raster = "no" and (ticks + 1) >= 127740) or (export-raster = "yes" and (ticks + 1) >= 1442) [stop]
-  ;if (ticks + 1) >= 127740 [stop]
+  
+;;--This section looks a bit messy but it makes cars to run differently on weekends.
   ask cars [
     let is-weekend? item 6 table:get pm10-road (ticks + 1)
     let what-time?  item 1 table:get pm10-road (ticks + 1)
@@ -196,6 +199,7 @@ to go
         if (is-weekend? = true and what-time? >= 23) [move-to origin to-work-setup] ] ;; Flying cars may appear.
                                                                  ;; They are just heading home without using the road links.
   ]
+
   speed-up
   set-signal-colours
   meet-traffic-lights
@@ -228,7 +232,7 @@ to set-gis
   gis:set-world-envelope (gis:envelope-union-of gis:envelope-of world_envelope) ;; set spatial extent
 
 
-;; Assign subdistrict name
+;; Assign subdistrict name to each patch
   ask patches gis:intersecting area [set is-research-area? true]
   foreach gis:feature-list-of area [vector-feature ->
   ask patches [if gis:intersects? vector-feature self
@@ -240,21 +244,17 @@ to set-gis
   ask patches gis:intersecting roads [set road_buffer true ]
   ask patches with [road_buffer != true][ set road_buffer false ]
 
-;; Assign streets
- ; set streets gis:load-dataset "GIS/seoulCBD_Pedestrian_Path.shp"
- ; ask patches gis:intersecting streets [set pavement true] ;; streets and buildings
- ; ask patches gis:intersecting building-layer [set pavement true] ;; have the pavement assigned positive
- ; ask patches with [pavement != true][set pavement false]
-
 
 ;; Assign Buildings
-  let building-layer gis:load-dataset "GIS/seoulCBD_Buildings.shp"     ;; import buildings
-  gis:set-drawing-color 107  gis:fill building-layer 1.0                 ;; colour buildings
-  ask patches gis:intersecting building-layer [set mybuilding true ]
-  ask patches with [mybuilding != true][set mybuilding false]
+  let building-layer gis:load-dataset "GIS/seoulCBD_Buildings.shp"     ;; import buildings from a GIS file
+  gis:set-drawing-color 107  gis:fill building-layer 1.0               ;; colour buildings into blue
+  ask patches gis:intersecting building-layer [set mybuilding true ]   ;; set the building areas as true
+  ask patches with [mybuilding != true][set mybuilding false]          ;; set the non-building areas as false
 
 
 ;; Identify centroids and assign IDs to centroids
+;; This loop is used as to assign a centroid location for each building so that the agents can set their destinations
+
    foreach gis:feature-list-of building-layer [ feature ->
     let centroid gis:location-of gis:centroid-of feature
     if not empty? centroid [
@@ -270,7 +270,8 @@ to set-gis
   ask patches with [centroid? != true][set centroid? false set ID "not given"  ]
 
 
-;; Create subway s_entrances
+;; Create subway entrances: "s_entrances"
+
   let subway gis:load-dataset "GIS/Subway_SeoulCBD.shp"
   foreach gis:feature-list-of subway [ vector-feature ->
     foreach gis:vertex-lists-of vector-feature [ vertex ->
@@ -345,6 +346,7 @@ to set-gis
 
 end
 
+;;--4daemoon represents four main gates built back in the previous Kingdom of Chosun.--;;
 to draw-4daemoon
   gis:set-drawing-color [ 229 255 204]    gis:fill area 0 ;;RGB color
   gis:set-drawing-color [  64  64  64]    gis:draw area 1
@@ -392,30 +394,27 @@ to activate-links
 end
 
 to set-signals
-; Set Signals in junctions
   ask nodes [
-    ifelse count my-links > 2
-      [set size 3
+    ifelse count my-links > 2      ; We arbitrarily set the traffic lights where the link intersections are more than 2
+      [set size 3                  ; There might be more in reality
        set intersection? true
-       set auto? random 11
+       set auto? random 11         ; We set the timer
     ]
-      [;set hidden? true
-       set color grey
-      ]
+      [set color grey]
   ]
 
-  ask nodes with [intersection? = true][
-    if auto? >= 5 [set color green set green-light? true]
-    if auto? <  5 [set color red set green-light? false]
+  ask nodes with [intersection? = true][                          ; As the timer ticks down from 10 to 0
+    if auto? >= 5 [set color green set green-light? true]         ; If the number is 5 or more then the traffic light is green
+    if auto? <  5 [set color red set green-light? false]          ; If the number is less than 5 the light is red
     set pcolor black + 5
     ask neighbors [set pcolor black + 4]
     ask patches with [pcolor = black + 4] [set intersection true]
   ]
 end
 
-
+;;- We set the road endpoints (or entry points) for the non-resident inbound vehicles.  
 to set-road-ends
-  let endpoints0 map node [5465 5463 5464 5451 5452 5798 5797 5685 5690 6745 6753 5653 5651 5652 6687 6679] ;6778 6704 ]
+  let endpoints0 map node [5465 5463 5464 5451 5452 5798 5797 5685 5690 6745 6753 5653 5651 5652 6687 6679] 
   let endpoints filter is-node? endpoints0
 
  foreach endpoints [ep ->
@@ -440,8 +439,8 @@ to set-random-cars
     set origin one-of nodes move-to origin
             ]
 
-  ask n-of (int(.7 * count cars)) cars [set fueltype "Gasoline"]
-  ask cars with [fueltype != "Gasoline"][set fueltype "Diesel" ]
+  ask n-of (int(.7 * count cars)) cars [set fueltype "Gasoline"]   ; 70% of the vehicles in Seoul CBD owns gasoline (unleaded) cars 
+  ask cars with [fueltype != "Gasoline"][set fueltype "Diesel" ]   ; the next majority is Diesel
 end
 
 
@@ -1390,10 +1389,9 @@ to pollute
 end
 
 
-
 to fadeout
-  ask patches with [pcolor = (grey + 2)][
-    ifelse countdown <= 0
+  ask patches with [pcolor = (grey + 2)][      ;; We set the dilution function to fade out
+    ifelse countdown <= 0                      ;; after 3 ticks or less
       [ set pcolor white
         set countdown random 3 ]
       [ set countdown countdown - 1 ]
