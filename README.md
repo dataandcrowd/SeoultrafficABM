@@ -5,6 +5,10 @@
 # What is this model?
 We built an agent-based model a traffic simulation for Central Seoul to understand the coupled problems of emissions, behaviour, and the estimated exposure to PM<sub>10</sub> for groups of drivers and subway commuters.
 
+## Pulished Papers
+- Original Journal Article: https://www.sciencedirect.com/science/article/pii/S0198971522001387
+- Summary version in the ESSA Conference: https://link.springer.com/chapter/10.1007/978-3-030-92843-8_26
+- Methods: https://www.sciencedirect.com/science/article/pii/S2215016122000577
 
 ## Brief Background
 Seoul has a population of more than 10 million with an addition of 8 million commuters flood in from adjacent cities everyday. Traffic congestion has been so common in Seoul, which resulted in hazardous levels of air pollution. During the cold and dry seasons (<0°C), more and more people take public transportation or private vehicles, which will intensify air pollution. This can cause further problems to commuters' health.
